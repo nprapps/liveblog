@@ -141,7 +141,7 @@ def compose_pinned_post(post):
     pinned_post = post
     # Get the timestamps collection
     client = MongoClient(app_config.MONGODB_URL)
-    database = client['elections16_liveblog']
+    database = client['liveblog']
     collection = database.pinned
     try:
         post['pinned']
@@ -298,7 +298,7 @@ def parse_raw_posts(raw_posts):
 
     # Get the timestamps collection
     client = MongoClient(app_config.MONGODB_URL)
-    database = client['elections16_liveblog']
+    database = client['liveblog']
     collection = database.timestamps
     for raw_post in raw_posts:
         post = {}
