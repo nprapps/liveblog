@@ -1,0 +1,75 @@
+{%if request.path == url_for('_preview') %}
+    {% set filtered_posts = posts %}
+{% else %}
+    {% set filtered_posts = posts|selectattr("published", "equalto", "yes") %}
+{% endif %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+<body>
+    <div class="liveblog {{status}}">
+        {%if request.path == url_for('_preview') %}
+        <h2 class="preview-msg">This is the preview page to check draft posts before publishing</h2>
+        {% endif %}
+
+        <div class="error-message">
+            <p>Due to technical issues, the live blog is not updating. We are actively working on a fix.</p>
+        </div>
+
+        {% if pinned_post %}
+            <div class="pinned-post" data-last-updated="{% if pinned_post.timestamp %} {{pinned_post.timestamp.isoformat()}} {% endif %}">
+                {%if request.path == url_for('_preview') %}
+                    <h4 class="post-headline">{{pinned_post.headline}}</h4>
+                    <div class="post-content">{{pinned_post.contents|safe}}</div>
+                    <div class="post-footer">
+                        <p class="footer-source">Source for results data: AP. Note: <a class="internal-link" href="#about-senate-results-6">Called vs. expected races.</a></p>
+                    </div>
+                {% else %}
+                    <h4 class="post-headline">{{pinned_post.cached_headline}}</h4>
+                    <div class="post-content">{{pinned_post.cached_contents|safe}}</div>
+                    <div class="post-footer">
+                        <p class="footer-source">Source for results data: AP. Note: <a class="internal-link" href="#about-senate-results-6">Called vs. expected races.</a></p>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+            <div class="new-posts-counter">
+                <a href="#" class="new-posts-btn">See <span class="counter"></span></a>
+            </div>
+        {% for post in filtered_posts %}
+            <div class="liveblog-item post{%if post['published'] == 'no' %} draft{% endif %}" id="{{ post.slug }}">
+                <div class="post-header">
+                    <span class="post-timestamp">{{ post.timestamp.isoformat() }}</span>
+                </div>
+                {% if post['major development'] == "yes" %}
+                <span class="post-label">Major development</span>
+                {% endif %}
+                <h4 class="post-headline{%if post['published'] == 'no' %} draft-headline{% endif %}">{{ post.headline }}</h4>
+                <div class="post-content">
+                    {{ post.contents|safe }}
+
+                    <p class="post-author">
+                        &mdash;
+                        {% for author in post.authors %}
+                            {% if author.page == '' %}
+                            <span class="author-other">{{ author.name }}</span>{% if loop.index < post.authors|length %},{% endif %}
+                            {% else %}
+                                <a href="{{ author.page }}">{{ author.name }}</a>{% if loop.index < post.authors|length %},{% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="post-footer">
+                    <span id="dl-{{ post.slug }}" class="deeplink">Copy link
+                        <span class="tooltip">Copied!</span>
+                    </span>
+                    <a class="footer-top-link"href="#">Back to top</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

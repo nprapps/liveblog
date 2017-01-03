@@ -1,0 +1,95 @@
+{% set filtered_posts = posts|selectattr("published", "equalto", "yes") %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Share Page</title>
+    {% if DEPLOYMENT_TARGET %}
+    <link rel="stylesheet" href="css/rendered/app.min.css">
+    {% else %}
+    <link rel="stylesheet" href="less/app.less">
+    {% endif %}
+    <style>
+      body{
+        padding: 40px;
+      }
+      .post{
+        margin-bottom: .5em;
+        padding: 2em 0;
+      }
+      .outerPost{
+        margin-bottom: 2em;
+      }
+
+      p {
+        margin-bottom: .5em;
+      }
+
+      input {
+        width: 80%;
+      }
+    </style>
+  </head>
+  <body>
+  {% for post in filtered_posts %}
+    {% if post.headline %}
+    <div class="post" id="{{ post.slug }}">
+        <h4 class="post-headline">{{ post.headline }}</h4>
+    </div>
+    {% endif %}
+  {% endfor %}
+
+  <script type="text/javascript">
+    var theId = null;
+    var div = null;
+
+    function createShareLink(){
+      {% if DEPLOYMENT_TARGET == None or DEPLOYMENT_TARGET == 'staging'%}
+        var url_tpl = 'http://www-s1.npr.org/templates/story/story.php?storyId={{SEAMUS_ID}}&post=';
+      {% else %}
+        var url_tpl = 'http://www.npr.org/templates/story/story.php?storyId={{SEAMUS_ID}}&post=';
+      {% endif %}
+      allDivs = document.getElementsByClassName('post')
+      for (var i = 0; i < allDivs.length; i++){
+        var div = allDivs[i];
+        var theId = div.getAttribute('id');
+        var theURL = url_tpl + theId;
+        var p = document.createElement('p');
+        p.setAttribute('class', 'shareLink');
+        var checkLink = document.createElement('a');
+        checkLink.setAttribute('href', theURL);
+        checkLink.setAttribute('target', "_blank");
+        checkLink.innerHTML = theURL;
+        p.appendChild(checkLink);
+        div.appendChild(p);
+
+        var npr_tw_suffix = '&utm_source=twitter.com&utm_medium=social&utm_campaign=npr&utm_term=nprnews&utm_content=202604'
+        var npr_tw_URL = theURL + npr_tw_suffix;
+        var p = document.createElement('p');
+        var span = document.createElement('span');
+        span.innerHTML = 'NPR Twitter: ';
+        p.appendChild(span);
+        var input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.setAttribute('value', npr_tw_URL);
+        p.appendChild(input);
+        div.appendChild(p);
+
+        var politics_tw_suffix = '&utm_source=twitter.com&utm_medium=social&utm_campaign=politics&utm_term=nprnews&utm_content=202604'
+        var politics_tw_URL = theURL + politics_tw_suffix;
+        var p = document.createElement('p');
+        var span = document.createElement('span');
+        span.innerHTML = "Politics Twitter: ";
+        p.appendChild(span);
+        var input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.setAttribute('value', politics_tw_URL);
+        p.appendChild(input);
+        div.appendChild(p);
+      }
+    };
+
+    window.onload = createShareLink();
+    </script>
+</body>
+</html>
