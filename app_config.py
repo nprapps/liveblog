@@ -112,7 +112,7 @@ AUTOINIT_LOADER = False
 """
 COPY EDITING
 """
-COPY_GOOGLE_DOC_KEY = '1Oizr_i1SizfvrwPfU9sSbxa4ktIXCh5q5mR4bksoouM'
+COPY_GOOGLE_DOC_KEY = '15TeNmLlwro_wfLTQmXDLhGigPhi4DIvpa7RsaKKUzwY'
 COPY_PATH = 'data/copy.xlsx'
 
 LIVEBLOG_HTML_PATH = 'data/liveblog.html'
@@ -125,8 +125,8 @@ NUM_HEADLINE_POSTS = 3
 GOOGLE APPS SCRIPTS
 """
 
-GAS_LOG_KEY = '1mwmMYtllwOhZi5Q8SeDppZQx7QoqXjU7lKuJAuu1qcY' # Google app script logs spreadsheet key
-LIVEBLOG_GDOC_KEY = '1jLWACDn2EA9KOqQj4AgCQWjPoXze28hsyaxHP9Il3h0' # Google doc key
+GAS_LOG_KEY = '1oE9V5APDi5zzFRm-1pm63BGJ6dUjeedz1qw6pECRRlQ' # Google app script logs spreadsheet key
+LIVEBLOG_GDOC_KEY = '11MMvFa7rVxm-qGcMZBGLWyGOjBzP2C7bJnc2WfLQ4mM' # Google doc key
 SCRIPT_PROJECT_NAME = 'liveblog' # Google app scripts project name
 SEAMUS_ID = '500427835'
 
@@ -243,14 +243,10 @@ def configure_targets(deployment_target):
         LOG_LEVEL = logging.INFO
         DEBUG = False
         ASSETS_MAX_AGE = 86400
-        SEAMUS_ID = '500427835'
-        # Production google_apps_scripts > staging > elections16-liveblog
-        # ELECTIONS16 LIVEBLOG PRODUCTION Elections16 > LiveBlog
-        LIVEBLOG_GDOC_KEY = '10VW8FfWLu5pyKeDqHawagsqQ4cETdwVmWRyeNAKKWyk'
-        # Dress rehearsal google_apps_scripts > staging > elections16-liveblog
-        # LIVEBLOG_GDOC_KEY = '1EJToRyjX0K1hQ8DPA2_MK9rKmOkIazsVHWPhfOotX88'
-        # Monday - day before test google_apps_scripts > staging > elections16-liveblog
-        # LIVEBLOG_GDOC_KEY = '1RhLApNcdqVkg4s7wxstaZ_EbrFqwEXCjDoKrULQJIaY'
+        SEAMUS_ID = ''
+        # TODO: Agree on where should the final inauguration day liveblog should live in
+        # POINT TO STAGING FOR NOW
+        LIVEBLOG_GDOC_KEY = '11MMvFa7rVxm-qGcMZBGLWyGOjBzP2C7bJnc2WfLQ4mM'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
@@ -265,13 +261,9 @@ def configure_targets(deployment_target):
         LOG_LEVEL = logging.INFO
         DEBUG = True
         ASSETS_MAX_AGE = 20
-        SEAMUS_ID = '500306012'
-        # Staging google_apps_scripts > staging > elections16-liveblog
-        LIVEBLOG_GDOC_KEY = '1NRH2bDm2cWG4yQDdznkHG4q-xI-zGYjqdZKbWjl9EtM'
-        # Dress rehearsal google_apps_scripts > staging > elections16-liveblog
-        # LIVEBLOG_GDOC_KEY = '1EJToRyjX0K1hQ8DPA2_MK9rKmOkIazsVHWPhfOotX88'
-        # ELECTIONS16 LIVEBLOG PRODUCTION Elections16 > LiveBlog
-        #LIVEBLOG_GDOC_KEY = '10VW8FfWLu5pyKeDqHawagsqQ4cETdwVmWRyeNAKKWyk'
+        SEAMUS_ID = ''
+        # Staging google_apps_scripts > staging > liveblog
+        LIVEBLOG_GDOC_KEY = '11MMvFa7rVxm-qGcMZBGLWyGOjBzP2C7bJnc2WfLQ4mM'
     else:
         S3_BUCKET = None
         S3_BASE_URL = 'http://127.0.0.1:8000'
@@ -282,15 +274,7 @@ def configure_targets(deployment_target):
         LOG_LEVEL = logging.INFO
         DEBUG = True
         ASSETS_MAX_AGE = 20
-
-        # Development google_apps_scripts > dev > elections16-liveblog
-        # > Elections16-Liveblog - Development
-        # LIVEBLOG_GDOC_KEY = '1jLWACDn2EA9KOqQj4AgCQWjPoXze28hsyaxHP9Il3h0'
-        # Development google_apps_scripts > dev > ParserTest
-        # LIVEBLOG_GDOC_KEY = '1m0mQYsgNgMOJe6CZ9dpPbAjSe3R5o0U7UHogguwzPuo'
-        # LIVEBLOG_GDOC_KEY = '10-SF-5UWgQqfbAmV3v4k9V6IGmYlPdSLQUUmHMj_zck'
-        # Development google_apps_scripts > dev > Refactoring
-        LIVEBLOG_GDOC_KEY = '1EJToRyjX0K1hQ8DPA2_MK9rKmOkIazsVHWPhfOotX88'
+        LIVEBLOG_GDOC_KEY = '1_IipOtr6uuoFLYzP8MhvIUC8yobUY-sk6ZVN6QYgU44'
         try:
             from local_settings import LIVEBLOG_GDOC_KEY, S3_BASE_URL
         except ImportError:

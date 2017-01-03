@@ -330,10 +330,10 @@ def upsert(script_name=None, src='google_apps_scripts'):
     require('settings', provided_by=['production', 'staging', 'development'])
 
     if not script_name:
-        script_name = '%s_%s' % (app_config.DEPLOYMENT_TARGET,
-                                 app_config.SCRIPT_PROJECT_NAME)
+        script_name = '%s-%s' % (app_config.DEPLOYMENT_TARGET,
+                                 app_config.CURRENT_LIVEBLOG)
         if app_config.DEPLOYMENT_TARGET == "production":
-            script_name = app_config.PROJECT_SLUG
+            script_name = app_config.CURRENT_LIVEBLOG
 
     id = get_gas_project_id(script_name)
 

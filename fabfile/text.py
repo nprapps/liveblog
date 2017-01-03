@@ -31,7 +31,6 @@ def update():
         return
 
     get_document(app_config.COPY_GOOGLE_DOC_KEY, app_config.COPY_PATH)
-    get_document(app_config.NAVBAR_GOOGLE_DOC_KEY, app_config.NAVBAR_PATH)
 
 
 @task
