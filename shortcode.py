@@ -117,7 +117,7 @@ def _get_image_context(id):
     url = IMAGE_URL_TEMPLATE % id
 
     client = MongoClient(app_config.MONGODB_URL)
-    database = client['elections16_liveblog']
+    database = client['liveblog']
     collection = database.images
     result = collection.find_one({'_id': id})
 
@@ -146,7 +146,7 @@ def _get_tweet_context(id):
     layout = 'text'
 
     client = MongoClient(app_config.MONGODB_URL)
-    database = client['elections16_liveblog']
+    database = client['liveblog']
     collection = database.tweets
     result = collection.find_one({'_id': id})
 
