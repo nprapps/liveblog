@@ -40,7 +40,7 @@ ASSETS_SLUG = 'liveblog'
 
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
-CURRENT_LIVEBLOG = 'inauguration-liveblog-20170120'
+CURRENT_LIVEBLOG = '20170120-inauguration-liveblog'
 SEAMUS_ID = ''  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_LIVEBLOG
@@ -70,6 +70,19 @@ STAGING_SERVERS = ['52.87.228.251']
 
 # Should code be deployed to the web/cron servers?
 DEPLOY_TO_SERVERS = True
+try:
+    # Override whether we should deploy to a cutom webserver
+    from local_settings import DEPLOY_TO_SERVERS
+except ImportError:
+    pass
+
+DEPLOY_STATIC_LIVEBLOG = False
+try:
+    # Override whether we are going to deploy a static liveblog
+    # from our local environment. Useful for non-live liveblogs
+    from local_settings import DEPLOY_STATIC_LIVEBLOG
+except ImportError:
+    pass
 
 SERVER_USER = 'ubuntu'
 SERVER_PYTHON = 'python2.7'
@@ -126,9 +139,9 @@ GOOGLE APPS SCRIPTS
 """
 
 GAS_LOG_KEY = '1oE9V5APDi5zzFRm-1pm63BGJ6dUjeedz1qw6pECRRlQ' # Google app script logs spreadsheet key
-LIVEBLOG_GDOC_KEY = '11MMvFa7rVxm-qGcMZBGLWyGOjBzP2C7bJnc2WfLQ4mM' # Google doc key
+LIVEBLOG_GDOC_KEY = '1_IipOtr6uuoFLYzP8MhvIUC8yobUY-sk6ZVN6QYgU44' # Google doc key
 SCRIPT_PROJECT_NAME = 'liveblog' # Google app scripts project name
-SEAMUS_ID = '500427835'
+SEAMUS_ID = ''
 
 
 """
@@ -243,10 +256,7 @@ def configure_targets(deployment_target):
         LOG_LEVEL = logging.INFO
         DEBUG = False
         ASSETS_MAX_AGE = 86400
-        SEAMUS_ID = ''
-        # TODO: Agree on where should the final inauguration day liveblog should live in
-        # POINT TO STAGING FOR NOW
-        LIVEBLOG_GDOC_KEY = '11MMvFa7rVxm-qGcMZBGLWyGOjBzP2C7bJnc2WfLQ4mM'
+        LIVEBLOG_GDOC_KEY = '1BHeJSGbEfdVs2pCrMtXZ0dQrgnVKKag8z1QQhLakPx4'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
@@ -261,7 +271,6 @@ def configure_targets(deployment_target):
         LOG_LEVEL = logging.INFO
         DEBUG = True
         ASSETS_MAX_AGE = 20
-        SEAMUS_ID = ''
         # Staging google_apps_scripts > staging > liveblog
         LIVEBLOG_GDOC_KEY = '11MMvFa7rVxm-qGcMZBGLWyGOjBzP2C7bJnc2WfLQ4mM'
     else:
@@ -275,8 +284,21 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         LIVEBLOG_GDOC_KEY = '1_IipOtr6uuoFLYzP8MhvIUC8yobUY-sk6ZVN6QYgU44'
+        # Override S3_BASE_URL to use another port locally for fab app
         try:
-            from local_settings import LIVEBLOG_GDOC_KEY, S3_BASE_URL
+            from local_settings import S3_BASE_URL
+        except ImportError:
+            pass
+        try:
+            from local_settings import LIVEBLOG_GDOC_KEY
+        except ImportError:
+            pass
+
+    # If we are deploying a non live fact check:
+    if DEPLOY_STATIC_LIVEBLOG:
+        # Override LIVEBLOG_GDOC_KEY to point ALL environments to google doc
+        try:
+            from local_settings import LIVEBLOG_GDOC_KEY
         except ImportError:
             pass
 

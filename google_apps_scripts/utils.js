@@ -71,7 +71,7 @@ function _insertPinnedPost() {
 function initializeDocument() {
   // Clear out the doc
   var ui = DocumentApp.getUi();
-  var response = ui.alert('WARNING: SHOULD NEVER BE DONE DURING ELECTION NIGHT', 'This will delete the doc contents, are you sure you know what you are doing?', ui.ButtonSet.YES_NO);
+  var response = ui.alert('WARNING: SHOULD NEVER BE DONE DURING THE LIVE EVENT', 'This will delete the doc contents, are you sure you know what you are doing?', ui.ButtonSet.YES_NO);
   // Process the user's response.
   if (response != ui.Button.YES) {
     return;

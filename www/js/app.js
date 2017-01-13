@@ -370,21 +370,25 @@ const buildLiveblogvDOM = function(liveblog) {
     ]);
 
     function renderChild(child) {
-        let element = null;
-        if (child.tagName === 'DIV') {
-            if (child.classList.contains('post')){
-                element = renderPost(child);
-            }
-            else if (child.classList.contains('pinned-post')) {
-                element = renderPinnedPost(child);
-            }
-            else {
+        try {
+            let element = null;
+            if (child.tagName === 'DIV') {
+                if (child.classList.contains('post')){
+                    element = renderPost(child);
+                }
+                else if (child.classList.contains('pinned-post')) {
+                    element = renderPinnedPost(child);
+                }
+                else {
+                    element = virtualize(child);
+                }
+            } else {
                 element = virtualize(child);
             }
-        } else {
-            element = virtualize(child);
+            return element;
+        } catch (e) {
+            console.error(e);
         }
-        return element;
     }
 
     function renderPost(child) {
@@ -497,7 +501,7 @@ const renderHeadervDOM = function(data) {
  */
 const renderHeaderContentsDuring = function(data) {
     return [
-        h('h1.header-title', 'Live Coverage: Election Night 2016'),
+        h('h1.header-title', 'Live Coverage: Inauguration Day 2017'),
         h('p.header-info', [
             h('span.last-updated', ['Last updated: ' + data.updated]),
             h('span.num-posts', data.numPosts + ' Posts')
@@ -510,7 +514,7 @@ const renderHeaderContentsDuring = function(data) {
  */
 const renderHeaderContentsAfter = function(data) {
     return [
-        h('h1.header-title', 'Live Coverage: Election Night 2016'),
+        h('h1.header-title', 'Live Coverage: Inauguration Day 2017'),
         h('p.header-info', [
             h('span.last-updated', ['Last updated: ' + data.updated]),
             h('span.num-posts', data.numPosts + ' Posts')
@@ -812,7 +816,6 @@ const onInternalLinkClick = function(e){
     e.preventDefault();
     e.stopPropagation();
     const postId = this.getAttribute('href');
-    // Firefox bug hack https://github.com/nprapps/elections16-liveblog/issues/143
     const id = '#' + postId.split('#').slice(-1);
     scrollToPost(id);
 

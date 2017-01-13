@@ -23,6 +23,11 @@ import render
 import text
 import utils
 import spreadsheet
+import logging
+
+logging.basicConfig(format=app_config.LOG_FORMAT)
+logger = logging.getLogger(__name__)
+logger.setLevel(app_config.LOG_LEVEL)
 
 if app_config.DEPLOY_TO_SERVERS:
     import servers
@@ -178,7 +183,11 @@ def deploy(remote='origin', reload=False):
 
         if app_config.DEPLOY_SERVICES:
             servers.deploy_confs()
-
+    else:
+        utils.confirm(colored("You are trying to deploy a static liveblog to production S3 bucket %s%s Doc Key: %s.\nDo you know what you're doing?" %
+                              (app_config.LIVEBLOG_DIRECTORY_PREFIX,
+                               app_config.CURRENT_LIVEBLOG,
+                               app_config.LIVEBLOG_GDOC_KEY), "red"))
     update()
     render.render_all()
 

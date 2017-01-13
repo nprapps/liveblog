@@ -112,14 +112,6 @@ def generate_dict():
 
 
 @task
-def install_navbar():
-    local('curl -s https://raw.githubusercontent.com/nprapps/elections16graphics/master/templates/navbar.html -o templates/navbar.html')
-    local('curl -s https://raw.githubusercontent.com/nprapps/elections16graphics/master/www/js/includes/navbar.js -o www/js/includes/navbar.js')
-    local('curl -s https://raw.githubusercontent.com/nprapps/elections16graphics/master/less/navbar.less -o less/navbar.less')
-    print('Latest navbar downloaded. Now, git add and commit the new changes.')
-    local('git status')
-
-@task
 def generate_station_list():
     """
     generate station list json for whitelist

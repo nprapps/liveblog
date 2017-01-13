@@ -14,9 +14,10 @@ liveblog
 * [Save media assets](#save-media-assets)
 * [Add a page to the site](#add-a-page-to-the-site)
 * [Run the project](#run-the-project)
+* [Overriding app configuration](#overriding-app-configuration)
+* [Non live events](#non-live-events)
 * [Google Apps Scripts configuration](#google-apps-scripts-configuration)
 * [Google Apps Scripts development](#google-apps-scripts-development)
-* [Google Apps Scripts Execution API](#google-apps-scripts-execution-api)
 * [Google Document Permissions](#google-document-permissions)
 * [COPY configuration](#copy-configuration)
 * [COPY editing](#copy-editing)
@@ -96,8 +97,8 @@ curl https://npmjs.org/install.sh | sh
 Then bootstrap the project:
 
 ```
-cd elections16-liveblog
-mkvirtualenv elections16-liveblog
+cd liveblog
+mkvirtualenv liveblog
 pip install -r requirements.txt
 npm install
 fab update
@@ -155,24 +156,54 @@ If you want to live update a Google Doc locally, you will also need to run the d
 fab daemons.main
 ```
 
+Overriding App Configuration
+----------------------------
+
+There was a lot of collaboration inside this project and during long periods of time we were all simultaneously working in different parts of the project's pipeline and required some stability on the rest of the pipeline to make some progress.
+
+This was particularly true for the google document that we would use as source of the transcript, some of us were testing for quirks on the parsing side while other wanted to test navigation between annotations.
+
+So we provided a way to override the app configuration locally. In order to do so you will need to create a file called `local_settings.py` on your project root.
+
+The properties that you can override are:
+* `TRANSCRIPT_GDOC_KEY`: The google doc key used as the input to our parsing process
+* `GAS_LOG_KEY`: The google spreadsheet that stores the logs from the google app script execution
+* `S3_BASE_URL`: Useful if you want to override the default port of the local server.
+
+There are oher properties that you can set up but they will be better explained over the next section.
+
+Non Live Events
+---------------
+
+Sometimes it is not a live event that you want to fact check but a straight-from-the-oven text that has just been released. This is a more static approach, but there's still a lot of value on the repo that can be used in a non-live situation, like the parsing and all the client code that generates the final embed with tracking of individual annotations, etc.
+
+In this particular case we would not use the google app script side of this repo, since we are not going to need to be pulling a transcript periodically from an API, also we may want to generate the parsing locally and just sent the results to S3 to create a static version of the application.
+
+By default, this repo is configured to be used for a live event situation, but using `local_settings.py` to override configuration we can turn it into a more static approach. Here are the properties that you can change:
+* `DEPLOY_TO_SERVERS`: Turn it to `False` if you plan on deploying a static app
+* `DEPLOY_STATIC_FACTCHECK`: Turn it to `True` so that the fabric `deploy` command will also issue the parsing of the last transcript and add it to the deploy process to S3.
+* `CURRENT_DEBATE`: Bucket where you want to deploy the application
+* `SEAMUS_ID`: In npr.org we need this to generate a share.html page that our editors can use to send our readers to specific annotations through social media.
+
+
 Google Apps Scripts configuration
 ---------------------------------
 
 For each given environment we have two parts regarding Google Apps Scripts:
 
 * Google Apps Scripts: The codebase that interacts with users as an AddOn.
-* Debate Google Doc: The document where the script dumps information each time a user interacts with the AddOn.
+* Liveblog Google Doc: The document where the script dumps information each time a user interacts with the AddOn.
 
 Here are those three files for each of our environments:
 * Development
-    * [Google App Script](https://script.google.com/a/npr.org/d/1BwpfYBmS7iK3K9i3B0EObinw7PE6jKg9QRAKi82eVz9sMcMdbUqM5shM/edit?usp=drive_web)
-    * [Fact Check Document](https://docs.google.com/document/d/1Fn3zEsGuvp0ot0Kamlc7_XR48QzoY4fSyRpO6BV1XsA/edit)
+    * [Google App Script](https://script.google.com/a/npr.org/d/1Uchv8hqixRKAB6WwiypGnbvwfc9SOb5vzyqHh3cRE-OlrEXa2W0tz2Wz/edit?usp=drive_web)
+    * [Liveblog Document](https://docs.google.com/document/d/1_IipOtr6uuoFLYzP8MhvIUC8yobUY-sk6ZVN6QYgU44/edit)
 * Staging
     * [Google App Script](https://script.google.com/a/npr.org/d/14VE1-ZzLYxoHRB7S2XBSXyA1ltIPVnjYvnC_IaHcEKj65T_Pb2uqBQEn/edit?usp=drive_web)
-    * [Fact Check Document](https://docs.google.com/document/d/1SIdTMAjRhJkQVeUeBAxflSVidYIXPfpQIXDTpJEHvT4/edit)
+    * [Liveblog Document](https://docs.google.com/document/d/1SIdTMAjRhJkQVeUeBAxflSVidYIXPfpQIXDTpJEHvT4/edit)
 * Production
-    * [Google App Script](https://script.google.com/a/npr.org/d/1mMSF3no0gLofIyuz187jDDHANsjXg-U5QPRO8L49HZLCaZxOrv-7ARGI/edit?usp=drive_web)
-    * [Fact Check Document](https://docs.google.com/document/d/1822ydEmHAfvaNpSitPtrgGgAW_hcjHvbdR-qur6kjIQ/edit)
+    * [Google App Script](https://script.google.com/a/npr.org/d/1viPy8MOoUWhIHPguiyH84Bra4cN_SfZaCSalzO_34CLBqOe4W-tnuAXj/edit?usp=drive_web)
+    * [Liveblog Test Document](https://docs.google.com/document/d/1HxgWFYBqgd_c4QRr80F5yTMqvveBhEVxTpEXUzB_F9o/edit)
 
 Google Apps Scripts Development
 -------------------------------
@@ -204,37 +235,6 @@ Where `ENVIRONMENT` can be: `development`, `staging` or `production`. Depending 
 ```
 fab development gs.upsert
 ```
-
-Google Apps Scripts Execution API
----------------------------------
-
-Using Google Apps Scripts Execution API you can fire a function within a Google Apps Script Project externally. It has some restrictions, for example it can not take longer than 6 minutes to execute or it can not create a trigger (That is why we need to do that manually)
-
-Anyhow, it is useful to setup the association between the script itself and the output doc and log. We use it that way in this project.
-
-The process to set that up is a bit tricky, to say the least. There's a good [documentation](https://developers.google.com/apps-script/guides/rest/api) at least.
-
-It is better to follow the documentation but let me throw in some tips that will make your life easier:
-* You need to deploy your Google Apps Script Project as an API executable (may need to create a new version)
-* We use OAuth to authenticate against Google Drive API and wanted to use those credentials for the execution API to do that the Google App Script Project has to be on the same Google Developer Console Project your credentials where issued on. More info [here](https://developers.google.com/apps-script/guides/services/authorization#using_a_different_google_developers_console_project)
-* Enable the Google Apps Script Execution API in the developer console project
-* Add all the required scope to the google authomatic config in `app_config`.
-
-Done that? Phewww that was crazy, right....now let's enjoy our work.
-
-Now we can run a fab command that will update the associated google doc key and associated log key to our Google Apps Script Project:
-
-```
-fab [ENVIRONMENT] gs.execute_setup
-```
-
-Where `ENVIRONMENT` can be: `development`, `staging` or `production`. Depending on the environment passed the command will update the appropriate Google App Script Project using `app_config` properties. For development it would be:
-
-```
-fab development gs.execute_setup
-```
-
-We use our codebase stored on github as the master for the Google Apps Scripts code. We have created a series of Fabric commands to ease the workflow of updating the actual code run inside google drive.
 
 Google Document Permissions
 ---------------------------
