@@ -65,8 +65,8 @@ DEFAULT_MAX_AGE = 20
 RELOAD_TRIGGER = False
 RELOAD_CHECK_INTERVAL = 60
 
-PRODUCTION_SERVERS = ['52.87.183.57']
-STAGING_SERVERS = ['52.87.228.251']
+PRODUCTION_SERVERS = ['54.164.100.118']
+STAGING_SERVERS = ['54.152.98.65']
 
 # Should code be deployed to the web/cron servers?
 DEPLOY_TO_SERVERS = True
@@ -141,7 +141,7 @@ GOOGLE APPS SCRIPTS
 GAS_LOG_KEY = '1oE9V5APDi5zzFRm-1pm63BGJ6dUjeedz1qw6pECRRlQ' # Google app script logs spreadsheet key
 LIVEBLOG_GDOC_KEY = '1_IipOtr6uuoFLYzP8MhvIUC8yobUY-sk6ZVN6QYgU44' # Google doc key
 SCRIPT_PROJECT_NAME = 'liveblog' # Google app scripts project name
-SEAMUS_ID = ''
+SEAMUS_ID = '509703637'
 
 
 """
