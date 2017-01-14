@@ -258,7 +258,8 @@ def deploy_liveblog_backup():
     flat.deploy_folder(
         app_config.ARCHIVE_S3_BUCKET,
         '.liveblog',
-        'liveblog/%s-%s' % (now, app_config.PROJECT_SLUG),
+        'liveblogs/%s/%s-%s' % (app_config.CURRENT_LIVEBLOG,
+                                now, app_config.PROJECT_SLUG),
         headers={
             'Cache-Control': 'max-age=%i' % app_config.DEFAULT_MAX_AGE
         }

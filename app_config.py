@@ -58,7 +58,7 @@ STAGING_S3_BUCKET = 'stage-apps.npr.org'
 
 ASSETS_S3_BUCKET = 'assets.apps.npr.org'
 
-ARCHIVE_S3_BUCKET = 'election-backup.apps.npr.org'
+ARCHIVE_S3_BUCKET = 'liveblog-backup.apps.npr.org'
 
 DEFAULT_MAX_AGE = 20
 
