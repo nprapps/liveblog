@@ -244,8 +244,9 @@ def deploy_liveblog():
         }
     )
 
-    if app_config.DEPLOYMENT_TARGET == 'production':
-        execute('deploy_liveblog_backup')
+    # TODO turn backup on inauguration day
+    # if app_config.DEPLOYMENT_TARGET == 'production':
+    #     execute('deploy_liveblog_backup')
 
 
 @task
