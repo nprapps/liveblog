@@ -43,8 +43,11 @@ function getAttributes(formObject) {
         case "internal_link":
             attributes += "link_text=\"" + formObject.link_text + "\"";
             break;
+        case "facebook":
+            break;
         default:
-            Logger.log("Unexpected shortcode type %s", formObject.embed_type);
+            var msg =  Utilities.formatString("Unexpected shortcode type %s.", formObject.embed_type);
+            throw new CustomError(msg, 'embed.js', '16');
     }
     PersistLog.info("shortcode attributes: %s", attributes);
     return attributes;

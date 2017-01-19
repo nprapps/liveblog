@@ -299,9 +299,9 @@ def cp_backup_folder(folder):
         exit()
     else:
         utils.confirm(
-            colored("You are trying to copy an old backup version of the liveblog to the production app\nDo you know what you're doing?", "red")
+            colored("You are trying to copy an old backup version of the liveblog to the production app in %s\nDo you know what you're doing?" % (app_config.S3_DEPLOY_URL), "red")
         )
-        cmd = 'aws s3 cp --acl public-read s3://election-backup.apps.npr.org/liveblog/%s/ %s/ --recursive' % (folder, app_config.S3_DEPLOY_URL)
+        cmd = 'aws s3 cp --acl public-read s3://liveblog-backup.apps.npr.org/liveblogs/20170120-inauguration-liveblog/%s/ %s/ --recursive' % (folder, app_config.S3_DEPLOY_URL)
         local(cmd)
 
 

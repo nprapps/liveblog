@@ -12,6 +12,6 @@ var IMAGE_URL = 'http://media.npr.org/politics/inauguration2017/'
 
 //Notifications
 var NOTIFICATION_ENABLED = false;
-var NOTIFICATION_RECIPIENTS = 'jelosua@npr.org';
+var NOTIFICATION_RECIPIENTS = 'nprapps@npr.org';
 
 
