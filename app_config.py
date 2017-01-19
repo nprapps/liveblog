@@ -41,7 +41,7 @@ ASSETS_SLUG = 'liveblog'
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
 CURRENT_LIVEBLOG = '20170120-inauguration-liveblog'
-SEAMUS_ID = ''  # SEAMUS PAGE ID FOR DEEP LINKING
+SEAMUS_ID = '509703637'  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_LIVEBLOG
     # Override SEAMUS_ID to generate the sharing list accordingly
