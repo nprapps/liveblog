@@ -113,7 +113,7 @@ function insertShortCode(formObject) {
                 // YOUTUBE QUERY REMOVAL
                 url = url.split('&')[0]
             }
-        } else if (formObject.embed_type == "tweet") {
+        } else if (formObject.embed_type == "tweet" || formObject.embed_type == "facebook") {
             // TWITTER QUERY REMOVAL
             url = url.split('?')[0]
         }
