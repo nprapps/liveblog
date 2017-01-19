@@ -199,7 +199,7 @@ Here are those three files for each of our environments:
     * [Google App Script](https://script.google.com/a/npr.org/d/1Uchv8hqixRKAB6WwiypGnbvwfc9SOb5vzyqHh3cRE-OlrEXa2W0tz2Wz/edit?usp=drive_web)
     * [Liveblog Document](https://docs.google.com/document/d/1_IipOtr6uuoFLYzP8MhvIUC8yobUY-sk6ZVN6QYgU44/edit)
 * Staging
-    * [Google App Script](https://script.google.com/a/npr.org/d/14VE1-ZzLYxoHRB7S2XBSXyA1ltIPVnjYvnC_IaHcEKj65T_Pb2uqBQEn/edit?usp=drive_web)
+    * [Google App Script](https://script.google.com/a/npr.org/d/1dd108qUKAiYo4I2CbyUjnVzguw2TIwdU0B_JOTSwdXVNYwlJX08aFmV1/edit?usp=drive_web)
     * [Liveblog Document](https://docs.google.com/document/d/1SIdTMAjRhJkQVeUeBAxflSVidYIXPfpQIXDTpJEHvT4/edit)
 * Production
     * [Google App Script](https://script.google.com/a/npr.org/d/1viPy8MOoUWhIHPguiyH84Bra4cN_SfZaCSalzO_34CLBqOe4W-tnuAXj/edit?usp=drive_web)
