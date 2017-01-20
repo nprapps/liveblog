@@ -20,7 +20,8 @@ function getAttributes(formObject) {
             break;
         case "image":
             if (formObject.caption) {
-              attributes += "caption=\"" + formObject.caption + "\"";
+              var caption_clean = formObject.caption.replace(/"/g,"&quot;");
+              attributes += "caption=\"" + caption_clean + "\"";
               attributes += " ";
             }
             if (formObject.credit) {
