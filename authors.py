@@ -149,34 +149,54 @@ AUTHORS = {
         "name": "Brian Naylor",
         "page": "http://www.npr.org/people/2100941/brian-naylor"
     },
-    "ak3": {
-        "initials": "ak3",
-        "name": "Asma Khalid",
-        "page": "http://www.npr.org/people/459062304/asma-khalid"
+    "pf": {
+        "initials": "pf",
+        "name": "Pam Fessler",
+        "page": "http://www.npr.org/people/2100470/pam-fessler"
     },
     "jt": {
         "initials": "jt",
         "name": "Jessica Taylor",
         "page": "http://www.npr.org/people/404496424/jessica-taylor"
     },
-    "pf": {
-        "initials": "pf",
-        "name": "Pam Fessler",
-        "page": "http://www.npr.org/people/2100470/pam-fessler"
+    "sd": {
+        "initials": "sd",
+        "name": "Scott Detrow",
+        "page": "http://www.npr.org/people/444796749/scott-detrow"
     },
     "ak2": {
         "initials": "ak2",
         "name": "Amita Kelly",
         "page": "http://www.npr.org/people/348738608/amita-parashar"
     },
-    "sd": {
-        "initials": "sd",
-        "name": "Scott Detrow",
-        "page": "http://www.npr.org/people/444796749/scott-detrow"
-    },
     "kc": {
         "initials": "kc",
         "name": "Kat Chow",
         "page": "http://www.npr.org/people/177498105/kat-chow"
+    },
+    "ak3": {
+        "initials": "ak3",
+        "name": "Asma Khalid",
+        "page": "http://www.npr.org/people/459062304/asma-khalid"
+    },
+    "df": {
+        "initials": "df",
+        "name": "Dana Farrington",
+        "page": "http://www.npr.org/people/348761550/dana-farrington"
+    },
+    "de": {
+        "initials": "de",
+        "name": "David Eads",
+        "page": "http://www.npr.org/people/348762476/david-eads"
+    },
+    "az": {
+        "initials": "az",
+        "name": "Ariel Zambelich",
+        "page": ""
+    },
+    "eb": {
+        "initials": "eb",
+        "name": "Emily Bogle",
+        "page": "http://www.npr.org/people/348764224/emily-bogle"
     }
 }
