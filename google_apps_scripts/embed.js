@@ -45,6 +45,7 @@ function getAttributes(formObject) {
             attributes += "link_text=\"" + formObject.link_text + "\"";
             break;
         case "facebook":
+        case "graphic":
             break;
         default:
             var msg =  Utilities.formatString("Unexpected shortcode type %s.", formObject.embed_type);
