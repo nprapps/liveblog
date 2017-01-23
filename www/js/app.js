@@ -38,6 +38,7 @@ let seenPosts = [];
 let firstLoad = true;
 let lastUpdatedTimestamp = null;
 let lastRequestTime = null;
+let lastVisiblePost = null;
 let liveblogInterval = null;
 let vHeight = null;
 // Debounce sendHeight messaging
@@ -241,6 +242,12 @@ const updateLiveblog = function(data) {
     liveblogvDOM = newLiveblogvDOM;
     registerTrackers();
     updateNewPostCount();
+    // Force lazyload of assets of the last visible post
+    // when there are patches to apply to the DOM
+    // i.e.: When the size of patches is greater than 1
+    if ((_.size(patches) > 1) && lastVisiblePost) {
+        onPostVisible(lastVisiblePost);
+    }
 }
 
 const updateRelativeTimestamps = function() {
@@ -764,12 +771,13 @@ const onPostVisible = function(id) {
     //console.log("message element-visible received", id);
     const post = document.getElementById(id);
     // Ignore messages sent to posts that
-    // have deing deleted from page
+    // have being deleted from page
     if (!post) { return; }
     if (seenPosts.indexOf(id) == -1) {
         seenPosts.push(id);
     }
 
+    lastVisiblePost = id;
     //lazy-load assets
     lazyload_assets(post);
 }
