@@ -373,11 +373,11 @@ const buildLiveblogvDOM = function(liveblog) {
         try {
             let element = null;
             if (child.tagName === 'DIV') {
-                if (child.classList.contains('post')){
-                    element = renderPost(child);
-                }
-                else if (child.classList.contains('pinned-post')) {
+                if (child.classList.contains('pinned-post')) {
                     element = renderPinnedPost(child);
+                }
+                else if (child.classList.contains('post')){
+                    element = renderPost(child);
                 }
                 else {
                     element = virtualize(child);
@@ -451,7 +451,9 @@ const buildLiveblogvDOM = function(liveblog) {
 
 
         return h('div', {
-            className: child.className
+            id: child.getAttribute('id'),
+            className: child.className,
+            key: child.getAttribute('id')
         },[
             virtualize(child.querySelector('.post-headline')),
             virtualize(child.querySelector('.post-content')),

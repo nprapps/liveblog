@@ -20,7 +20,7 @@
         </div>
 
         {% if pinned_post %}
-            <div class="pinned-post" data-last-updated="{% if pinned_post.timestamp %}{{pinned_post.timestamp.isoformat()}}{% endif %}">
+            <div class="pinned-post post" id="pinned" data-last-updated="{% if pinned_post.timestamp %}{{pinned_post.timestamp.isoformat()}}{% endif %}">
                 {%if request.path == url_for('_preview') %}
                     <h4 class="post-headline">{{pinned_post.headline}}</h4>
                     <div class="post-content">{{pinned_post.contents|safe}}</div>
