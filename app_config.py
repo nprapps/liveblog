@@ -40,7 +40,7 @@ ASSETS_SLUG = 'liveblog'
 
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
-CURRENT_LIVEBLOG = '20170120-inauguration-liveblog'
+CURRENT_LIVEBLOG = '20170214-liveblog-https'
 SEAMUS_ID = '509703637'  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_LIVEBLOG
@@ -244,14 +244,14 @@ def configure_targets(deployment_target):
 
     if deployment_target == 'production':
         S3_BUCKET = PRODUCTION_S3_BUCKET
-        S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
-                                     LIVEBLOG_DIRECTORY_PREFIX,
-                                     CURRENT_LIVEBLOG)
+        S3_BASE_URL = 'https://%s/%s%s' % (S3_BUCKET,
+                                           LIVEBLOG_DIRECTORY_PREFIX,
+                                           CURRENT_LIVEBLOG)
         S3_DEPLOY_URL = 's3://%s/%s%s' % (S3_BUCKET,
                                           LIVEBLOG_DIRECTORY_PREFIX,
                                           CURRENT_LIVEBLOG)
         SERVERS = PRODUCTION_SERVERS
-        SERVER_BASE_URL = '//%s/%s' % (SERVERS[0], PROJECT_SLUG)
+        SERVER_BASE_URL = 'https://%s/%s' % (SERVERS[0], PROJECT_SLUG)
         SERVER_LOG_PATH = '/var/log/%s' % PROJECT_FILENAME
         LOG_LEVEL = logging.INFO
         DEBUG = False
@@ -259,14 +259,15 @@ def configure_targets(deployment_target):
         LIVEBLOG_GDOC_KEY = '1BHeJSGbEfdVs2pCrMtXZ0dQrgnVKKag8z1QQhLakPx4'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
-        S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
-                                     LIVEBLOG_DIRECTORY_PREFIX,
-                                     CURRENT_LIVEBLOG)
+        S3_BASE_URL = 'https://s3.amazonaws.com/%s/%s%s' % (
+            S3_BUCKET,
+            LIVEBLOG_DIRECTORY_PREFIX,
+            CURRENT_LIVEBLOG)
         S3_DEPLOY_URL = 's3://%s/%s%s' % (S3_BUCKET,
                                           LIVEBLOG_DIRECTORY_PREFIX,
                                           CURRENT_LIVEBLOG)
         SERVERS = STAGING_SERVERS
-        SERVER_BASE_URL = 'http://%s/%s' % (SERVERS[0], PROJECT_SLUG)
+        SERVER_BASE_URL = 'https://%s/%s' % (SERVERS[0], PROJECT_SLUG)
         SERVER_LOG_PATH = '/var/log/%s' % PROJECT_FILENAME
         LOG_LEVEL = logging.INFO
         DEBUG = True
@@ -303,6 +304,7 @@ def configure_targets(deployment_target):
             pass
 
     DEPLOYMENT_TARGET = deployment_target
+
 
 """
 Run automated configuration
