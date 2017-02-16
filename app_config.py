@@ -54,7 +54,7 @@ DEPLOYMENT
 """
 PRODUCTION_S3_BUCKET = 'apps.npr.org'
 
-STAGING_S3_BUCKET = 'stage-apps.npr.org'
+STAGING_S3_BUCKET = 'test-policy-tags-role'
 
 ASSETS_S3_BUCKET = 'assets.apps.npr.org'
 
