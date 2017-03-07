@@ -57,7 +57,6 @@ The project contains the following folders and important files:
 * ``confs`` -- Server configuration files for nginx and uwsgi. Edit the templates then ``fab <ENV> servers.render_confs``, don't edit anything in ``confs/rendered`` directly.
 * ``data`` -- Data files, such as those used to generate HTML.
 * ``fabfile`` -- [Fabric](http://docs.fabfile.org/en/latest/) commands for automating setup, deployment, data processing, etc.
-* ``google_apps_script`` -- Folder that contains code for uploaded Google Apps Script.
 * ``etc`` -- Miscellaneous scripts and metadata for project bootstrapping.
 * ``jst`` -- Javascript ([Underscore.js](http://documentcloud.github.com/underscore/#template)) templates.
 * ``less`` -- [LESS](http://lesscss.org/) files, will be compiled to CSS and concatenated for deployment.
@@ -71,6 +70,7 @@ The project contains the following folders and important files:
 * ``app_config.py`` -- Global project configuration for scripts, deployment, etc.
 * ``crontab`` -- Cron jobs to be installed as part of the project.
 * ``package.json`` -- Contains both server-side and client-side javascript dependencies and scripts for webpack
+* ``parse_doc.py`` -- Contains the google doc html parser functionality
 * ``public_app.py`` -- A [Flask](http://flask.pocoo.org/) app for running server-side code.
 * ``render_utils.py`` -- Code supporting template rendering.
 * ``requirements.txt`` -- Python requirements.
