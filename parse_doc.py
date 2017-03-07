@@ -2,13 +2,13 @@
 import logging
 import re
 import app_config
-from authors import AUTHORS
 import datetime
 import pytz
 from shortcode import process_shortcode
 import cPickle as pickle
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
+import xlrd
 
 logging.basicConfig(format=app_config.LOG_FORMAT)
 logger = logging.getLogger(__name__)
@@ -210,36 +210,43 @@ def process_headline(contents):
     return headline
 
 
-def parse_author_metadata(raw_authors):
+def add_author_metadata(metadata, authors):
     """
-    Custom parsing of metadata keys and values
+    extract author data from dict and add to metadata
     """
-    authors = []
+    # Ignore authors parsing for pinned post
+    try:
+        if metadata['pinned']:
+            return
+    except KeyError:
+        pass
+
+    raw_authors = metadata.pop('authors')
+    authors_result = []
     bits = raw_authors.split(',')
     for bit in bits:
         author = {}
         m = author_initials_regex.match(bit)
         if m:
-            initials = m.group(1)
+            key = m.group(1)
             try:
-                author['name'] = AUTHORS[initials]['name']
-                author['page'] = AUTHORS[initials]['page']
+                author['name'] = authors[key]['name']
+                author['page'] = authors[key]['page']
             except KeyError:
                 logger.warning('did not find author in dictionary %s' % author)
                 continue
-            authors.append(author)
-            # HERE
+            authors_result.append(author)
         else:
             logger.debug("Author not in dictionary: %s" % raw_authors)
             author['name'] = bit
             author['page'] = ''
-            authors.append(author)
+            authors_result.append(author)
     if not len(authors):
         # Add a default author to avoid erroing out
         author['name'] = 'NPR Staff'
         author['page'] = 'http://www.npr.org/'
-        authors.append(author)
-    return authors
+        authors_result.append(author)
+    metadata['authors'] = authors_result
 
 
 def process_metadata(contents):
@@ -250,12 +257,10 @@ def process_metadata(contents):
         m = extract_metadata_regex.match(text)
         if m:
             key = m.group(1).strip().lower()
+            value = m.group(2).strip()
             if key != 'authors':
-                value = m.group(2).strip().lower()
-                metadata[key] = value
-            else:
-                value = m.group(2).strip()
-                metadata['authors'] = parse_author_metadata(value)
+                value = value.lower()
+            metadata[key] = value
         else:
             logger.error('Could not parse metadata. Text: %s' % text)
     logger.debug("metadata: %s" % metadata)
@@ -285,7 +290,7 @@ def process_post_contents(contents):
     return post_contents
 
 
-def parse_raw_posts(raw_posts):
+def parse_raw_posts(raw_posts, authors):
     """
     parse raw posts into an array of post objects
     """
@@ -320,6 +325,7 @@ def parse_raw_posts(raw_posts):
                     post_raw_contents.append(tag)
         post[u'headline'] = process_headline(post_raw_headline)
         metadata = process_metadata(post_raw_metadata)
+        add_author_metadata(metadata, authors)
         for k, v in metadata.iteritems():
             post[k] = v
         post[u'contents'] = process_post_contents(post_raw_contents)
@@ -327,7 +333,6 @@ def parse_raw_posts(raw_posts):
 
         # Retrieve timestamp from mongo
         utcnow = datetime.datetime.utcnow()
-
         # Ignore pinned post timestamp generation
         if 'pinned' in post.keys():
             continue
@@ -342,8 +347,9 @@ def parse_raw_posts(raw_posts):
                 post['timestamp'] = utcnow.replace(tzinfo=pytz.utc)
             else:
                 logger.debug('post %s timestamp: retrieved from cache' % (
-                            post['slug']))
-                post['timestamp'] = result['timestamp'].replace(tzinfo=pytz.utc)
+                             post['slug']))
+                post['timestamp'] = result['timestamp'].replace(
+                    tzinfo=pytz.utc)
                 logger.debug("timestamp from DB: %s" % post['timestamp'])
         else:
             post['timestamp'] = utcnow.replace(tzinfo=pytz.utc)
@@ -387,7 +393,47 @@ def split_posts(doc):
     return status, raw_posts
 
 
-def parse(doc):
+def getAuthorsData():
+    """
+    Transforms the authors excel file
+    into a format like this
+    "dm": {
+        "initials": "dm",
+        "name": "Domenico Montanaro",
+        "role": "NPR Political Editor & Digital Audience",
+        "page": "http://www.npr.org/people/xxxx",
+        "img": "http://media.npr.org/assets/img/yyy.jpg"
+    }
+    """
+    authors = {}
+    try:
+        book = xlrd.open_workbook(app_config.AUTHORS_PATH)
+        sheet = book.sheet_by_index(0)
+        header = True
+        for row in sheet.get_rows():
+            # Ignore header row
+            if header:
+                header = False
+                continue
+            initials = row[0].value
+            if initials in authors:
+                logger.warning("Duplicate initials on authors dict: %s" % (
+                               initials))
+                continue
+            author = {}
+            author['initials'] = row[0].value
+            author['name'] = row[1].value
+            author['role'] = row[2].value
+            author['page'] = row[3].value
+            author['img'] = row[4].value
+            authors[initials] = author
+    except Exception, e:
+        logger.error("Could not process the authors excel file: %s" % (e))
+    finally:
+        return authors
+
+
+def parse(doc, authors=None):
     """
     Custom parser for the debates google doc format
     returns boolean marking if the transcript is live or has ended
@@ -397,8 +443,10 @@ def parse(doc):
         status = None
         pinned_post = None
         logger.info('-------------start------------')
+        if not authors:
+            authors = getAuthorsData()
         status, raw_posts = split_posts(doc)
-        posts = parse_raw_posts(raw_posts)
+        posts = parse_raw_posts(raw_posts, authors)
         if posts:
             idx = find_pinned_post(posts)
             if idx is not None:

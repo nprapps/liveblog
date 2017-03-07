@@ -13,7 +13,7 @@ from jinja2 import Environment, FileSystemLoader
 from pymongo import MongoClient
 
 TWITTER_OEMBED_URL = 'https://api.twitter.com/1.1/statuses/oembed.json'
-IMAGE_URL_TEMPLATE = 'https://media.npr.org/politics/inauguration2017/%s'
+IMAGE_URL_TEMPLATE = '%s/%s'
 IMAGE_TYPES = ['image', 'graphic']
 SHORTCODE_DICT = {
     'tweet': {
@@ -114,7 +114,7 @@ def _get_image_context(id):
     """
     Download image and get/cache aspect ratio.
     """
-    url = IMAGE_URL_TEMPLATE % id
+    url = IMAGE_URL_TEMPLATE % (app_config.IMAGE_URL, id)
 
     client = MongoClient(app_config.MONGODB_URL)
     database = client['liveblog']
@@ -136,7 +136,7 @@ def _get_image_context(id):
         ratio = result['ratio']
 
     ratio = round(ratio * 100, 2)
-    return dict(ratio=ratio)
+    return dict(ratio=ratio, url=url)
 
 
 def _get_tweet_context(id):

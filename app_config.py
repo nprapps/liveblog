@@ -41,11 +41,10 @@ ASSETS_SLUG = 'liveblog'
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
 CURRENT_LIVEBLOG = '20170214-liveblog-https'
-SEAMUS_ID = '509703637'  # SEAMUS PAGE ID FOR DEEP LINKING
+IMAGE_URL = 'https://media.npr.org/politics/inauguration2017'
+
 try:
     from local_settings import CURRENT_LIVEBLOG
-    # Override SEAMUS_ID to generate the sharing list accordingly
-    from local_settings import SEAMUS_ID
 except ImportError:
     pass
 
@@ -127,6 +126,14 @@ COPY EDITING
 """
 COPY_GOOGLE_DOC_KEY = '15TeNmLlwro_wfLTQmXDLhGigPhi4DIvpa7RsaKKUzwY'
 COPY_PATH = 'data/copy.xlsx'
+
+"""
+AUTHORS DICTIONARY
+"""
+AUTHORS_GOOGLE_DOC_KEY = '1s0Vs4c41kp8mCvGnIFbdPK9YI9t18u0c2kvh6W1eZBw'
+AUTHORS_PATH = 'data/authors.xlsx'
+# Number of cycles needed to refresh the author excel file
+REFRESH_AUTHOR_CYCLES = 6
 
 LIVEBLOG_HTML_PATH = 'data/liveblog.html'
 LIVEBLOG_BACKUP_PATH = 'data/liveblog_backup.pickle'

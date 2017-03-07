@@ -174,20 +174,19 @@ def deploy(remote='origin', reload=False):
 
         servers.checkout_latest(remote)
 
-        servers.fabcast('text.update')
-        #servers.fabcast('assets.sync')
-        #servers.fabcast('data.update')
+        # servers.fabcast('text.update')
+        # servers.fabcast('assets.sync')
+        # servers.fabcast('data.update')
 
         if app_config.DEPLOY_CRONTAB:
             servers.install_crontab()
 
         if app_config.DEPLOY_SERVICES:
             servers.deploy_confs()
-    else:
-        utils.confirm(colored("You are trying to deploy a static liveblog to production S3 bucket %s%s Doc Key: %s.\nDo you know what you're doing?" %
-                              (app_config.LIVEBLOG_DIRECTORY_PREFIX,
-                               app_config.CURRENT_LIVEBLOG,
-                               app_config.LIVEBLOG_GDOC_KEY), "red"))
+
+        # add factcast for the authors dictionary
+        servers.fabcast('text.update')
+
     update()
     render.render_all()
 

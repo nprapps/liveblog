@@ -9,9 +9,13 @@
     {% else %}
     <link rel="stylesheet" href="less/app.less">
     {% endif %}
+    <link rel="shortcut icon" href="https://media.npr.org/favicon.ico" />
     <style>
       body{
         padding: 40px;
+      }
+      .shareLink{
+        margin-top: 2em;
       }
       .post{
         margin-bottom: .5em;
@@ -20,6 +24,35 @@
       .outerPost{
         margin-bottom: 2em;
       }
+      #output {
+          margin-top: 30px;
+          display: none;
+      }
+
+      #input {
+          font-size: 18px;
+      }
+
+      .input-item {
+          display: block;
+      }
+
+      .input-item {
+          font-size: 16px;
+      }
+
+      input.input-item {
+          font-size: 14px;
+      }
+
+      .required-flag {
+          color: red;
+      }
+
+      #error {
+          margin-top: 15px;
+          color: red;
+      }
 
       p {
         margin-bottom: .5em;
@@ -27,69 +60,139 @@
 
       input {
         width: 80%;
+        margin-bottom: 5px;
       }
     </style>
   </head>
   <body>
-  {% for post in filtered_posts %}
-    {% if post.headline %}
-    <div class="post" id="{{ post.slug }}">
-        <h4 class="post-headline">{{ post.headline }}</h4>
+    <div id="input">
+        <label class="bold input-item" for="url">Enter the liveblog url<span class="required-flag">*</span></label>
+        <input class="input-item" placeholder="http://www.npr.org/2017/01/20/509703637/live-coverage-donald-trumps-presidential-inauguration" type="text" name="url" id="url">
+        <label class="input-item" for="campaigns">Enter optional twitter campaigns</label>
+        <input class="input-item" placeholder="npr,politics" type="text" name="campaigns" id="campaigns">
+        <button class="input-item" id="submit" type="button">Generate sharing page</button>
     </div>
-    {% endif %}
-  {% endfor %}
-
-  <script type="text/javascript">
-    var theId = null;
-    var div = null;
-
-    function createShareLink(){
-      {% if DEPLOYMENT_TARGET == None or DEPLOYMENT_TARGET == 'staging'%}
-        var url_tpl = 'https://www-s1.npr.org/templates/story/story.php?storyId={{SEAMUS_ID}}&post=';
-      {% else %}
-        var url_tpl = 'https://www.npr.org/templates/story/story.php?storyId={{SEAMUS_ID}}&post=';
+    <div id="output">
+    {% for post in filtered_posts %}
+      {% if post.headline %}
+      <div class="post" id="{{ post.slug }}">
+        <h4 class="post-headline">{{ post.headline }}</h4>
+      </div>
       {% endif %}
-      allDivs = document.getElementsByClassName('post')
-      for (var i = 0; i < allDivs.length; i++){
-        var div = allDivs[i];
-        var theId = div.getAttribute('id');
-        var theURL = url_tpl + theId;
-        var p = document.createElement('p');
-        p.setAttribute('class', 'shareLink');
-        var checkLink = document.createElement('a');
-        checkLink.setAttribute('href', theURL);
-        checkLink.setAttribute('target', "_blank");
-        checkLink.innerHTML = theURL;
-        p.appendChild(checkLink);
-        div.appendChild(p);
+    {% endfor %}
+    </div>
+    <script src="js/lib/jquery.js"></script>
 
-        var npr_tw_suffix = '&utm_source=twitter.com&utm_medium=social&utm_campaign=npr&utm_term=nprnews&utm_content=202604'
-        var npr_tw_URL = theURL + npr_tw_suffix;
-        var p = document.createElement('p');
-        var span = document.createElement('span');
-        span.innerHTML = 'NPR Twitter: ';
-        p.appendChild(span);
-        var input = document.createElement('input');
-        input.setAttribute('type', 'text');
-        input.setAttribute('value', npr_tw_URL);
-        p.appendChild(input);
-        div.appendChild(p);
+    <script type="text/javascript">
+        var local_st_campaign = "{{CURRENT_LIVEBLOG}}-share-campaigns"
+        var local_st_url = "{{CURRENT_LIVEBLOG}}-share-url"
+        var theId = null;
+        var div = null;
+        function createShareLinks(url, campaignsRaw){
+            campaigns = [];
+            // Parse campaigns
+            if (campaignsRaw) {
+                campaigns = campaignsRaw.split(',');
+            }
+            // Add NPR specific campaign params
+            if (url.indexOf('npr.org/') !== -1) {
+                npr_share = '&utm_term=nprnews&utm_content=202604';
+            }
+            else {
+                npr_share = '';
+            }
 
-        var politics_tw_suffix = '&utm_source=twitter.com&utm_medium=social&utm_campaign=politics&utm_term=nprnews&utm_content=202604'
-        var politics_tw_URL = theURL + politics_tw_suffix;
-        var p = document.createElement('p');
-        var span = document.createElement('span');
-        span.innerHTML = "Politics Twitter: ";
-        p.appendChild(span);
-        var input = document.createElement('input');
-        input.setAttribute('type', 'text');
-        input.setAttribute('value', politics_tw_URL);
-        p.appendChild(input);
-        div.appendChild(p);
-      }
-    };
+            allDivs = document.getElementsByClassName('post')
+            for (var i = 0; i < allDivs.length; i++){
+                div = allDivs[i];
+                theId = div.getAttribute('id');
+                var theURL = url + '#' + theId;
 
-    window.onload = createShareLink();
-    </script>
-</body>
+                var p = document.createElement('p');
+                p.setAttribute('class', 'shareLink share-assets');
+                var checkLink = document.createElement('a');
+                checkLink.setAttribute('href', theURL);
+                checkLink.setAttribute('target', "_blank");
+                checkLink.innerHTML = theURL;
+                p.appendChild(checkLink);
+                div.appendChild(p);
+
+                for (var j=0; j < campaigns.length; j++) {
+                    theURL = url + '&utm_source=twitter.com&utm_medium=social' + npr_share + '&utm_campaign=' + campaigns[j].trim() + '#' + theId;
+                    var p = document.createElement('p');
+                    p.setAttribute('class', 'share-assets');
+                    var span = document.createElement('span');
+                    span.innerHTML = campaigns[j].trim().toUpperCase() + " Twitter: ";
+                    p.appendChild(span);
+                    var input = document.createElement('input');
+                    input.setAttribute('type', 'text');
+                    input.setAttribute('value', theURL);
+                    p.appendChild(input);
+                    div.appendChild(p);
+                }
+            }
+            $('#output').show();
+        };
+
+        function showError(msg, element) {
+            $('#error').remove();
+            var div = $('<div id="error" class="error">' + msg + '</div>');
+            $(element).after(div);
+        };
+
+        function validate() {
+            if (!$('#url').val() || (!/^https?:\/\//i.test($('#url').val()))) {
+                showError("A valid url is needed", $('#input'));
+                $('#output').hide();
+                return;
+            }
+            $('#error').remove();
+            $('.share-assets').remove()
+            var url = $('#url').val();
+            var campaigns = $('#campaigns').val();
+            if (!campaigns) {
+                campaigns = null
+            }
+            // Store data on localStorage
+            if (storageAvailable('localStorage')) {
+                localStorage.setItem(local_st_url, url);
+                if (campaigns) {
+                    localStorage.setItem(local_st_campaign, campaigns);
+                } else {
+                    localStorage.removeItem(local_st_campaign);
+                }
+            }
+            createShareLinks(url, campaigns);
+        };
+
+        function storageAvailable(type) {
+            try {
+                var storage = window[type],
+                    x = '__storage_test__';
+                storage.setItem(x, x);
+                storage.removeItem(x);
+                return true;
+            }
+            catch(e) {
+                return false;
+            }
+        }
+
+        $(function() {
+            $('#submit').click(validate);
+            // Get data from localStorage
+            if (storageAvailable('localStorage')) {
+                var campaigns = localStorage.getItem(local_st_campaign);
+                if (campaigns) {
+                    $("#campaigns").val(campaigns);
+                }
+                var url = localStorage.getItem(local_st_url);
+                if (url) {
+                    $("#url").val(url);
+                    createShareLinks(url, campaigns);
+                }
+            }
+        });
+        </script>
+    </body>
 </html>

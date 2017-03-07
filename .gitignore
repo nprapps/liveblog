@@ -51,6 +51,8 @@ confs/rendered/*
 data/gdoc*.csv
 data/copy.xls
 data/copy.xlsx
+data/authors.xls
+data/authors.xlsx
 data/navbar.xlsx
 data/*.html
 www/assets/*

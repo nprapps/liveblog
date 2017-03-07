@@ -31,6 +31,7 @@ def update():
         return
 
     get_document(app_config.COPY_GOOGLE_DOC_KEY, app_config.COPY_PATH)
+    get_document(app_config.AUTHORS_GOOGLE_DOC_KEY, app_config.AUTHORS_PATH)
 
 
 @task
