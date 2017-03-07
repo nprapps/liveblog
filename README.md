@@ -1,8 +1,3 @@
-Copyright 2015 NPR.  All rights reserved.  No part of these materials may be reproduced, modified, stored in a retrieval system, or retransmitted, in any form or by any means, electronic, mechanical or otherwise, without prior written permission from NPR.
-
-(Want to use this code? Send an email to nprapps@npr.org!)
-
-
 liveblog
 ========
 
@@ -34,6 +29,8 @@ liveblog
 * [Install web services](#install-web-services)
 * [Run a remote fab command](#run-a-remote-fab-command)
 * [Report analytics](#report-analytics)
+* [License and credits](#license-and-credits)
+* [Contributors](#contributors)
 
 What is this?
 -------------
@@ -111,7 +108,7 @@ Hide project secrets
 
 Project secrets should **never** be stored in ``app_config.py`` or anywhere else in the repository. They will be leaked to the client if you do. Instead, always store passwords, keys, etc. in environment variables and document that they are needed here in the README.
 
-Any environment variable that starts with ``$PROJECT_SLUG_`` will be automatically loaded when ``app_config.get_secrets()`` is called.
+Any environment variable that starts with ``liveblog`` will be automatically loaded when ``app_config.get_secrets()`` is called.
 
 Save media assets
 -----------------
@@ -144,7 +141,7 @@ Run the project
 A flask app is used to run the project locally. It will automatically recompile templates and assets on demand.
 
 ```
-workon $PROJECT_SLUG
+workon liveblog
 fab app
 ```
 
@@ -519,12 +516,23 @@ The Google Analytics events tracked in this application are:
 
 |Category|Action|Label|Value|
 |--------|------|-----|-----|
-|debates2|tweet|`location`||
-|debates2|facebook|`location`||
-|debates2|email|`location`||
-|debates2|new-comment||
-|debates2|open-share-discuss||
-|debates2|close-share-discuss||
-|debates2|summary-copied||
-|debates2|featured-tweet-action|`action`|
-|debates2|featured-facebook-action|`action`|
+|liveblog|tweet|`location`||
+|liveblog|facebook|`location`||
+|liveblog|email|`location`||
+|liveblog|new-comment||
+|liveblog|open-share-discuss||
+|liveblog|close-share-discuss||
+|liveblog|summary-copied||
+|liveblog|featured-tweet-action|`action`|
+|liveblog|featured-facebook-action|`action`|
+
+License and credits
+-------------------
+Released under the MIT open source license. See ``LICENSE`` for details.
+
+
+Contributors
+------------
+`liveblog` was built by the NPR Visuals team.
+
+See ``CONTRIBUTORS`` for additional contributors
