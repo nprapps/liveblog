@@ -37,8 +37,6 @@ What is this?
 
 NPR Liveblog app based on google docs and google app scripts
 
-This is a Work In Progress Repo subject to change
-
 Assumptions
 -----------
 
