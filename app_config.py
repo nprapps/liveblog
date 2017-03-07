@@ -40,8 +40,8 @@ ASSETS_SLUG = 'liveblog'
 
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
-CURRENT_LIVEBLOG = '20170214-liveblog-https'
-IMAGE_URL = 'https://media.npr.org/politics/inauguration2017'
+CURRENT_LIVEBLOG = '20170321-gorsuch-hearings'
+IMAGE_URL = 'https://media.npr.org/politics/gorsuch-hearings'
 
 try:
     from local_settings import CURRENT_LIVEBLOG
@@ -65,7 +65,7 @@ RELOAD_TRIGGER = False
 RELOAD_CHECK_INTERVAL = 60
 
 PRODUCTION_SERVERS = ['52.87.229.146']
-STAGING_SERVERS = ['52.90.129.68']
+STAGING_SERVERS = ['54.89.83.190']
 
 # Should code be deployed to the web/cron servers?
 DEPLOY_TO_SERVERS = True
@@ -263,7 +263,8 @@ def configure_targets(deployment_target):
         LOG_LEVEL = logging.INFO
         DEBUG = False
         ASSETS_MAX_AGE = 86400
-        LIVEBLOG_GDOC_KEY = '1BHeJSGbEfdVs2pCrMtXZ0dQrgnVKKag8z1QQhLakPx4'
+        # CHANGE TO LIVEBLOG DOC KEY FOR THE CORRESPONDING CURRENT_LIVEBLOG
+        LIVEBLOG_GDOC_KEY = '1_Fy4F2FTTpPvLSZxwl06IiS_p1slCN-E4KoFf_IMJoo'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = 'https://s3.amazonaws.com/%s/%s%s' % (
@@ -280,7 +281,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # Staging google_apps_scripts > staging > liveblog
-        LIVEBLOG_GDOC_KEY = '11MMvFa7rVxm-qGcMZBGLWyGOjBzP2C7bJnc2WfLQ4mM'
+        LIVEBLOG_GDOC_KEY = '1_-NQNlJA_MX5jl-Gzef4rQabg0G7AZShsIn8jVA2cvg'
     else:
         S3_BUCKET = None
         S3_BASE_URL = 'http://127.0.0.1:8000'
@@ -291,7 +292,8 @@ def configure_targets(deployment_target):
         LOG_LEVEL = logging.INFO
         DEBUG = True
         ASSETS_MAX_AGE = 20
-        LIVEBLOG_GDOC_KEY = '1_IipOtr6uuoFLYzP8MhvIUC8yobUY-sk6ZVN6QYgU44'
+        # Staging google_apps_scripts > development > liveblog
+        LIVEBLOG_GDOC_KEY = '1na8vlYRPUNV2N3_IfFJT8HVo0qH9z8iRZGBBYUfHB2w'
         # Override S3_BASE_URL to use another port locally for fab app
         try:
             from local_settings import S3_BASE_URL
