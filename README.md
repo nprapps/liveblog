@@ -11,8 +11,7 @@ liveblog
 * [Run the project](#run-the-project)
 * [Overriding app configuration](#overriding-app-configuration)
 * [Non live events](#non-live-events)
-* [Google Apps Scripts configuration](#google-apps-scripts-configuration)
-* [Google Apps Scripts development](#google-apps-scripts-development)
+* [Google Apps Scripts Addon Development](#google-apps-scripts-addon-development)
 * [Google Document Permissions](#google-document-permissions)
 * [COPY configuration](#copy-configuration)
 * [COPY editing](#copy-editing)
@@ -177,59 +176,12 @@ In this particular case we would not use the google app script side of this repo
 By default, this repo is configured to be used for a live event situation, but using `local_settings.py` to override configuration we can turn it into a more static approach. Here are the properties that you can change:
 * `DEPLOY_TO_SERVERS`: Turn it to `False` if you plan on deploying a static app
 * `DEPLOY_STATIC_FACTCHECK`: Turn it to `True` so that the fabric `deploy` command will also issue the parsing of the last transcript and add it to the deploy process to S3.
-* `CURRENT_DEBATE`: Bucket where you want to deploy the application
-* `SEAMUS_ID`: In npr.org we need this to generate a share.html page that our editors can use to send our readers to specific annotations through social media.
+* `CURRENT_LIVEBLOG`: Bucket where you want to deploy the application
 
+Google Apps Scripts Addon Development
+-------------------------------------
 
-Google Apps Scripts configuration
----------------------------------
-
-For each given environment we have two parts regarding Google Apps Scripts:
-
-* Google Apps Scripts: The codebase that interacts with users as an AddOn.
-* Liveblog Google Doc: The document where the script dumps information each time a user interacts with the AddOn.
-
-Here are those three files for each of our environments:
-* Development
-    * [Google App Script](https://script.google.com/a/npr.org/d/1Uchv8hqixRKAB6WwiypGnbvwfc9SOb5vzyqHh3cRE-OlrEXa2W0tz2Wz/edit?usp=drive_web)
-    * [Liveblog Document](https://docs.google.com/document/d/1_IipOtr6uuoFLYzP8MhvIUC8yobUY-sk6ZVN6QYgU44/edit)
-* Staging
-    * [Google App Script](https://script.google.com/a/npr.org/d/1dd108qUKAiYo4I2CbyUjnVzguw2TIwdU0B_JOTSwdXVNYwlJX08aFmV1/edit?usp=drive_web)
-    * [Liveblog Document](https://docs.google.com/document/d/1SIdTMAjRhJkQVeUeBAxflSVidYIXPfpQIXDTpJEHvT4/edit)
-* Production
-    * [Google App Script](https://script.google.com/a/npr.org/d/1viPy8MOoUWhIHPguiyH84Bra4cN_SfZaCSalzO_34CLBqOe4W-tnuAXj/edit?usp=drive_web)
-    * [Liveblog Test Document](https://docs.google.com/document/d/1HxgWFYBqgd_c4QRr80F5yTMqvveBhEVxTpEXUzB_F9o/edit)
-
-Google Apps Scripts Development
--------------------------------
-
-We use our codebase stored on github as the master for the Google Apps Scripts code. We have created a series of Fabric commands to ease the workflow of updating the actual code run inside google drive.
-
-## List projects
-
-```
-fab gs.list_projects
-```
-
-It will return a complete list of Google Apps Script projects. It accepts and optional owner parameter to filter out the results to a given owner. for example the following command will return only the projects that you have created:
-
-```
-fab gs.list_projects:me
-```
-
-## Upsert project
-
-If you want to update local changes to a Google Apps Script Project you can run:
-
-```
-fab [ENVIRONMENT] gs.upsert
-```
-
-Where `ENVIRONMENT` can be: `development`, `staging` or `production`. Depending on the environment passed the command will update the appropriate Google App Script Project using `app_config` properties. For development it would be:
-
-```
-fab development gs.upsert
-```
+This repo expects a google doc that has certain format in order to be able to parse it. In order to create such a doc we use a google apps script addon that allows to insert posts read more about it [here](https://github.com/nprapps/liveblog-addon)
 
 Google Document Permissions
 ---------------------------
