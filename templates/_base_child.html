@@ -51,5 +51,9 @@
     <div id="fb-root"></div>
     <script src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=760859660627694" async defer ></script>
     {% endblock %}
+
+    <script type="text/javascript">
+        var COPY = {{ COPY.content.json()|safe }};
+    </script>
     </body>
 </html>

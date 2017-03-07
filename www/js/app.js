@@ -252,7 +252,7 @@ const updateLiveblog = function(data) {
 
 const updateRelativeTimestamps = function() {
     if (domNode) {
-        var posts = domNode.querySelectorAll('.post');
+        var posts = domNode.querySelectorAll('.post:not(.pinned-post)');
         // Stop using relative time after an hour and ten minutes
         var relativeCutoff = 4200000;
         [].forEach.call(posts, function(post) {
@@ -277,7 +277,7 @@ const updateRelativeTimestamps = function() {
 const updateHeader = function() {
     const headerData = {
         'updated': lastUpdatedTimestamp,
-        'numPosts': document.querySelectorAll('.post').length
+        'numPosts': document.querySelectorAll('.post:not(.pinned-post)').length
     }
 
     const newHeadervDOM = renderHeadervDOM(headerData);
@@ -510,7 +510,7 @@ const renderHeadervDOM = function(data) {
  */
 const renderHeaderContentsDuring = function(data) {
     return [
-        h('h1.header-title', 'Live Coverage: Inauguration Day 2017'),
+        h('h1.header-title', COPY.header_title),
         h('p.header-info', [
             h('span.last-updated', ['Last updated: ' + data.updated]),
             h('span.num-posts', data.numPosts + ' Posts')
@@ -523,7 +523,7 @@ const renderHeaderContentsDuring = function(data) {
  */
 const renderHeaderContentsAfter = function(data) {
     return [
-        h('h1.header-title', 'Live Coverage: Inauguration Day 2017'),
+        h('h1.header-title', COPY.header_title),
         h('p.header-info', [
             h('span.last-updated', ['Last updated: ' + data.updated]),
             h('span.num-posts', data.numPosts + ' Posts')
@@ -795,7 +795,7 @@ const onBoundingClientRectRequest = function(id) {
 }
 
 const onUnload = function(e) {
-    const numPosts = document.querySelectorAll('.post').length;
+    const numPosts = document.querySelectorAll('.post:not(.pinned-post)').length;
     const unreadPosts = document.querySelectorAll('.post.unread').length;
     const readPosts = numPosts - unreadPosts;
 
