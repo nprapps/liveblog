@@ -40,11 +40,16 @@ ASSETS_SLUG = 'liveblog'
 
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
-CURRENT_LIVEBLOG = '20170321-gorsuch-hearings'
-IMAGE_URL = 'https://media.npr.org/politics/gorsuch-hearings'
+CURRENT_LIVEBLOG = '20170320-natsec-hearings'
+IMAGE_URL = 'https://media.npr.org/politics/natsec-hearings'
 
 try:
     from local_settings import CURRENT_LIVEBLOG
+except ImportError:
+    pass
+
+try:
+    from local_settings import IMAGE_URL
 except ImportError:
     pass
 
@@ -64,8 +69,8 @@ DEFAULT_MAX_AGE = 20
 RELOAD_TRIGGER = False
 RELOAD_CHECK_INTERVAL = 60
 
-PRODUCTION_SERVERS = ['54.208.130.126']
-STAGING_SERVERS = ['54.89.83.190']
+PRODUCTION_SERVERS = ['52.91.130.91']
+STAGING_SERVERS = ['54.237.243.155']
 
 # Should code be deployed to the web/cron servers?
 DEPLOY_TO_SERVERS = True
@@ -263,7 +268,10 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # CHANGE TO LIVEBLOG DOC KEY FOR THE CORRESPONDING CURRENT_LIVEBLOG
-        LIVEBLOG_GDOC_KEY = '1_Fy4F2FTTpPvLSZxwl06IiS_p1slCN-E4KoFf_IMJoo'
+        # GORSUCH HEARINGS
+        # LIVEBLOG_GDOC_KEY = '1_Fy4F2FTTpPvLSZxwl06IiS_p1slCN-E4KoFf_IMJoo'
+        # NATIONAL SECURITY HEARINGS
+        LIVEBLOG_GDOC_KEY = '1ernqZSJE-S2qe9xllqMH_Tc4KyEJqQefj25abGrLk2I'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = 'https://s3.amazonaws.com/%s/%s%s' % (
