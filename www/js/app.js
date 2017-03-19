@@ -582,9 +582,9 @@ const renderTweet = function(tweetWrapper) {
 }
 
 /*
- * Render a Youtube video
+ * Render a Youtube or NPR player video
  */
-const renderYoutubeVideo = function(videoWrapper) {
+const renderIframeVideo = function(videoWrapper) {
     const video = videoWrapper.getElementsByTagName('iframe')[0];
     const src = videoWrapper.getAttribute("data-src");
     video.setAttribute("src", src);
@@ -668,9 +668,9 @@ const registerTrackers = function() {
 }
 
 const lazyload_videos = function(post) {
-    const youtubeVideos = post.querySelectorAll(".embed-youtube[data-src]");
-    const youtubeVideosArray = Array.prototype.slice.call(youtubeVideos);
-    youtubeVideosArray.map(video => renderYoutubeVideo(video));
+    const iframeVideos = post.querySelectorAll(".embed-youtube[data-src], .embed-npr-video[data-src]");
+    const iframeVideosArray = Array.prototype.slice.call(iframeVideos);
+    iframeVideosArray.map(video => renderIframeVideo(video));
 
     const facebookVideos = post.querySelectorAll(".embed-fblive[data-src]");
     const facebookVideosArray = Array.prototype.slice.call(facebookVideos);
