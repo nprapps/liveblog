@@ -42,8 +42,7 @@ ASSETS_SLUG = 'liveblog'
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
 CURRENT_LIVEBLOG = '20170321-gorsuch-hearings'
 IMAGE_URL = 'https://media.npr.org/politics/gorsuch-hearings'
-# SEAMUS_ID = '520828113'
-SEAMUS_ID = '509039636'
+SEAMUS_ID = '520828113'
 
 try:
     from local_settings import CURRENT_LIVEBLOG
