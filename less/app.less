@@ -165,70 +165,7 @@ p.header-info {
     }
 }
 
-// PINNED POST
-.pinned-post {
-    box-sizing: border-box;
-    background: @white;
-    padding: 0.5em 1em;
-    .gotham();
-    .clearfix();
 
-    @media @screen-tiny {
-        padding: 0.25em 0.8em;
-    }
-
-    .top-level-results {
-        display: none;
-
-        // TODO: rem * @FONTSCALEove when BOP is styled
-        body.npr & {
-            display: none;
-        }
-    }
-
-    .post-headline {
-        font-weight: bold;
-        font-size: 0.85rem * @FONTSCALE;
-        line-height: 1.4rem * @FONTSCALE;
-    }
-
-    .post-content {
-        font-size: 0.85rem * @FONTSCALE;
-
-        p, li {
-            .gotham();
-            font-size: 0.85rem * @FONTSCALE;
-            line-height: 1.4rem * @FONTSCALE;
-        }
-
-        a {
-            font-weight: bold;
-        }
-    }
-
-    p.footer-source {
-        .sans-serif();
-        font-size: 11px;
-        font-style: italic;
-        line-height: 1.1em;
-        margin-bottom: 1em;
-        color: @textgray;
-        display: none;
-    }
-
-    // Balance of power
-    .bop {
-        & > p {
-            margin-bottom: 0;
-        }
-
-        &.hidden {
-            overflow: hidden;
-            display: none;
-        }
-    }
-
-}
 
 // NEW POSTS BUTTON
 .new-posts-counter {
@@ -671,6 +608,71 @@ a.new-posts-btn {
             }
         }
     }
+}
+
+// PINNED POST
+.pinned-post {
+    box-sizing: border-box;
+    background: @white;
+    padding: 0.5em 1em;
+    .gotham();
+    .clearfix();
+
+    @media @screen-tiny {
+        padding: 0.25em 0.8em;
+    }
+
+    .top-level-results {
+        display: none;
+
+        // TODO: rem * @FONTSCALEove when BOP is styled
+        body.npr & {
+            display: none;
+        }
+    }
+
+    .post-headline {
+        font-weight: bold;
+        font-size: 0.85rem * @FONTSCALE;
+        line-height: 1.4rem * @FONTSCALE;
+    }
+
+    .post-content {
+        font-size: 0.85rem * @FONTSCALE;
+
+        p, li {
+            .gotham();
+            font-size: 0.85rem * @FONTSCALE;
+            line-height: 1.4rem * @FONTSCALE;
+        }
+
+        a {
+            font-weight: bold;
+        }
+    }
+
+    p.footer-source {
+        .sans-serif();
+        font-size: 11px;
+        font-style: italic;
+        line-height: 1.1em;
+        margin-bottom: 1em;
+        color: @textgray;
+        display: none;
+    }
+
+    // Balance of power
+    .bop {
+        & > p {
+            margin-bottom: 0;
+        }
+
+        &.hidden {
+            overflow: hidden;
+            display: none;
+        }
+    }
+
 }
 
 // LOADING ANIMATION
