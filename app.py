@@ -17,7 +17,7 @@ from copydoc import CopyDoc
 from flask import Flask, make_response, render_template, jsonify
 from flask_cors import CORS
 from render_utils import make_context, smarty_filter, flatten_app_config
-from render_utils import urlencode_filter, compose_post_url
+from render_utils import urlencode_filter
 from werkzeug.debug import DebuggedApplication
 
 app = Flask(__name__)
@@ -57,17 +57,6 @@ def _share():
     """
     context = get_liveblog_context()
     return make_response(render_template('share.html', **context))
-
-
-@app.route('/headline.json', methods=['GET', 'OPTIONS'])
-def _headline():
-    """
-    Preview contains published and draft posts
-    """
-    context = get_liveblog_context()
-    headline = parse_headline_posts(context)
-    logger.debug(headline)
-    return jsonify(**headline)
 
 
 @app.route('/copydoc.html', methods=['GET', 'OPTIONS'])
@@ -146,21 +135,6 @@ def parse_document(html):
     parsed_document = parse_doc.parse(doc)
 
     return parsed_document
-
-
-def parse_headline_posts(context):
-    published_posts = filter(lambda p: p['published'] == 'yes' and
-                             p['slug'] != 'sponsorship',
-                             context['posts'])
-    top_posts = []
-    for post in published_posts[:app_config.NUM_HEADLINE_POSTS]:
-        headline_post = {}
-        headline_post['headline'] = post['headline']
-        headline_post['timestamp'] = post['timestamp'].isoformat()
-        headline_post['url'] = compose_post_url(post['slug'])
-        top_posts.append(headline_post)
-
-    return {'posts': top_posts}
 
 
 # Enable Werkzeug debug pages

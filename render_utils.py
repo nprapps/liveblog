@@ -230,12 +230,3 @@ def smarty_filter(s):
     except:
         logger.error('This string failed to encode: %s' % s)
         return Markup(s)
-
-
-def compose_post_url(slug):
-    """
-    Composes NPR page url based on post slug and SEAMUS_ID
-    """
-    tpl = 'http://www.npr.org/templates/story/story.php?storyId=%s&post=%s'
-    url = tpl % (app_config.SEAMUS_ID, slug)
-    return url
