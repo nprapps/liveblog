@@ -13,7 +13,6 @@ from jinja2 import Environment, FileSystemLoader
 from pymongo import MongoClient
 
 TWITTER_OEMBED_URL = 'https://api.twitter.com/1.1/statuses/oembed.json'
-NPR_VIDEO_URL_TEMPLATE = 'https://www.npr.org/templates/event/embeddedVideo.php?storyId=%s&mediaId=%s'
 IMAGE_URL_TEMPLATE = '%s/%s'
 IMAGE_TYPES = ['image', 'graphic']
 SHORTCODE_DICT = {
@@ -68,8 +67,6 @@ def _get_extra_context(id, tag):
         extra.update(_get_image_context(id))
     if tag == 'tweet':
         extra.update(_get_tweet_context(id))
-    if tag == 'npr_video':
-        extra.update(_get_npr_video_context(id))
     return extra
 
 
@@ -77,14 +74,16 @@ def _handler(context, content, pargs, kwargs, tag, defaults):
     """
     Default handler all other handlers inherit from.
     """
-    id = _process_id(pargs[0], tag)
-    template_context = dict(url=pargs[0],
+    if pargs:
+        id = _process_id(pargs[0], tag)
+        template_context = dict(url=pargs[0],
                             id=id)
-    extra_context = _get_extra_context(id, tag)
-
+        extra_context = _get_extra_context(id, tag)
+        template_context.update(extra_context)
+    else:
+        template_context = dict()
     template_context.update(defaults)
     template_context.update(kwargs)
-    template_context.update(extra_context)
     template = env.get_template('%s.html' % tag)
     output = template.render(**template_context)
     return output
@@ -111,12 +110,6 @@ def process_shortcode(tag):
         logger.error('Could not render short code in: "%s"' % text)
         logger.error('cause: %s' % e.__cause__)
         return ''
-
-
-def _get_npr_video_context(id):
-    url = NPR_VIDEO_URL_TEMPLATE % (app_config.SEAMUS_ID, id)
-    print url
-    return dict(url=url)
 
 
 def _get_image_context(id):
