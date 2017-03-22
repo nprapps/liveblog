@@ -215,5 +215,5 @@ def parse_liveblog():
 @task
 def render_liveblog():
     parsed_liveblog = parse_liveblog()
-    generate_views(['_liveblog', '_preview', '_share', '_headline'],
+    generate_views(['_liveblog', '_preview', '_share'],
                    parsed_liveblog)

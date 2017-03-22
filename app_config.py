@@ -40,9 +40,8 @@ ASSETS_SLUG = 'liveblog'
 
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
-CURRENT_LIVEBLOG = '20170320-natsec-hearings'
-IMAGE_URL = 'https://media.npr.org/politics/natsec-hearings'
-SEAMUS_ID = '520503364'
+CURRENT_LIVEBLOG = '20170321-gorsuch-hearings'
+IMAGE_URL = 'https://media.npr.org/politics/gorsuch-hearings'
 
 try:
     from local_settings import CURRENT_LIVEBLOG
@@ -270,9 +269,7 @@ def configure_targets(deployment_target):
         ASSETS_MAX_AGE = 86400
         # CHANGE TO LIVEBLOG DOC KEY FOR THE CORRESPONDING CURRENT_LIVEBLOG
         # GORSUCH HEARINGS
-        # LIVEBLOG_GDOC_KEY = '1_Fy4F2FTTpPvLSZxwl06IiS_p1slCN-E4KoFf_IMJoo'
-        # NATIONAL SECURITY HEARINGS
-        LIVEBLOG_GDOC_KEY = '1ernqZSJE-S2qe9xllqMH_Tc4KyEJqQefj25abGrLk2I'
+        LIVEBLOG_GDOC_KEY = '1_Fy4F2FTTpPvLSZxwl06IiS_p1slCN-E4KoFf_IMJoo'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = 'https://s3.amazonaws.com/%s/%s%s' % (

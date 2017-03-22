@@ -1,0 +1,47 @@
+// OVERRIDE CSS FOR SEAMUS PAGE
+body.id520828113 header.contentheader, body.id520828113 #main-section header.contentheader.contentheader--one {
+    display: none !important;
+}
+
+body.id520828113 header.contentheader {
+    display: none;
+}
+
+body.id520828113 h3.slug, body.id520828113 .story>.slug, body.id520828113 .story>h3.slug {
+    display: none;
+}
+
+body.id520828113 .story-tools, .story>.story-tools {
+    display: none;
+}
+
+body.id520828113 .story > .storytitle {
+    display: none;
+}
+
+body.id520828113 .story>.story-meta {
+    display: none;
+}
+
+body.id520828113 .story>#storytext {
+    display: none !important;
+}
+
+body.id520828113 .story>.tags {
+    margin-left: 0;
+}
+
+@media only screen and (min-width: 768px) {
+    body.id520828113 h3.slug, body.id520828113 .story>.slug, body.id520828113 .story>h3.slug {
+        display: none;
+    }
+    body.id520828113 .story>#supplementarycontent {
+        margin-left: 0;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    body.id520828113 h3.slug, body.id520828113 .story>.slug, body.id520828113 .story>h3.slug {
+        display: none;
+    }
+}
