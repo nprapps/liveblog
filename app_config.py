@@ -40,8 +40,8 @@ ASSETS_SLUG = 'liveblog'
 
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
-CURRENT_LIVEBLOG = '20170321-gorsuch-hearings'
-IMAGE_URL = 'https://media.npr.org/politics/gorsuch-hearings'
+CURRENT_LIVEBLOG = '20170821-eclipse'
+IMAGE_URL = 'https://media.npr.org/science/eclipse'
 
 try:
     from local_settings import CURRENT_LIVEBLOG
@@ -70,7 +70,7 @@ RELOAD_TRIGGER = False
 RELOAD_CHECK_INTERVAL = 60
 
 PRODUCTION_SERVERS = ['52.91.130.91']
-STAGING_SERVERS = ['54.237.243.155']
+STAGING_SERVERS = ['54.89.115.127']
 
 # Should code be deployed to the web/cron servers?
 DEPLOY_TO_SERVERS = True
@@ -269,7 +269,7 @@ def configure_targets(deployment_target):
         ASSETS_MAX_AGE = 86400
         # CHANGE TO LIVEBLOG DOC KEY FOR THE CORRESPONDING CURRENT_LIVEBLOG
         # GORSUCH HEARINGS
-        LIVEBLOG_GDOC_KEY = '1_Fy4F2FTTpPvLSZxwl06IiS_p1slCN-E4KoFf_IMJoo'
+        LIVEBLOG_GDOC_KEY = '1fmGu5x75y_aQesmquWvJBCwTC-_6LtxdqAwSHuIJlso'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = 'https://s3.amazonaws.com/%s/%s%s' % (
@@ -298,7 +298,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # Staging google_apps_scripts > development > liveblog
-        LIVEBLOG_GDOC_KEY = '1na8vlYRPUNV2N3_IfFJT8HVo0qH9z8iRZGBBYUfHB2w'
+        LIVEBLOG_GDOC_KEY = '1fmGu5x75y_aQesmquWvJBCwTC-_6LtxdqAwSHuIJlso'
         # Override S3_BASE_URL to use another port locally for fab app
         try:
             from local_settings import S3_BASE_URL
