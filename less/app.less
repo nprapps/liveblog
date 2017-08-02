@@ -608,6 +608,12 @@ a.new-posts-btn {
             }
         }
     }
+
+    &.pinned-post {
+        .embed-youtube, .embed-fblive, .embed-npr-video {
+            max-width: 100%;
+        }
+    }
 }
 
 // PINNED POST
@@ -672,12 +678,6 @@ a.new-posts-btn {
             display: none;
         }
     }
-
-    .embed-youtube, .embed-fblive, .embed-npr-video {
-        width: 100%;
-        max-width: 100%;
-    }
-
 }
 
 // LOADING ANIMATION
