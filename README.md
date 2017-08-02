@@ -88,6 +88,12 @@ brew install node
 curl https://npmjs.org/install.sh | sh
 ```
 
+MongoDB is used to cache the ratios of our visual assets so that we do not need to download it everytime the parser runs, if you do not have mongo installed run:
+
+```
+brew install mongodb
+```
+
 Then bootstrap the project:
 
 ```
