@@ -69,7 +69,7 @@ DEFAULT_MAX_AGE = 20
 RELOAD_TRIGGER = False
 RELOAD_CHECK_INTERVAL = 60
 
-PRODUCTION_SERVERS = ['52.91.130.91']
+PRODUCTION_SERVERS = ['54.208.29.76']
 STAGING_SERVERS = ['54.89.115.127']
 
 # Should code be deployed to the web/cron servers?
@@ -298,7 +298,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # Staging google_apps_scripts > development > liveblog
-        LIVEBLOG_GDOC_KEY = '1fmGu5x75y_aQesmquWvJBCwTC-_6LtxdqAwSHuIJlso'
+        LIVEBLOG_GDOC_KEY = '1na8vlYRPUNV2N3_IfFJT8HVo0qH9z8iRZGBBYUfHB2w'
         # Override S3_BASE_URL to use another port locally for fab app
         try:
             from local_settings import S3_BASE_URL

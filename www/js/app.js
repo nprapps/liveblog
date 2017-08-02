@@ -815,7 +815,7 @@ const onUnload = function(e) {
 const onJumpToTopClick = function(e) {
     e.preventDefault();
     e.stopPropagation();
-    window.pymChild.scrollParentToChildEl('results-nav-wrapper');
+    window.pymChild.scrollParentToChildEl('header-wrapper');
     if (!jumpToTopTracked) {
         ANALYTICS.trackEvent('jump-to-top-click');
         jumpToTopTracked = true;
