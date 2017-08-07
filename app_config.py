@@ -135,7 +135,7 @@ COPY_PATH = 'data/copy.xlsx'
 """
 AUTHORS DICTIONARY
 """
-AUTHORS_GOOGLE_DOC_KEY = '1s0Vs4c41kp8mCvGnIFbdPK9YI9t18u0c2kvh6W1eZBw'
+AUTHORS_GOOGLE_DOC_KEY = '1A1yZFo7awU8clQVsiV1mobMbwxjIygj1VWP66Wj-GXs'
 AUTHORS_PATH = 'data/authors.xlsx'
 # Number of cycles needed to refresh the author excel file
 REFRESH_AUTHOR_CYCLES = 6
