@@ -20,8 +20,6 @@ liveblog
 * [Arbitrary Google Docs](#arbitrary-google-docs)
 * [Run Python tests](#run-python-tests)
 * [Run Javascript tests](#run-javascript-tests)
-* [Compile static assets](#compile-static-assets)
-* [Test the rendered app](#test-the-rendered-app)
 * [Deploy to S3](#deploy-to-s3)
 * [Deploy to EC2](#deploy-to-ec2)
 * [Install cron jobs](#install-cron-jobs)
@@ -388,28 +386,6 @@ Run Javascript tests
 --------------------
 
 With the project running, visit [localhost:8000/test/SpecRunner.html](http://localhost:8000/test/SpecRunner.html).
-
-Compile static assets
----------------------
-
-Compile LESS to CSS, compile javascript templates to Javascript and minify all assets:
-
-```
-workon debates2
-fab render
-```
-
-(This is done automatically whenever you deploy to S3.)
-
-Test the rendered app
----------------------
-
-If you want to test the app once you've rendered it out, just use the Python webserver:
-
-```
-cd www
-python -m SimpleHTTPServer
-```
 
 Deploy to S3
 ------------
