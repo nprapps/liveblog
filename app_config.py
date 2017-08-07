@@ -289,7 +289,7 @@ def configure_targets(deployment_target):
         LIVEBLOG_GDOC_KEY = '1_-NQNlJA_MX5jl-Gzef4rQabg0G7AZShsIn8jVA2cvg'
     else:
         S3_BUCKET = None
-        S3_BASE_URL = 'http://127.0.0.1:8000'
+        S3_BASE_URL = 'http://127.0.0.1:7777'
         S3_DEPLOY_URL = None
         SERVERS = []
         SERVER_BASE_URL = 'http://127.0.0.1:8001/%s' % PROJECT_SLUG

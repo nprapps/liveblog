@@ -141,20 +141,39 @@ A site can have any number of rendered pages, each with a corresponding template
 Run the project
 ---------------
 
-A flask app is used to run the project locally. It will automatically recompile templates and assets on demand.
+In order to run the project locally you'll need three components running:
+1. Mongo: Is used to cache aspect ratios for the liveblog assets
+2. Google doc updating daemon: Downloads the google doc supporting the liveblog, parses it and generates the output in HTML form.
+3. Local server: Used to display the frontend application
+
+To run mongo locally in a terminal window run:
 
 ```
-workon liveblog
-fab app
+mongod --config /usr/local/etc/mongod.conf
 ```
-
-Visit [localhost:8000](http://localhost:8000) in your browser.
 
 If you want to live update a Google Doc locally, you will also need to run the daemon locally. You can do that with:
 
 ```
 fab daemons.main
 ```
+
+Finally, a flask app is used to run the project locally. It will automatically recompile templates and assets on demand.
+
+```
+workon liveblog
+fab app
+```
+
+
+Visit [localhost:7777](http://localhost:7777) in your browser.
+
+Do you use iTerm2 as your terminal app? Here's [a sample AppleScript](https://gist.github.com/jjelosua/636434e55f4d0aea864d4c5b652e908e) to automatically launch a four-paned terminal window (one to access the repo, one for the local webserver, one for the daemon and one for mongo).
+
+You can save this locally, customize it to match your own configuration and add an alias for it to your .bash_profile.
+
+alias liveblog="osascript ~/PATH-TO-FILE/Liveblog.scpt"
+
 
 Overriding App Configuration
 ----------------------------
