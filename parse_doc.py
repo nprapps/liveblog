@@ -33,7 +33,7 @@ shortcode_regex = re.compile(ur'^\s*\[%\s*.*\s*%\]\s*$', re.UNICODE)
 internal_link_regex = re.compile(ur'(\[% internal_link\s+.*?\s*%\])',
                                  re.UNICODE)
 
-author_initials_regex = re.compile(ur'^.*\((\w{2,3})\)\s*$', re.UNICODE)
+author_initials_regex = re.compile(ur'^(.*)\((\w{2,3})\)\s*$', re.UNICODE)
 
 
 def is_post_marker(tag):
@@ -225,21 +225,20 @@ def add_author_metadata(metadata, authors):
     authors_result = []
     bits = raw_authors.split(',')
     for bit in bits:
-        author = {}
+        author = { 'page': '' }
         m = author_initials_regex.match(bit)
         if m:
-            key = m.group(1)
+            key = m.group(2)
             try:
                 author['name'] = authors[key]['name']
                 author['page'] = authors[key]['page']
             except KeyError:
-                logger.warning('did not find author in dictionary %s' % author)
-                continue
+                logger.warning('did not find author in dictionary %s' % key)
+                author['name'] = m.group(1).strip()
             authors_result.append(author)
         else:
             logger.debug("Author not in dictionary: %s" % raw_authors)
             author['name'] = bit
-            author['page'] = ''
             authors_result.append(author)
     if not len(authors):
         # Add a default author to avoid erroing out

@@ -117,9 +117,7 @@ const childReady = function(containerWidth) {
 const parseParentURL = function() {
     parentUrl = new URL(window.pymChild.parentUrl, location, true);
     const domain = parentUrl.hostname.split('.').slice(-2).join('.');
-    if (domain == 'npr.org' ||
-        parentUrl.hostname == 'localhost' ||
-        parentUrl.hostname == '127.0.0.1') {
+    if (domain == 'npr.org') {
         document.body.classList.add('npr');
     }
 }
