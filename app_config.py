@@ -42,6 +42,11 @@ ASSETS_SLUG = 'liveblog'
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
 CURRENT_LIVEBLOG = '20170821-eclipse'
 IMAGE_URL = 'https://media.npr.org/science/eclipse'
+# NESTED EMBED ON PINNED POST
+# Add a nested embed url if you want the pinned post to display a nested embed
+# Example: https://apps.npr.org/dailygraphics/graphics/map-state-trifecta-20170804/child.html
+# set to None or remove to ignore that option, WE SHOULD NOT CHANGE THIS LIVE
+NESTED_EMBED_URL = None
 
 try:
     from local_settings import CURRENT_LIVEBLOG

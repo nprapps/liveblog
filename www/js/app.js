@@ -45,17 +45,15 @@ let vHeight = null;
 let debouncedUpdateIFrame = null
 const DEBOUNCE_WAIT = 500;
 
-// BOP rendered flags for defered deeplinking
-let bopRendered = false;
-let totalsRendered = false;
-let bopDeepLink = false;
+// Nested Embed flag for defered deeplinking
+let nestedDeepLink = false;
 // Time that the tooltip will be displayed after successfully copying a link
 const CLIPBOARD_TOOLTIP_SHOW_TIME = 1000;
 
 const parser = new DOMParser();
 const liveblogWrapper = document.querySelector('.liveblog-wrapper')
 const headerWrapper = document.querySelector('.header-wrapper')
-const updateInterval = APP_CONFIG.DEPLOYMENT_TARGET ? 10000 : 10000;
+const updateInterval = APP_CONFIG.DEPLOYMENT_TARGET ? 10000 : 5000;
 const LAZYLOAD_AHEAD = 2;
 
 // Analytics
@@ -203,7 +201,12 @@ const getLiveblog = function() {
                 if (firstLoad) {
                     firstLoad = false;
                     addNewPostBtnListener();
-                    deepLinkScroll();
+                    if (APP_CONFIG.NESTED_EMBED_URL) {
+                        addNestedEmbed();
+                    }
+                    else {
+                        deepLinkScroll();
+                    }
                 }
             } else if (res.status === 304) {
                 // update relative timestamps when 304s
@@ -307,6 +310,14 @@ const updateNewPostCount = function() {
     // To transitionend
     debouncedUpdateIFrame();
 };
+
+const addNestedEmbed = function() {
+    const pymAutoInstances = pym.autoInit();
+    if (pymAutoInstances.length) {
+        pymParent = pymAutoInstances[0];
+        pymParent.onMessage('height', onNestedHeight);
+    }
+}
 
 const addLiveblogListener = function() {
     const liveblogWrapper = document.querySelector('.liveblog-wrapper');
@@ -456,16 +467,21 @@ const buildLiveblogvDOM = function(liveblog) {
             lastUpdatedTimestamp = 'No updates yet';
         }
 
+        let postHTML = [];
+
+        postHTML.push(virtualize(child.querySelector('.post-headline')));
+        let mapSelector = child.querySelector('.nested-embed');
+        if (mapSelector) {
+            postHTML.push(virtualize(mapSelector));
+        }
+        postHTML.push(virtualize(child.querySelector('.post-content')));
+        postHTML.push(virtualize(child.querySelector('.post-footer')));
 
         return h('div', {
             id: child.getAttribute('id'),
             className: child.className,
             key: child.getAttribute('id')
-        },[
-            virtualize(child.querySelector('.post-headline')),
-            virtualize(child.querySelector('.post-content')),
-            virtualize(child.querySelector('.post-footer')),
-        ])
+        }, postHTML)
     }
 }
 
@@ -857,6 +873,14 @@ const onNewPostBtnClick = function(e) {
     const strGroupedPosts = groupedPosts.toString();
     ANALYTICS.trackEvent('new-post-grouped', strGroupedPosts, groupedPosts);
 };
+
+const onNestedHeight = function() {
+    debouncedUpdateIFrame();
+    if (!nestedDeepLink) {
+        nestedDeepLink = true;
+        deepLinkScroll();
+    }
+}
 
 // via https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round#Decimal_rounding
 const decimalAdjust = function(type, value, exp) {
