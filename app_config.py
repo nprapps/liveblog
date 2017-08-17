@@ -291,7 +291,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # Staging google_apps_scripts > staging > liveblog
-        LIVEBLOG_GDOC_KEY = '1_-NQNlJA_MX5jl-Gzef4rQabg0G7AZShsIn8jVA2cvg'
+        LIVEBLOG_GDOC_KEY = '1B_pInA65iaUc6Tr-enrcKQGGUSa2_HrE22Xnn9fNlFE'
     else:
         S3_BUCKET = None
         S3_BASE_URL = 'http://127.0.0.1:7777'
@@ -303,7 +303,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # Staging google_apps_scripts > development > liveblog
-        LIVEBLOG_GDOC_KEY = '1na8vlYRPUNV2N3_IfFJT8HVo0qH9z8iRZGBBYUfHB2w'
+        LIVEBLOG_GDOC_KEY = '1B_pInA65iaUc6Tr-enrcKQGGUSa2_HrE22Xnn9fNlFE'
         # Override S3_BASE_URL to use another port locally for fab app
         try:
             from local_settings import S3_BASE_URL
