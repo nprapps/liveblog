@@ -46,7 +46,7 @@ IMAGE_URL = 'https://media.npr.org/science/eclipse'
 # Add a nested embed url if you want the pinned post to display a nested embed
 # Example: https://apps.npr.org/dailygraphics/graphics/map-state-trifecta-20170804/child.html
 # set to None or remove to ignore that option, WE SHOULD NOT CHANGE THIS LIVE
-NESTED_EMBED_URL = 'https://s3.amazonaws.com/stage-apps.npr.org/dailygraphics/graphics/eclipse-map-animated-20170810/child.html'
+NESTED_EMBED_URL = 'https://apps.npr.org/dailygraphics/graphics/eclipse-map-animated-20170810/child.html'
 
 try:
     from local_settings import CURRENT_LIVEBLOG
