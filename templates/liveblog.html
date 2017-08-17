@@ -23,22 +23,22 @@
             <div class="pinned-post post" id="pinned" data-last-updated="{% if pinned_post.timestamp %}{{pinned_post.timestamp.isoformat()}}{% endif %}">
                 {%if request.path == url_for('_preview') %}
                     <h4 class="post-headline">{{pinned_post.headline}}</h4>
-                    {%if NESTED_EMBED_URL %}
-                    <div class="nested-embed">
-                        <p data-pym-src="{{NESTED_EMBED_URL}}">Loading...</p>
-                    </div>
-                    {% endif %}
                     <div class="post-content">{{pinned_post.contents|safe}}</div>
                     <div class="post-footer"></div>
-                {% else %}
-                    <h4 class="post-headline">{{pinned_post.cached_headline}}</h4>
                     {%if NESTED_EMBED_URL %}
                     <div class="nested-embed">
                         <p data-pym-src="{{NESTED_EMBED_URL}}">Loading...</p>
                     </div>
                     {% endif %}
+                {% else %}
+                    <h4 class="post-headline">{{pinned_post.cached_headline}}</h4>
                     <div class="post-content">{{pinned_post.cached_contents|safe}}</div>
                     <div class="post-footer"></div>
+                    {%if NESTED_EMBED_URL %}
+                    <div class="nested-embed">
+                        <p data-pym-src="{{NESTED_EMBED_URL}}">Loading...</p>
+                    </div>
+                    {% endif %}
                 {% endif %}
             </div>
         {% endif %}
@@ -72,7 +72,7 @@
                     <span id="dl-{{ post.slug }}" class="deeplink">Copy link
                         <span class="tooltip">Copied!</span>
                     </span>
-                    <a class="footer-top-link"href="#">Back to top</a>
+                    <a class="footer-top-link" href="#">Back to top</a>
                 </div>
             </div>
         {% endfor %}

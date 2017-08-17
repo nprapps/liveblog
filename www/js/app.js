@@ -468,12 +468,12 @@ const buildLiveblogvDOM = function(liveblog) {
         let postHTML = [];
 
         postHTML.push(virtualize(child.querySelector('.post-headline')));
+        postHTML.push(virtualize(child.querySelector('.post-content')));
+        postHTML.push(virtualize(child.querySelector('.post-footer')));
         let mapSelector = child.querySelector('.nested-embed');
         if (mapSelector) {
             postHTML.push(virtualize(mapSelector));
         }
-        postHTML.push(virtualize(child.querySelector('.post-content')));
-        postHTML.push(virtualize(child.querySelector('.post-footer')));
 
         return h('div', {
             id: child.getAttribute('id'),
