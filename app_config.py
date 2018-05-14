@@ -40,7 +40,7 @@ ASSETS_SLUG = 'liveblog'
 
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
-CURRENT_LIVEBLOG = 'liveblog-skillshare-20180514'
+CURRENT_LIVEBLOG = '20180514-skillshare-test'
 IMAGE_URL = 'https://media.npr.org/science/eclipse'
 # NESTED EMBED ON PINNED POST
 # Add a nested embed url if you want the pinned post to display a nested embed
@@ -274,7 +274,7 @@ def configure_targets(deployment_target):
         ASSETS_MAX_AGE = 86400
         # CHANGE TO LIVEBLOG DOC KEY FOR THE CORRESPONDING CURRENT_LIVEBLOG
         # GORSUCH HEARINGS
-        LIVEBLOG_GDOC_KEY = '1aydfU7QNHbu0Jc_TeVy14rbseVixFh5lxyVS_oztbAc'
+        LIVEBLOG_GDOC_KEY = '1xe0mapaYnCpstWE_rMvuBh5qFfFLYnrHgkCOg9yLJnw'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = 'https://s3.amazonaws.com/%s/%s%s' % (
@@ -291,7 +291,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # Staging google_apps_scripts > staging > liveblog
-        LIVEBLOG_GDOC_KEY = '1aydfU7QNHbu0Jc_TeVy14rbseVixFh5lxyVS_oztbAc'
+        LIVEBLOG_GDOC_KEY = '1xe0mapaYnCpstWE_rMvuBh5qFfFLYnrHgkCOg9yLJnw'
     else:
         S3_BUCKET = None
         S3_BASE_URL = 'http://127.0.0.1:7777'
@@ -303,7 +303,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # Staging google_apps_scripts > development > liveblog
-        LIVEBLOG_GDOC_KEY = '1aydfU7QNHbu0Jc_TeVy14rbseVixFh5lxyVS_oztbAc'
+        LIVEBLOG_GDOC_KEY = '1xe0mapaYnCpstWE_rMvuBh5qFfFLYnrHgkCOg9yLJnw'
         # Override S3_BASE_URL to use another port locally for fab app
         try:
             from local_settings import S3_BASE_URL
