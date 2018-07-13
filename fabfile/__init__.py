@@ -116,10 +116,10 @@ def app(port='8000'):
     Serve app.py.
     """
 
-    gunicorn = 'gunicorn -b 0.0.0.0:%s --timeout 3600 --debug --reload --log-file=logs/app.log app:wsgi_app' % port
+    gunicorn = 'gunicorn -b 0.0.0.0:%s --timeout 3600 --reload --log-file=logs/app.log app:wsgi_app' % port
 
     if env.get('settings'):
-        local("DEPLOYMENT_TARGET=%s bash -c 'gunicorn -b 0.0.0.0:%s --timeout 3600 --debug --reload --log-file=logs/app.log app:wsgi_app'" % (env.settings, port))
+        local("DEPLOYMENT_TARGET=%s bash -c 'gunicorn -b 0.0.0.0:%s --timeout 3600 --reload --log-file=logs/app.log app:wsgi_app'" % (env.settings, port))
     else:
         local('concurrently "%s" "npm start"' % gunicorn)
 
@@ -129,7 +129,7 @@ def public_app(port='8001'):
     Serve public_app.py.
     """
     if env.get('settings'):
-        local("DEPLOYMENT_TARGET=%s bash -c 'gunicorn -b 0.0.0.0:%s --timeout 3600 --debug --reload --log-file=logs/public_app.log public_app:wsgi_app'" % (env.settings, port))
+        local("DEPLOYMENT_TARGET=%s bash -c 'gunicorn -b 0.0.0.0:%s --timeout 3600 --reload --log-file=logs/public_app.log public_app:wsgi_app'" % (env.settings, port))
     else:
         local('concurrently "%s" "npm start"' % gunicorn)
 
