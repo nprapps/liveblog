@@ -184,7 +184,7 @@ def deploy(remote='origin', reload=False):
         if app_config.DEPLOY_SERVICES:
             servers.deploy_confs()
 
-        servers.fabcast('utils.reinstall_libraries')
+        servers.fabcast('servers.install_requirements')
 
         # add factcast for the authors dictionary
         servers.fabcast('text.update')

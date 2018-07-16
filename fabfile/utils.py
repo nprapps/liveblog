@@ -65,15 +65,6 @@ def install_font(force='true'):
     local('node_modules/fontello-cli/bin/fontello-cli install --config fontello/config.json --css www/css/icon --font www/css/font/')
 
 
-@task
-def reinstall_libraries():
-    '''
-    Perform a reinstallation of all Python and Node dependencies, if necessary
-    '''
-    local('pip install -r requirements.txt')
-    local('npm install')
-
-
 def prep_bool_arg(arg):
     return bool(strtobool(str(arg)))
 
