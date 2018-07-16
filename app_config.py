@@ -40,8 +40,8 @@ ASSETS_SLUG = 'liveblog'
 
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
-CURRENT_LIVEBLOG = '20170821-eclipse'
-IMAGE_URL = 'https://media.npr.org/science/eclipse'
+CURRENT_LIVEBLOG = '20181106-elections'
+IMAGE_URL = 'FOOBAR'
 # NESTED EMBED ON PINNED POST
 # Add a nested embed url if you want the pinned post to display a nested embed
 # Example: https://apps.npr.org/dailygraphics/graphics/map-state-trifecta-20170804/child.html
@@ -74,7 +74,7 @@ DEFAULT_MAX_AGE = 20
 RELOAD_TRIGGER = False
 RELOAD_CHECK_INTERVAL = 60
 
-PRODUCTION_SERVERS = ['34.207.209.174']
+PRODUCTION_SERVERS = ['18.210.214.159']
 STAGING_SERVERS = ['54.144.25.50']
 
 # Should code be deployed to the web/cron servers?
@@ -134,13 +134,13 @@ AUTOINIT_LOADER = False
 """
 COPY EDITING
 """
-COPY_GOOGLE_DOC_KEY = '15TeNmLlwro_wfLTQmXDLhGigPhi4DIvpa7RsaKKUzwY'
+COPY_GOOGLE_DOC_KEY = '1Mw0jynVo1HsbOloIEArpJhaug8LhEisp1z__1PgrxhQ'
 COPY_PATH = 'data/copy.xlsx'
 
 """
 AUTHORS DICTIONARY
 """
-AUTHORS_GOOGLE_DOC_KEY = '1A1yZFo7awU8clQVsiV1mobMbwxjIygj1VWP66Wj-GXs'
+AUTHORS_GOOGLE_DOC_KEY = '1s0Vs4c41kp8mCvGnIFbdPK9YI9t18u0c2kvh6W1eZBw'
 AUTHORS_PATH = 'data/authors.xlsx'
 # Number of cycles needed to refresh the author excel file
 REFRESH_AUTHOR_CYCLES = 6
@@ -156,7 +156,7 @@ GOOGLE APPS SCRIPTS
 """
 
 GAS_LOG_KEY = '1oE9V5APDi5zzFRm-1pm63BGJ6dUjeedz1qw6pECRRlQ' # Google app script logs spreadsheet key
-LIVEBLOG_GDOC_KEY = '1_IipOtr6uuoFLYzP8MhvIUC8yobUY-sk6ZVN6QYgU44' # Google doc key
+LIVEBLOG_GDOC_KEY = '1EuW3QYBtpl2hW421kVGtrHPI0bxY3ny5iKpixWUZvyg' # Google doc key
 SCRIPT_PROJECT_NAME = 'liveblog' # Google app scripts project name
 
 
