@@ -93,8 +93,8 @@ def install_requirements():
     require('settings', provided_by=['production', 'staging'])
 
     run('%(SERVER_VIRTUALENV_PATH)s/bin/pip install -r %(SERVER_REPOSITORY_PATH)s/requirements.txt' % app_config.__dict__)
-    sudo('cd %(SERVER_REPOSITORY_PATH)s; npm install' % app_config.__dict__)
-    sudo('chown -R ubuntu:ubuntu %(SERVER_REPOSITORY_PATH)s/node_modules' % app_config.__dict__)
+    # sudo('cd %(SERVER_REPOSITORY_PATH)s; npm install' % app_config.__dict__)
+    # sudo('chown -R ubuntu:ubuntu %(SERVER_REPOSITORY_PATH)s/node_modules' % app_config.__dict__)
 
 @task
 def setup_logs():
