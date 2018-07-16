@@ -273,8 +273,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # CHANGE TO LIVEBLOG DOC KEY FOR THE CORRESPONDING CURRENT_LIVEBLOG
-        # GORSUCH HEARINGS
-        LIVEBLOG_GDOC_KEY = '1fmGu5x75y_aQesmquWvJBCwTC-_6LtxdqAwSHuIJlso'
+        # LIVEBLOG_GDOC_KEY = '1fmGu5x75y_aQesmquWvJBCwTC-_6LtxdqAwSHuIJlso'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = 'https://s3.amazonaws.com/%s/%s%s' % (
@@ -291,7 +290,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # Staging google_apps_scripts > staging > liveblog
-        LIVEBLOG_GDOC_KEY = '1B_pInA65iaUc6Tr-enrcKQGGUSa2_HrE22Xnn9fNlFE'
+        # LIVEBLOG_GDOC_KEY = '1B_pInA65iaUc6Tr-enrcKQGGUSa2_HrE22Xnn9fNlFE'
     else:
         S3_BUCKET = None
         S3_BASE_URL = 'http://127.0.0.1:7777'
@@ -303,7 +302,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # Staging google_apps_scripts > development > liveblog
-        LIVEBLOG_GDOC_KEY = '1B_pInA65iaUc6Tr-enrcKQGGUSa2_HrE22Xnn9fNlFE'
+        # LIVEBLOG_GDOC_KEY = '1B_pInA65iaUc6Tr-enrcKQGGUSa2_HrE22Xnn9fNlFE'
         # Override S3_BASE_URL to use another port locally for fab app
         try:
             from local_settings import S3_BASE_URL
