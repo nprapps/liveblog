@@ -7,24 +7,29 @@ import boto
 import json
 import webbrowser
 import logging
+import requests
 
 from distutils.util import strtobool
 from distutils.spawn import find_executable
 from boto.s3.connection import OrdinaryCallingFormat
 from fabric.api import local, task, prompt
 from oauth import get_credentials
+from StringIO import StringIO
 from time import sleep
 from urlparse import urlparse
+from zipfile import ZipFile
 
 logging.basicConfig(format=app_config.LOG_FORMAT)
 logger = logging.getLogger(__name__)
 logger.setLevel(app_config.LOG_LEVEL)
 
+
 """
 Utilities used by multiple commands.
 """
 
-from fabric.api import prompt
+FONTELLO_HOST = 'http://fontello.com'
+
 
 def confirm(message):
     """
@@ -48,21 +53,68 @@ def get_bucket(bucket_name):
 
     return s3.get_bucket(bucket_name)
 
+
+def get_fontello_session_id():
+    """
+    Use the Fontello configuration file to get a session ID to
+    open or download our custom font
+    """
+    fontello_config_path = os.path.join('fontello', 'config.json')
+
+    with open(fontello_config_path) as fontello_config:
+        fontello_session_id = requests.post(
+            FONTELLO_HOST,
+            files={'config': fontello_config}
+        ).content
+    return fontello_session_id
+
+
 @task
-def install_font(force='true'):
+def install_font(force=True):
     """
     Install font
     """
-    print 'Installing font'
-    if force != 'true':
-        try:
-            with open('www/css/icon/npr-app-template.css') and open('www/css/font/npr-app-template.svg'):
-                logger.info('Font installed, skipping.')
-                return
-        except IOError:
-            pass
+    # Replaces `fontello-cli` library, which had a long-standing vulnerability
+    CSS_DIR = os.path.join('www', 'css', 'icon')
+    FONT_DIR = os.path.join('www', 'css', 'font')
 
-    local('node_modules/fontello-cli/bin/fontello-cli install --config fontello/config.json --css www/css/icon --font www/css/font/')
+    # Ensure that the directories exist
+    for directory_path in (CSS_DIR, FONT_DIR):
+        if not os.path.exists(directory_path):
+            os.makedirs(directory_path)
+
+    if force or \
+            len(os.listdir(CSS_DIR)) == 0 or \
+            len(os.listdir(FONT_DIR)) == 0:
+        logger.info('Installing font')
+
+        fontello_session_id = get_fontello_session_id()
+        zip_url = '{}/{}/get'.format(FONTELLO_HOST, fontello_session_id)
+        zip_stream = requests.get(zip_url).content
+        zipfile = ZipFile(StringIO(zip_stream))
+
+        for filepath in zipfile.namelist():
+            filename = os.path.basename(filepath)
+
+            # Ignore directory pointers, and unnecessary files
+            if not filename or not (
+                os.path.dirname(filepath).endswith('css') or
+                os.path.dirname(filepath).endswith('font')
+            ):
+                continue
+
+            if os.path.splitext(filepath)[1] == '.css':
+                with open(os.path.join(CSS_DIR, filename), 'w') as file:
+                    file.write(zipfile.open(filepath).read())
+            # Handle the binary and plaintext font files differently
+            elif os.path.splitext(filepath)[1] == '.svg':
+                with open(os.path.join(FONT_DIR, filename), 'w') as file:
+                    file.write(zipfile.open(filepath).read())
+            else:
+                with open(os.path.join(FONT_DIR, filename), 'wb') as file:
+                    file.write(zipfile.open(filepath).read())
+    else:
+        logger.info('Font already installed; skipping. You may force install if needed.')
 
 
 def prep_bool_arg(arg):
@@ -95,12 +147,16 @@ def check_credentials():
             exit()
     return credentials
 
+
 @task
 def open_font():
     """
     Open font in Fontello GUI in your browser
     """
-    local('node_modules/fontello-cli/bin/fontello-cli open --config fontello/config.json')
+    # Based on https://gist.github.com/puzrin/5537065
+    # Replaces `fontello-cli` Node library, which had a vulnerability
+    fontello_session_id = get_fontello_session_id()
+    webbrowser.open('{}/{}'.format(FONTELLO_HOST, fontello_session_id))
 
 
 @task
