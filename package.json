@@ -12,7 +12,7 @@
     "imagesloaded": "^4.1.1",
     "moment": "^2.15.0",
     "moment-timezone": "^0.5.5",
-    "superagent": "^2.2.0",
+    "superagent": "^3.8.1",
     "superagent-no-cache": "^0.1.0",
     "underscore": "^1.8.3",
     "url-parse": "^1.1.3",
