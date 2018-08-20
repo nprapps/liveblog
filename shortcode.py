@@ -38,6 +38,7 @@ SHORTCODE_DICT = {
     },
     'facebook': {},
     'npr_video': {},
+    'ap_live_video': {},
 }
 
 env = Environment(loader=FileSystemLoader('templates/shortcodes'))
