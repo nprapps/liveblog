@@ -83,7 +83,6 @@ Node.js is required for the static asset pipeline. If you don't already have it,
 
 ```
 brew install node
-curl https://npmjs.org/install.sh | sh
 ```
 
 MongoDB is used to cache the ratios of our visual assets so that we do not need to download it everytime the parser runs, if you do not have mongo installed run:
@@ -204,7 +203,7 @@ By default, this repo is configured to be used for a live event situation, but u
 Google Apps Scripts Addon Development
 -------------------------------------
 
-This repo expects a google doc that has certain format in order to be able to parse it. In order to create such a doc we use a google apps script addon that allows to insert posts read more about it [here](https://github.com/nprapps/liveblog-addon)
+This repo expects a google doc that has certain format in order to be able to parse it. In order to create such a doc we use a google apps script addon that allows to insert posts [read more about liveblog-addon here](https://github.com/nprapps/liveblog-addon)
 
 Google Document Permissions
 ---------------------------
