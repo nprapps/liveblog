@@ -386,15 +386,19 @@ Run Javascript tests
 
 With the project running, visit [localhost:8000/test/SpecRunner.html](http://localhost:8000/test/SpecRunner.html).
 
-Deploy to S3
-------------
+## Deploy 
+
+### Deploy to S3
+
+S3's the front-end.
 
 ```
 fab staging master deploy
 ```
 
-Deploy to EC2
--------------
+### Deploy to EC2
+
+EC2's the backend.
 
 You can deploy to EC2 for a variety of reasons. We cover two cases: Running a dynamic web application (`public_app.py`) and executing cron jobs (`crontab`).
 
@@ -416,8 +420,7 @@ For running cron jobs:
 
 You can configure your EC2 instance to both run Web services and execute cron jobs; just set both environment variables in the fabfile.
 
-Install cron jobs
------------------
+### Install cron jobs
 
 Cron jobs are defined in the file `crontab`. Each task should use the `cron.sh` shim to ensure the project's virtualenv is properly activated prior to execution. For example:
 
@@ -429,8 +432,7 @@ To install your crontab set `INSTALL_CRONTAB` to `True` in `app_config.py`. Cron
 
 The cron jobs themselves should be defined in `fabfile/cron_jobs.py` whenever possible.
 
-Install web services
----------------------
+### Install web services
 
 Web services are configured in the `confs/` folder.
 
@@ -448,8 +450,7 @@ You can also deploy only configuration files by running (normally this is invoke
 fab servers.deploy_confs
 ```
 
-Run a  remote fab command
--------------------------
+### Run a  remote fab command
 
 Sometimes it makes sense to run a fabric command on the server, for instance, when you need to render using a production database. You can do this with the `fabcast` fabric command. For example:
 
