@@ -159,11 +159,11 @@ Finally, a flask app is used to run the project locally. It will automatically r
 
 ```
 workon liveblog
-fab app
+fab app:7777
 ```
 
 
-Visit [localhost:7777](http://localhost:7777) in your browser.
+Visit [localhost:7777/child.html](http://localhost:7777/child.html) in your browser.
 
 Do you use iTerm2 as your terminal app? Here's [a sample AppleScript](https://gist.github.com/jjelosua/636434e55f4d0aea864d4c5b652e908e) to automatically launch a four-paned terminal window (one to access the repo, one for the local webserver, one for the daemon and one for mongo).
 
