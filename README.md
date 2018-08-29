@@ -7,7 +7,7 @@ liveblog
 * [Bootstrap the project](#bootstrap-the-project)
 * [Hide project secrets](#hide-project-secrets)
 * [Save media assets](#save-media-assets)
-* [Add a page to the site](#add-a-page-to-the-site)
+* [Adding a page to the site](#adding-a-page-to-the-site)
 * [Run the project](#run-the-project)
 * [Overriding app configuration](#overriding-app-configuration)
 * [Non live events](#non-live-events)
