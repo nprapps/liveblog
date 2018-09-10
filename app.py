@@ -32,6 +32,15 @@ logger = logging.getLogger(__name__)
 logger.setLevel(app_config.LOG_LEVEL)
 
 
+@app.route('/sharecard/<slug>.html', methods=['GET', 'OPTIONS'])
+def _sharecard(slug):
+    """
+    Flatfile sharecards, one per liveblog post.
+    """
+    context = get_liveblog_context()
+    #print slug, context
+    return make_response(render_template('sharecard.html', **context))
+
 @app.route('/liveblog.html', methods=['GET', 'OPTIONS'])
 def _liveblog():
     """
