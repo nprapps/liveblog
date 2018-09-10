@@ -1,4 +1,5 @@
 # _*_ coding:utf-8 _*_
+# This is called by app.py: parsed_document = parse_doc.parse(doc)
 import logging
 import re
 import app_config
@@ -337,6 +338,7 @@ def parse_raw_posts(raw_posts, authors):
             continue
         if post['published'] == 'yes':
             result = collection.find_one({'_id': post['slug']})
+            # This fires when we have a newly published post
             if not result:
                 logger.debug('did not find post timestamp %s: ' % post['slug'])
                 collection.insert({
