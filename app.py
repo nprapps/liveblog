@@ -38,8 +38,12 @@ def _sharecard(slug):
     Flatfile sharecards, one per liveblog post.
     """
     context = get_liveblog_context()
-    #print slug, context
-    return make_response(render_template('sharecard.html', **context))
+    for post in context['posts']:
+        if slug == post['slug']:
+            post_context = post
+            post_context['PARENT_LIVEBLOG_URL'] = context['PARENT_LIVEBLOG_URL']
+            break
+    return make_response(render_template('sharecard.html', **post_context))
 
 @app.route('/liveblog.html', methods=['GET', 'OPTIONS'])
 def _liveblog():

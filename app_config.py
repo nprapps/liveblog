@@ -42,6 +42,10 @@ ASSETS_SLUG = 'liveblog'
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
 CURRENT_LIVEBLOG = '20181106-elections'
 IMAGE_URL = 'FOOBAR'
+# PARENT LIVEBLOG URL
+# We need this to make the social sharecard functionality work.
+PARENT_LIVEBLOG_URL = 'https://www.npr.org/2016/11/08/500427835/live-blog-election-night-2016?post=scene-at-the-white-house-91'
+
 # NESTED EMBED ON PINNED POST
 # Add a nested embed url if you want the pinned post to display a nested embed
 # Example: https://apps.npr.org/dailygraphics/graphics/map-state-trifecta-20170804/child.html
