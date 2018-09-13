@@ -37,9 +37,12 @@ class GetFirstElement(HTMLParser):
     '''
     Given a blob of markup, find and return the contents and attributes 
     of the first of a particular type of element. 
-    Currently tuned to work on <p> and <img> elements.
+    Currently tuned to work on <p> and <img> elements
+    (return the contents of <p>'s, return the the attributes of <img>').
+
+    Here's a doctest for reference more than for actual doctest'ing.
     >>> el = GetFirstElement('img')
-    >>> markup = '<p>First p tag<img alt="The first img" src="">'
+    >>> markup = '<p>First p tag<img alt="The first img" src=""></p>'
     >>> el.feed(markup)
     >>> print dict(el.attrs)
     {u'src': u'', u'alt': u'The first img'}
@@ -48,7 +51,6 @@ class GetFirstElement(HTMLParser):
     def __init__(self, el):
         '''
         What element are we looking for? That gets set here.
-        >>> el = GetFirstElement()
         '''
         HTMLParser.__init__(self)
         self.el = el.lower()
@@ -76,7 +78,7 @@ class GetFirstElement(HTMLParser):
 
     def handle_data(self, data):
         '''
-        This processed the contents of the tags.
+        This processes the contents of the tags.
         '''
         if self.match_start and not self.match_data:
             if self.verbose:
