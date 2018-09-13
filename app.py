@@ -83,13 +83,18 @@ def _sharecard(slug):
     """
     context = get_liveblog_context()
     for post in context['posts']:
+        print post['slug']
         if slug == post['slug']:
             post_context = post
             post_context['PARENT_LIVEBLOG_URL'] = context['PARENT_LIVEBLOG_URL']
 
             get_img = GetFirstElement('img')
             get_img.feed(post['contents'])
-            post_context['img_src'] = dict(get_img.attrs)['src']
+            img_attrs = dict(get_img.attrs)
+            if 'src' in img_attrs:
+                post_context['img_src'] = img_attrs['src']
+            else:
+                post_context['img_src'] = context['DEFAULT_SHARE_IMG']
 
             get_p = GetFirstElement('p')
             get_p.feed(post['contents'])

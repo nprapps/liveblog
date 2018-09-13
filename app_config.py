@@ -45,6 +45,8 @@ IMAGE_URL = 'FOOBAR'
 # PARENT LIVEBLOG URL
 # We need this to make the social sharecard functionality work.
 PARENT_LIVEBLOG_URL = 'https://www.npr.org/2016/11/08/500427835/live-blog-election-night-2016?post=scene-at-the-white-house-91'
+# Also used by the social sharecards, this image will be the default share image in case there's no image in the actual post
+DEFAULT_SHARE_IMG = 'https://media.npr.org/assets/img/2016/11/09/wh-liveblog_wide-a9a86c0fb659a06ac270129a5ea5dc61c654e105.jpg?s=1400'
 
 # NESTED EMBED ON PINNED POST
 # Add a nested embed url if you want the pinned post to display a nested embed
