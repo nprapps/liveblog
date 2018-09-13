@@ -19,6 +19,7 @@ from flask_cors import CORS
 from render_utils import make_context, smarty_filter, flatten_app_config
 from render_utils import urlencode_filter
 from werkzeug.debug import DebuggedApplication
+from html.parser import HTMLParser
 
 app = Flask(__name__)
 app.debug = app_config.DEBUG
@@ -32,6 +33,50 @@ logger = logging.getLogger(__name__)
 logger.setLevel(app_config.LOG_LEVEL)
 
 
+class GetFirstElement(HTMLParser):
+    '''
+    Given a blob of markup, find and return the contents and attributes 
+    of the first of a particular type of element. 
+    Currently tuned to work on <p> and <img> elements.
+    >>> el = GetFirstElement('img')
+    >>> markup = '<p>First p tag<img alt="The first img" src="">'
+    >>> el.feed(markup)
+    >>> print dict(el.attrs)
+    {u'src': u'', u'alt': u'The first img'}
+    '''
+
+    def __init__(self, el):
+        '''
+        What element are we looking for? That gets set here.
+        >>> el = GetFirstElement()
+        '''
+        HTMLParser.__init__(self)
+        self.el = el.lower()
+        # self.match_start and self.match_data helps us figure out when we've already gotten a match for the element.
+        self.match_start = False
+        self.match_data = False
+        self.matched_el = False
+        self.standalone_elements = ['meta', 'link', 'hr', 'img'] 
+
+    def handle_starttag(self, tag, attrs):
+        '''
+        Some elements have an opening and closing tag, those get handled differently
+        than the elements that are standalone.
+        >>> el = GetFirstElement()
+        '''
+        if tag == self.el and not self.match_start:
+            self.match_start = True
+            self.matched_el = tag
+            if tag in self.standalone_elements:
+                # Set aside the element attributes for later.
+                self.attrs = attrs
+
+    def handle_data(self, data):
+        if self.match_start and not self.match_data:
+            # Set aside the element's innards for later
+            self.data = data
+
+
 @app.route('/sharecard/<slug>.html', methods=['GET', 'OPTIONS'])
 def _sharecard(slug):
     """
@@ -42,8 +87,18 @@ def _sharecard(slug):
         if slug == post['slug']:
             post_context = post
             post_context['PARENT_LIVEBLOG_URL'] = context['PARENT_LIVEBLOG_URL']
+
+            get_img = GetFirstElement('img')
+            get_img.feed(post['contents'])
+            post_context['img_src'] = dict(get_img.attrs)['src']
+
+            get_p = GetFirstElement('p')
+            get_p.feed(post['contents'])
+            post_context['lead_paragraph'] = get_p.data
             break
-    return make_response(render_template('sharecard.html', **post_context))
+    markup = render_template('sharecard.html', **post_context)
+    return make_response(markup)
+
 
 @app.route('/liveblog.html', methods=['GET', 'OPTIONS'])
 def _liveblog():

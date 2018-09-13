@@ -15,7 +15,7 @@
 
     <meta property="og:image" content="" />
     <meta name="twitter:image" content="" />
-    <meta name="twitter:image:alt" content="A description of the twitter image" />
+    <meta name="twitter:image:alt" content="A description of the twitter image if at all possible" />
     <meta property="og:image:width" content="1024" />
     <meta property="og:image:height" content="512" />
 
@@ -34,6 +34,8 @@
 <body>
     {# This is what a post object looks like
     {u'headline': u'Post haste!', 'timestamp': datetime.datetime(2018, 8, 29, 15, 2, 31, 955000, tzinfo=<UTC>), u'published': u'yes', u'major development': u'no', 'authors': [{'page': u'https://www.npr.org/people/395772167/miles-parks', 'name': u'Miles Parks'}], u'slug': u'post-haste-3', u'contents': u'<p>POST CONTENT</p>'} #}
+    <p>Img src: {{img_src}}</p>
+    <p>Lead graf: {{lead_paragraph}}</p>
     <h1>{{headline}}</h1>
     <p>If you are not redirected, <a href="{{PARENT_LIVEBLOG_URL}}?post={{slug}}">visit the NPR live blog here</a></p>
     <script>
