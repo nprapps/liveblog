@@ -9,12 +9,12 @@
 
     <meta property="og:title" content="{{headline}}" />
     <meta name="twitter:title" content="{{headline}}" />
-    <meta name="description" content="DESC" />
-    <meta property="og:description" content="DESC" />
-    <meta name="twitter:description" content="DESC" />
+    <meta name="description" content="{{lead_paragraph}}" />
+    <meta property="og:description" content="{{lead_paragraph}}" />
+    <meta name="twitter:description" content="{{lead_paragraph}}" />
 
-    <meta property="og:image" content="" />
-    <meta name="twitter:image" content="" />
+    <meta property="og:image" content="{{img_src}}" />
+    <meta name="twitter:image" content="{{img_src}}" />
     <meta name="twitter:image:alt" content="A description of the twitter image if at all possible" />
     <meta property="og:image:width" content="1024" />
     <meta property="og:image:height" content="512" />
@@ -34,9 +34,8 @@
 <body>
     {# This is what a post object looks like
     {u'headline': u'Post haste!', 'timestamp': datetime.datetime(2018, 8, 29, 15, 2, 31, 955000, tzinfo=<UTC>), u'published': u'yes', u'major development': u'no', 'authors': [{'page': u'https://www.npr.org/people/395772167/miles-parks', 'name': u'Miles Parks'}], u'slug': u'post-haste-3', u'contents': u'<p>POST CONTENT</p>'} #}
-    <p>Img src: {{img_src}}</p>
-    <p>Lead graf: {{lead_paragraph}}</p>
     <h1>{{headline}}</h1>
+    <p>{{lead_paragraph}}</p>
     <p>If you are not redirected, <a href="{{PARENT_LIVEBLOG_URL}}?post={{slug}}">visit the NPR live blog here</a></p>
     <script>
     // Commented out for testing purposes
