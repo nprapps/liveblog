@@ -39,8 +39,25 @@
     <p>If you are not redirected, <a href="{{PARENT_LIVEBLOG_URL}}?post={{slug}}">visit the NPR live blog here</a></p>
     <p>Image src: {{img_src}}</p>
     <script>
+    // Make sure we capture any utm parameters passed.
+    var query_bits = [];
+    var query_string = '';
+    if ( window.location.search != '' && window.location.search.indexOf('utm') >= 0 ) {
+        // Break up the search string into key/value pairs.
+        // The "slice(1)" is to get rid of the leading '?'
+        var items = window.location.search.slice(1)split('&');
+        var l = items.length;
+        for ( var i = 0; i < l; i ++ ) {
+            if ( items[i].toLowerCase().indexOf('utm_') >= 0 ) {
+                query_bits.push(items[i]);
+            }
+        }
+        if ( query_bits.length > 0 ) {
+            query_string = query_bits.join('&');
+        }
+    }
     // Commented out for testing purposes
-    //document.location = '{{PARENT_LIVEBLOG_URL}}?post={{slug}}';
+    //document.location = '{{PARENT_LIVEBLOG_URL}}?post={{slug}}' + query_string;
     </script>
 </body>
 </html>
