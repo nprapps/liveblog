@@ -55,14 +55,12 @@ class GetFirstElement(HTMLParser):
         # self.match_start and self.match_data helps us figure out when we've already gotten a match for the element.
         self.match_start = False
         self.match_data = False
-        self.matched_el = False
-        self.standalone_elements = ['meta', 'link', 'hr', 'img'] 
+        self.standalone_elements = ['meta', 'link', 'hr', 'img']
 
     def handle_starttag(self, tag, attrs):
         '''
         Some elements have an opening and closing tag, those get handled differently
         than the elements that are standalone.
-        >>> el = GetFirstElement()
         '''
         if tag == self.el and not self.match_start:
             self.match_start = True
@@ -73,6 +71,7 @@ class GetFirstElement(HTMLParser):
 
     def handle_data(self, data):
         if self.match_start and not self.match_data:
+            self.match_data = True
             # Set aside the element's innards for later
             self.data = data
 
