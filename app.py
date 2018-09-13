@@ -81,9 +81,14 @@ class GetFirstElement(HTMLParser):
         if self.match_start and not self.match_data:
             if self.verbose:
                 print 'Found contents of a matching start tag: %s' % data
-            self.match_data = True
-            # Set aside the element's innards for later
-            self.data = data
+            if data.strip() == '':
+                if self.verbose:
+                    print 'Start tag %s was empty, moving on to next tag.' % data
+                self.match_start = False
+            else:
+                self.match_data = True
+                # Set aside the element's innards for later
+                self.data = data
 
 
 @app.route('/sharecard/<slug>.html', methods=['GET', 'OPTIONS'])
