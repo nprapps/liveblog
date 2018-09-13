@@ -52,6 +52,8 @@ class GetFirstElement(HTMLParser):
         '''
         HTMLParser.__init__(self)
         self.el = el.lower()
+        self.attrs = None
+        self.data = None
         # self.match_start and self.match_data helps us figure out when we've already gotten a match for the element.
         self.match_start = False
         self.match_data = False
@@ -83,18 +85,17 @@ def _sharecard(slug):
     """
     context = get_liveblog_context()
     for post in context['posts']:
-        print post['slug']
         if slug == post['slug']:
             post_context = post
             post_context['PARENT_LIVEBLOG_URL'] = context['PARENT_LIVEBLOG_URL']
 
             get_img = GetFirstElement('img')
             get_img.feed(post['contents'])
-            img_attrs = dict(get_img.attrs)
-            if 'src' in img_attrs:
-                post_context['img_src'] = img_attrs['src']
-            else:
-                post_context['img_src'] = context['DEFAULT_SHARE_IMG']
+            post_context['img_src'] = context['DEFAULT_SHARE_IMG']
+            if get_img.attrs:
+                img_attrs = dict(get_img.attrs)
+                if 'src' in img_attrs:
+                    post_context['img_src'] = img_attrs['src']
 
             get_p = GetFirstElement('p')
             get_p.feed(post['contents'])
