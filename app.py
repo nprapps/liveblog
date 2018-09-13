@@ -52,6 +52,7 @@ class GetFirstElement(HTMLParser):
         '''
         HTMLParser.__init__(self)
         self.el = el.lower()
+        self.verbose = False
         self.attrs = None
         self.data = None
         # self.match_start and self.match_data helps us figure out when we've already gotten a match for the element.
@@ -65,6 +66,8 @@ class GetFirstElement(HTMLParser):
         than the elements that are standalone.
         '''
         if tag == self.el and not self.match_start:
+            if self.verbose:
+                print 'Found a matching start tag: %s' % tag
             self.match_start = True
             self.matched_el = tag
             if tag in self.standalone_elements:
@@ -72,7 +75,12 @@ class GetFirstElement(HTMLParser):
                 self.attrs = attrs
 
     def handle_data(self, data):
+        '''
+        This processed the contents of the tags.
+        '''
         if self.match_start and not self.match_data:
+            if self.verbose:
+                print 'Found contents of a matching start tag: %s' % data
             self.match_data = True
             # Set aside the element's innards for later
             self.data = data
@@ -90,6 +98,7 @@ def _sharecard(slug):
             post_context['PARENT_LIVEBLOG_URL'] = context['PARENT_LIVEBLOG_URL']
 
             get_img = GetFirstElement('img')
+            get_img.verbose = True
             get_img.feed(post['contents'])
             post_context['img_src'] = context['DEFAULT_SHARE_IMG']
             if get_img.attrs:
@@ -101,6 +110,7 @@ def _sharecard(slug):
             get_p.feed(post['contents'])
             post_context['lead_paragraph'] = get_p.data
             break
+    # *** TODO this gets us the markup as a string, we need to figure out how to hand this off to amazon boto.
     markup = render_template('sharecard.html', **post_context)
     return make_response(markup)
 

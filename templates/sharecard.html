@@ -15,7 +15,7 @@
 
     <meta property="og:image" content="{{img_src}}" />
     <meta name="twitter:image" content="{{img_src}}" />
-    <meta name="twitter:image:alt" content="A description of the twitter image if at all possible" />
+    <meta name="twitter:image:alt" content="{# A description of the twitter image if at all possible #}" />
     <meta property="og:image:width" content="1024" />
     <meta property="og:image:height" content="512" />
 
@@ -37,6 +37,7 @@
     <h1>{{headline}}</h1>
     <p>{{lead_paragraph}}</p>
     <p>If you are not redirected, <a href="{{PARENT_LIVEBLOG_URL}}?post={{slug}}">visit the NPR live blog here</a></p>
+    <p>Image src: {{img_src}}</p>
     <script>
     // Commented out for testing purposes
     //document.location = '{{PARENT_LIVEBLOG_URL}}?post={{slug}}';
