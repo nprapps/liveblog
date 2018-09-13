@@ -480,17 +480,27 @@ The Google Analytics events tracked in this application are:
 
 ## Social sharecard flatfiles
 
+### Overview
+
 In order to get liveblog post-specific social sharecards, we have to write and upload HTML flatfiles to S3 with the particulars of that liveblog post. [For the full background on social sharecards, read this GitHub issue](https://github.com/nprapps/liveblog/issues/30).
 
 In the past, when someone would share a particular entry in the liveblog on Facebook or twitter, you would see something like this:
 
-[[SCREENSHOT]]
+[](screenshots/social-sharecard-generic.png)
 
 In order to get social share cards specific to the post, we write a many HTML files, one for each liveblog post, with that post's information in the HTML file meta tags, so we can see a sharecard that looks like:
 
 [[ANOTHER SCREENSHOT]]
 
-In addition, the social sharecard flatfile frontend hides itself from robots, and issues a javascript redirect to readers (this is done so the scrapers from the social sites don't follow the redirect).
+In addition, the social sharecard flatfile frontend hides itself from robots, and issues a javascript redirect to readers (as opposed to a 301 redirect or a meta redirect -- this is done so the scrapers from the social sites don't follow the redirect).
+
+### Details
+
+* There are two app_config.py variables that need configuring, [starting around line 45](app_config.py#L45) 
+* The markup view is handed in [app.py](app.py).
+* [fabfile/flat.py](fabfile/flat.py) could be useful for boto 
+* In [parse_doc.py](parse_doc.py#L341), around line 341, is the functionality that fires when a new liveblog post is discovered, we'll be tying in some boto actions to that.
+* We also need to figure out where the boto actions around liveblog post update go.
 
 
 License and credits
