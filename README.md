@@ -7,7 +7,7 @@ liveblog
 * [Bootstrap the project](#bootstrap-the-project)
 * [Hide project secrets](#hide-project-secrets)
 * [Save media assets](#save-media-assets)
-* [Add a page to the site](#add-a-page-to-the-site)
+* [Adding a page to the site](#adding-a-page-to-the-site)
 * [Run the project](#run-the-project)
 * [Overriding app configuration](#overriding-app-configuration)
 * [Non live events](#non-live-events)
@@ -83,7 +83,6 @@ Node.js is required for the static asset pipeline. If you don't already have it,
 
 ```
 brew install node
-curl https://npmjs.org/install.sh | sh
 ```
 
 MongoDB is used to cache the ratios of our visual assets so that we do not need to download it everytime the parser runs, if you do not have mongo installed run:
@@ -160,7 +159,7 @@ Finally, a flask app is used to run the project locally. It will automatically r
 
 ```
 workon liveblog
-fab app
+fab app:7777
 ```
 
 
@@ -204,7 +203,7 @@ By default, this repo is configured to be used for a live event situation, but u
 Google Apps Scripts Addon Development
 -------------------------------------
 
-This repo expects a google doc that has certain format in order to be able to parse it. In order to create such a doc we use a google apps script addon that allows to insert posts read more about it [here](https://github.com/nprapps/liveblog-addon)
+This repo expects a google doc that has certain format in order to be able to parse it. In order to create such a doc we use a google apps script addon that allows to insert posts [read more about liveblog-addon here](https://github.com/nprapps/liveblog-addon)
 
 Google Document Permissions
 ---------------------------
@@ -387,15 +386,19 @@ Run Javascript tests
 
 With the project running, visit [localhost:8000/test/SpecRunner.html](http://localhost:8000/test/SpecRunner.html).
 
-Deploy to S3
-------------
+## Deploy 
+
+### Deploy to S3
+
+S3's the front-end.
 
 ```
 fab staging master deploy
 ```
 
-Deploy to EC2
--------------
+### Deploy to EC2
+
+EC2's the backend.
 
 You can deploy to EC2 for a variety of reasons. We cover two cases: Running a dynamic web application (`public_app.py`) and executing cron jobs (`crontab`).
 
@@ -417,8 +420,7 @@ For running cron jobs:
 
 You can configure your EC2 instance to both run Web services and execute cron jobs; just set both environment variables in the fabfile.
 
-Install cron jobs
------------------
+### Install cron jobs
 
 Cron jobs are defined in the file `crontab`. Each task should use the `cron.sh` shim to ensure the project's virtualenv is properly activated prior to execution. For example:
 
@@ -430,8 +432,7 @@ To install your crontab set `INSTALL_CRONTAB` to `True` in `app_config.py`. Cron
 
 The cron jobs themselves should be defined in `fabfile/cron_jobs.py` whenever possible.
 
-Install web services
----------------------
+### Install web services
 
 Web services are configured in the `confs/` folder.
 
@@ -449,8 +450,7 @@ You can also deploy only configuration files by running (normally this is invoke
 fab servers.deploy_confs
 ```
 
-Run a  remote fab command
--------------------------
+### Run a  remote fab command
 
 Sometimes it makes sense to run a fabric command on the server, for instance, when you need to render using a production database. You can do this with the `fabcast` fabric command. For example:
 
