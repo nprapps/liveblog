@@ -67,7 +67,7 @@ def jst():
     try:
         local('node_modules/universal-jst/bin/jst.js --template underscore jst www/js/templates.js')
     except:
-        logger.error('It looks like "jst" isn\'t installed. Try running: "npm install"')
+        logger.error('It looks like "underscore" isn\'t installed. Try running: "npm install"')
 
 
 @task
