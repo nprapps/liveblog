@@ -137,18 +137,19 @@ const initUI = function() {
 }
 
 const setupClipboardjs = function() {
-    let deeplinkUrl = new URL(window.pymChild.parentUrl, location, true);
     let clipboard = new Clipboard('.deeplink', {
         target: function(trigger) {
+            const baseURL = window.APP_CONFIG.S3_BASE_URL;
+
             const parent = trigger.parentElement;
-            const id = trigger['id'].substring(3);
-            let newQuery = deeplinkUrl.query;
-            newQuery['post'] = id;
-            deeplinkUrl.set('query',newQuery);
+            const slug = trigger['id'].substring(3);
+            const url = `${baseURL}/sharecard/${slug}.html`;
+
             let input = document.createElement('input');
             input.className = 'deeplink-input hidden';
             input.readonly = true;
-            input.value = deeplinkUrl.href;
+            input.value = url;
+
             if (!parent) {
                 console.error("deeplink has no parent element");
                 return null;
@@ -178,7 +179,7 @@ const setupClipboardjs = function() {
         ANALYTICS.trackEvent('copy-to-clipboard', id);
     });
     clipboard.on('error', function(e) {
-        console.log('Press Press Ctrl+C to copy');
+        console.log('Press Ctrl+C to copy');
     });
 }
 
