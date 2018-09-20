@@ -14,10 +14,9 @@ import parse_doc
 import static
 
 from copydoc import CopyDoc
-from flask import Flask, make_response, render_template, jsonify
+from flask import Flask, make_response, render_template
 from flask_cors import CORS
-from render_utils import make_context, smarty_filter, flatten_app_config
-from render_utils import urlencode_filter
+from render_utils import make_context, smarty_filter, flatten_app_config, urlencode_filter, GetFirstElement
 from werkzeug.debug import DebuggedApplication
 
 app = Flask(__name__)
@@ -30,6 +29,36 @@ app.add_template_filter(urlencode_filter, name='urlencode')
 logging.basicConfig(format=app_config.LOG_FORMAT)
 logger = logging.getLogger(__name__)
 logger.setLevel(app_config.LOG_LEVEL)
+
+
+@app.route('/sharecard/<slug>.html', methods=['GET', 'OPTIONS'])
+def _sharecard(slug):
+    """
+    Flatfile sharecards, one per liveblog post.
+    """
+    context = get_liveblog_context()
+    for post in context['posts']:
+        if slug == post['slug']:
+            post_context = post
+            post_context['PARENT_LIVEBLOG_URL'] = context['PARENT_LIVEBLOG_URL']
+            post_context['SHARECARD_URL'] = '%s/%s.html' % (context['S3_BASE_URL'], post['slug'])
+
+            get_img = GetFirstElement('img')
+            get_img.verbose = True
+            get_img.feed(post['contents'])
+            post_context['img_src'] = context['DEFAULT_SHARE_IMG']
+            if get_img.attrs:
+                img_attrs = dict(get_img.attrs)
+                if 'src' in img_attrs:
+                    post_context['img_src'] = img_attrs['src']
+
+            get_p = GetFirstElement('p')
+            get_p.feed(post['contents'])
+            post_context['lead_paragraph'] = get_p.data
+            break
+
+    markup = render_template('sharecard.html', **post_context)
+    return make_response(markup)
 
 
 @app.route('/liveblog.html', methods=['GET', 'OPTIONS'])

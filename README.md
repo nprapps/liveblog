@@ -26,6 +26,7 @@ liveblog
 * [Install web services](#install-web-services)
 * [Run a remote fab command](#run-a-remote-fab-command)
 * [Report analytics](#report-analytics)
+* [Social sharecard flatfiles](#social-sharecard-flatfiles)
 * [License and credits](#license-and-credits)
 * [Contributors](#contributors)
 
@@ -476,6 +477,28 @@ The Google Analytics events tracked in this application are:
 |liveblog|summary-copied||
 |liveblog|featured-tweet-action|`action`|
 |liveblog|featured-facebook-action|`action`|
+
+## Social sharecard flatfiles
+
+### Overview
+
+In order to get liveblog post-specific social sharecards, we have to write and upload HTML flatfiles to S3 with the particulars of that liveblog post. [For the full background on social sharecards, read this GitHub issue](https://github.com/nprapps/liveblog/issues/30).
+
+In the past, when someone would share a particular entry in the liveblog on Facebook or twitter, you would see something like this:
+
+[](screenshots/social-sharecard-generic.png)
+
+In order to get social share cards specific to the post, we write a many HTML files, one for each liveblog post, with that post's information in the HTML file meta tags, so we can see a sharecard that looks like:
+
+[[ANOTHER SCREENSHOT]]
+
+In addition, the social sharecard flatfile frontend hides itself from robots, and issues a javascript redirect to readers (as opposed to a 301 redirect or a meta redirect -- this is done so the scrapers from the social sites don't follow the redirect).
+
+### Details
+
+* There are two app_config.py variables that need configuring in `app_config.py`: `PARENT_LIVEBLOG_URL` and `DEFAULT_SHARE_IMG`
+* The markup view is handed in [app.py](app.py).
+
 
 License and credits
 -------------------
