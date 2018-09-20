@@ -1,65 +1,59 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>{{ headline }}</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="robots" content="NOINDEX">
+    <head>
+        <title>{{ headline }}</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="robots" content="NOINDEX">
 
-    <meta property="og:title" content="{{ headline }}" />
-    <meta name="twitter:title" content="{{ headline }}" />
-    <meta name="description" content="{{ lead_paragraph }}" />
-    <meta property="og:description" content="{{ lead_paragraph }}" />
-    <meta name="twitter:description" content="{{ lead_paragraph }}" />
+        <meta property="og:title" content="{{ headline }}" />
+        <meta name="twitter:title" content="{{ headline }}" />
+        <meta name="description" content="{{ lead_paragraph }}" />
+        <meta property="og:description" content="{{ lead_paragraph }}" />
+        <meta name="twitter:description" content="{{ lead_paragraph }}" />
 
-    <meta property="og:image" content="{{ img_src }}" />
-    <meta name="twitter:image" content="{{ img_src }}" />
-    <meta property="og:image:width" content="1024" />
-    <meta property="og:image:height" content="512" />
+        <meta property="og:image" content="{{ img_src }}" />
+        <meta name="twitter:image" content="{{ img_src }}" />
+        <meta property="og:image:width" content="1024" />
+        <meta property="og:image:height" content="512" />
 
-    <meta property="og:url" content="{{ SHARECARD_URL }}" />
-    <meta name="twitter:url" content="{{ PARENT_LIVEBLOG_URL }}?post={{ slug }}" />
-    
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@NPR">
-    <meta name="twitter:creator" content="@NPR">
-    <meta property="fb:app_id" content="138837436154588" />
-    <meta property="fb:admins" content="1594068001" />
-    <meta property="fb:pages" content="10643211755" />
-    <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="NPR.org" />
-</head>
-<body>
-    <p>If you are not automatically redirected, <a href="{{ PARENT_LIVEBLOG_URL }}?post={{ slug }}">visit the NPR live coverage here</a></p>
+        <meta property="og:url" content="{{ SHARECARD_URL }}" />
+        <meta name="twitter:url" content="{{ PARENT_LIVEBLOG_URL }}?post={{ slug }}" />
 
-    <em>Delete the below debug text before deploying to production:</em>
-    <h1>{{ headline }}</h1>
-    <p>{{ lead_paragraph }}</p>
-    <p>Image src: {{ img_src }}</p>
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="@NPR">
+        <meta name="twitter:creator" content="@NPR">
+        <meta property="fb:app_id" content="138837436154588" />
+        <meta property="fb:admins" content="1594068001" />
+        <meta property="fb:pages" content="10643211755" />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="NPR.org" />
+    </head>
+    <body>
+        <p>If you are not automatically redirected, <a href="{{ PARENT_LIVEBLOG_URL }}?post={{ slug }}">visit the NPR live coverage here</a></p>
 
-    <script>
-        // Make sure we capture any UTM query parameters passed
-        var sourceQueryString = window.location.search;
-        // Remove the leading `?` character
-        if (sourceQueryString) { sourceQueryString = sourceQueryString.slice(1); }
-        // Each item will be a key-value pair
-        var sourceQueryItems = sourceQueryString.split('&');
+        <script>
+            // Make sure we capture any UTM query parameters passed
+            var sourceQueryString = window.location.search;
+            // Remove the leading `?` character
+            if (sourceQueryString) { sourceQueryString = sourceQueryString.slice(1); }
+            // Each item will be a key-value pair
+            var sourceQueryItems = sourceQueryString.split('&');
 
-        queryItemsToKeep = sourceQueryItems.reduce(function (accumulator, item) {
-            return item.toLowerCase().indexOf('utm_') === 0
-                ? accumulator.concat(item)
-                : accumulator;
-        }, []);
+            queryItemsToKeep = sourceQueryItems.reduce(function (accumulator, item) {
+                return item.toLowerCase().indexOf('utm_') === 0
+                    ? accumulator.concat(item)
+                    : accumulator;
+            }, []);
 
-        var redirectQueryString = queryItemsToKeep.join('&');
-        var redirectURL = '{{ PARENT_LIVEBLOG_URL }}?post={{ slug }}' +
-            (redirectQueryString && '&' + redirectQueryString);
+            var redirectQueryString = queryItemsToKeep.join('&');
+            var redirectURL = '{{ PARENT_LIVEBLOG_URL }}?post={{ slug }}' +
+                (redirectQueryString && '&' + redirectQueryString);
 
-        // Using `location.replace()` means that users won't be able to
-        // navigate "back" to this stub page
-        console.log(redirectURL);
-        // window.location.replace(redirectURL);
-    </script>
-</body>
+            // Using `location.replace()` means that users won't be able to
+            // navigate "back" to this stub page
+            window.location.replace(redirectURL);
+        </script>
+    </body>
 </html>

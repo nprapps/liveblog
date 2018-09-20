@@ -6,6 +6,7 @@ Commands for rendering various parts of the app stack.
 
 import codecs
 from glob import glob
+from inspect import getargspec
 import logging
 import os
 
@@ -181,28 +182,43 @@ def render_copydoc():
 def generate_views(views, parsed_liveblog):
     from flask import url_for, g
 
-    view_paths = []
-    with app.app.test_request_context():
-        for view_name in views:
-            path = url_for(view_name)
-            view_paths.append((view_name, path))
+    try:
+        os.makedirs('.liveblog/')
+    except OSError:
+        pass
 
-    for view_name, path in view_paths:
-        logger.info("%s, %s" % (view_name, path))
-        with _fake_context(path):
-            # add parsed liveblog to g
-            g.parsed_liveblog = parsed_liveblog
-            logger.info(path)
-            view = app.__dict__[view_name]
-            response = view()
+    for view_name in views:
+        logger.info("Generating view for {}".format(view_name))
+        view = app.__dict__[view_name]
 
-            try:
-                os.makedirs('.liveblog/')
-            except OSError:
-                pass
+        # If a view requires an argument, then run it once for each blog post
+        iterate_by_post = len(getargspec(view).args) > 0
 
-            with codecs.open('.liveblog/{0}'.format(path), 'w', 'utf-8') as f:
-                f.write(response.data.decode('utf-8'))
+        if iterate_by_post:
+            for post in parsed_liveblog['posts']:
+                slug = post['slug']
+
+                with app.app.test_request_context():
+                    path = url_for(view_name, slug=slug)
+                    # If this view type requires a subdirectory, then create one
+                    try:
+                        os.makedirs('.liveblog/{}'.format(os.path.dirname(path)))
+                    except OSError:
+                        pass
+
+                with _fake_context(path):
+                    g.parsed_liveblog = parsed_liveblog
+                    response = view(slug)
+                    with codecs.open('.liveblog/{0}'.format(path), 'w', 'utf-8') as f:
+                        f.write(response.data.decode('utf-8'))
+        else:
+            with app.app.test_request_context():
+                path = url_for(view_name)
+            with _fake_context(path):
+                g.parsed_liveblog = parsed_liveblog
+                response = view()
+                with codecs.open('.liveblog/{0}'.format(path), 'w', 'utf-8') as f:
+                    f.write(response.data.decode('utf-8'))
 
 
 def parse_liveblog():
@@ -215,5 +231,5 @@ def parse_liveblog():
 @task
 def render_liveblog():
     parsed_liveblog = parse_liveblog()
-    generate_views(['_liveblog', '_preview', '_share'],
+    generate_views(['_liveblog', '_preview', '_share', '_sharecard'],
                    parsed_liveblog)

@@ -498,8 +498,6 @@ In addition, the social sharecard flatfile frontend hides itself from robots, an
 
 * There are two app_config.py variables that need configuring in `app_config.py`: `PARENT_LIVEBLOG_URL` and `DEFAULT_SHARE_IMG`
 * The markup view is handed in [app.py](app.py).
-* In `parse_raw_posts()` of [parse_doc.py](parse_doc.py) is the functionality that fires when a new liveblog post is discovered.
-* We also need to figure out where the boto actions around liveblog post update go.
 
 
 License and credits
