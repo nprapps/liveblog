@@ -14,12 +14,10 @@ import parse_doc
 import static
 
 from copydoc import CopyDoc
-from flask import Flask, make_response, render_template, jsonify
+from flask import Flask, make_response, render_template
 from flask_cors import CORS
-from render_utils import make_context, smarty_filter, flatten_app_config
-from render_utils import urlencode_filter
+from render_utils import make_context, smarty_filter, flatten_app_config, urlencode_filter, GetFirstElement
 from werkzeug.debug import DebuggedApplication
-from html.parser import HTMLParser
 
 app = Flask(__name__)
 app.debug = app_config.DEBUG
@@ -31,66 +29,6 @@ app.add_template_filter(urlencode_filter, name='urlencode')
 logging.basicConfig(format=app_config.LOG_FORMAT)
 logger = logging.getLogger(__name__)
 logger.setLevel(app_config.LOG_LEVEL)
-
-
-class GetFirstElement(HTMLParser):
-    '''
-    Given a blob of markup, find and return the contents and attributes 
-    of the first of a particular type of element. 
-    Currently tuned to work on <p> and <img> elements
-    (return the contents of <p>'s, return the the attributes of <img>').
-
-    Here's a doctest for reference more than for actual doctest'ing.
-    >>> el = GetFirstElement('img')
-    >>> markup = '<p>First p tag<img alt="The first img" src=""></p>'
-    >>> el.feed(markup)
-    >>> print dict(el.attrs)
-    {u'src': u'', u'alt': u'The first img'}
-    '''
-
-    def __init__(self, el):
-        '''
-        What element are we looking for? That gets set here.
-        '''
-        HTMLParser.__init__(self)
-        self.el = el.lower()
-        self.verbose = False
-        self.attrs = None
-        self.data = None
-        # self.match_start and self.match_data helps us figure out when we've already gotten a match for the element.
-        self.match_start = False
-        self.match_data = False
-        self.standalone_elements = ['meta', 'link', 'hr', 'img']
-
-    def handle_starttag(self, tag, attrs):
-        '''
-        Some elements have an opening and closing tag, those get handled differently
-        than the elements that are standalone.
-        '''
-        if tag == self.el and not self.match_start:
-            if self.verbose:
-                print 'Found a matching start tag: %s' % tag
-            self.match_start = True
-            self.matched_el = tag
-            if tag in self.standalone_elements:
-                # Set aside the element attributes for later.
-                self.attrs = attrs
-
-    def handle_data(self, data):
-        '''
-        This processes the contents of the tags.
-        '''
-        if self.match_start and not self.match_data:
-            if self.verbose:
-                print 'Found contents of a matching start tag: %s' % data
-            if data.strip() == '':
-                if self.verbose:
-                    print 'Start tag %s was empty, moving on to next tag.' % data
-                self.match_start = False
-            else:
-                self.match_data = True
-                # Set aside the element's innards for later
-                self.data = data
 
 
 @app.route('/sharecard/<slug>.html', methods=['GET', 'OPTIONS'])
@@ -118,7 +56,7 @@ def _sharecard(slug):
             get_p.feed(post['contents'])
             post_context['lead_paragraph'] = get_p.data
             break
-    # *** TODO this gets us the markup as a string, we need to figure out how to hand this off to amazon boto.
+
     markup = render_template('sharecard.html', **post_context)
     return make_response(markup)
 

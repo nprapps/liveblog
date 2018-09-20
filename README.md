@@ -496,10 +496,9 @@ In addition, the social sharecard flatfile frontend hides itself from robots, an
 
 ### Details
 
-* There are two app_config.py variables that need configuring, [starting around line 45](app_config.py#L45) 
+* There are two app_config.py variables that need configuring in `app_config.py`: `PARENT_LIVEBLOG_URL` and `DEFAULT_SHARE_IMG`
 * The markup view is handed in [app.py](app.py).
-* [fabfile/flat.py](fabfile/flat.py) could be useful for boto 
-* In [parse_doc.py](parse_doc.py#L341), around line 341, is the functionality that fires when a new liveblog post is discovered, we'll be tying in some boto actions to that.
+* In `parse_raw_posts()` of [parse_doc.py](parse_doc.py) is the functionality that fires when a new liveblog post is discovered.
 * We also need to figure out where the boto actions around liveblog post update go.
 
 

@@ -357,7 +357,7 @@ def parse_raw_posts(raw_posts, authors):
         else:
             post['timestamp'] = utcnow.replace(tzinfo=pytz.utc)
         # ** TODO Loop through sharecards list and send published sharecards to the S3 bucket
-        #for item in sharecard.items():
+        # for item in sharecard.items():
         #    pass
 
     return posts
