@@ -54,7 +54,9 @@ def _sharecard(slug):
 
             get_p = GetFirstElement('p')
             get_p.feed(post['contents'])
-            post_context['lead_paragraph'] = get_p.data
+            # Force an empty string instead of `None`, which would render
+            # literally in the social card
+            post_context['lead_paragraph'] = get_p.data or ""
             break
 
     markup = render_template('sharecard.html', **post_context)
