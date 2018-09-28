@@ -52,7 +52,7 @@ DEFAULT_SHARE_IMG = 'https://media.npr.org/assets/img/2016/11/09/wh-liveblog_wid
 # Add a nested embed url if you want the pinned post to display a nested embed
 # Example: https://apps.npr.org/dailygraphics/graphics/map-state-trifecta-20170804/child.html
 # set to None or remove to ignore that option, WE SHOULD NOT CHANGE THIS LIVE
-NESTED_EMBED_URL = 'https://apps.npr.org/dailygraphics/graphics/eclipse-map-animated-20170810/child.html?env=liveblog'
+NESTED_EMBED_URL = 'https://apps.npr.org/elections18-graphics/bop-gcu-liveblog/child.html?env=liveblog'
 
 try:
     from local_settings import CURRENT_LIVEBLOG
