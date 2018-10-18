@@ -54,6 +54,11 @@ DEFAULT_SHARE_IMG = 'https://media.npr.org/assets/img/2016/11/09/wh-liveblog_wid
 # set to None or remove to ignore that option, WE SHOULD NOT CHANGE THIS LIVE
 NESTED_EMBED_URL = 'https://apps.npr.org/elections18-graphics/bop-gcu-liveblog/child.html?env=liveblog'
 
+# Sometimes, such as for elections, we need to add a custom header
+# Code for this header lives within the '_custom_header.html' HTML,
+# which can be edited project-by-project
+USE_CUSTOM_HEADER = True
+
 try:
     from local_settings import CURRENT_LIVEBLOG
 except ImportError:

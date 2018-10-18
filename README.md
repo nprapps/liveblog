@@ -170,7 +170,7 @@ Do you use iTerm2 as your terminal app? Here's [a sample AppleScript](https://gi
 
 You can save this locally, customize it to match your own configuration and add an alias for it to your .bash_profile.
 
-alias liveblog="osascript ~/PATH-TO-FILE/Liveblog.scpt"
+```alias liveblog="osascript ~/PATH-TO-FILE/Liveblog.scpt"```
 
 
 Overriding App Configuration
@@ -200,6 +200,8 @@ By default, this repo is configured to be used for a live event situation, but u
 * `DEPLOY_TO_SERVERS`: Turn it to `False` if you plan on deploying a static app
 * `DEPLOY_STATIC_FACTCHECK`: Turn it to `True` so that the fabric `deploy` command will also issue the parsing of the last transcript and add it to the deploy process to S3.
 * `CURRENT_LIVEBLOG`: Bucket where you want to deploy the application
+* `USE_CUSTOM_HEADER`: Sometimes, such as for elections, we need to add a custom header at the top of the liveblog (above the title). If this setting is `True`, the `_custom_header.html` HTML component will be inserted at the top of the page.
+
 
 Google Apps Scripts Addon Development
 -------------------------------------
