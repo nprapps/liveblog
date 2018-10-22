@@ -1,0 +1,38 @@
+// OVERRIDE CSS FOR LIVEBLOG
+body.id650521908 header.contentheader,
+body.id650521908 #main-section header.contentheader.contentheader--one {
+    display: none !important;
+}
+body.id650521908 header.contentheader { display: none; }
+
+body.id650521908 h3.slug,
+body.id650521908 .story > .slug,
+body.id650521908 .story > h3.slug,
+body.id650521908 .story-tools,
+.story > .story-tools {
+    display: none;
+}
+
+body.id650521908 .story > .storytitle { display: none; }
+body.id650521908 .story > .story-meta { display: none; }
+body.id650521908 .story > .tags { margin-left: 0; }
+
+body.id650521908 #storytext > p { display: none; }
+
+@media only screen and (min-width: 769px) {
+    body.id650521908 h3.slug,
+    body.id650521908 .story > .slug,
+    body.id650521908 .story > h3.slug {
+        display: none;
+    }
+    body.id650521908 .story { padding: 0; }
+    body.id650521908 .story > #storytext { margin-left: 0; }
+}
+
+@media only screen and (max-width: 768px) {
+    body.id650521908 h3.slug,
+    body.id650521908 .story > .slug,
+    body.id650521908 .story > h3.slug {
+        display: none;
+    }
+}
