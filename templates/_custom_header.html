@@ -8,7 +8,6 @@
   var insertBefore = document.getElementById('header-wrapper');
 
   var xhttp = new XMLHttpRequest();
-  xhttp.responseType = 'document';
   xhttp.onreadystatechange = function() {
     // When the HTML successfully loads...
     if (this.readyState === 4 && this.status === 200) {
@@ -26,6 +25,7 @@
     }
   } 
   xhttp.open('GET', hrefOfInsert, true);
+  xhttp.responseType = 'document';
   xhttp.send();
 </script>
 
