@@ -49,10 +49,10 @@ def _sharecard(slug):
             post_context['img_src'] = context['DEFAULT_SHARE_IMG']
             if get_img.attrs:
                 img_attrs = dict(get_img.attrs)
-                if 'src' in img_attrs:
+                if 'src' in img_attrs.keys():
                     post_context['img_src'] = img_attrs['src']
 
-            get_p = GetFirstElement('p')
+            get_p = GetFirstElement('p', without_classes=['caption', 'credit'])
             get_p.feed(post['contents'])
             # Force an empty string instead of `None`, which would render
             # literally in the social card

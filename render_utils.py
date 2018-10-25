@@ -247,12 +247,14 @@ class GetFirstElement(HTMLParser):
     {u'src': u'', u'alt': u'The first img'}
     '''
 
-    def __init__(self, el):
+    def __init__(self, el, without_classes=[]):
         '''
         What element are we looking for? That gets set here.
         '''
         HTMLParser.__init__(self)
         self.el = el.lower()
+        # Be able to ignore certain sorts of elements, such as photo captions
+        self.without_classes = without_classes
         self.attrs = None
         self.data = None
         # self.match_start and self.match_data helps us figure out when we've already gotten a match for the element.
@@ -265,7 +267,12 @@ class GetFirstElement(HTMLParser):
         Some elements have an opening and closing tag, those get handled differently
         than the elements that are standalone.
         '''
-        if tag == self.el and not self.match_start:
+        if tag == self.el and \
+                not any([
+                    c in self.without_classes
+                    for c in dict(attrs).get('class', '').split(' ')
+                ]) and \
+                not self.match_start:
             logger.debug('Found a matching start tag: %s' % tag)
             self.match_start = True
             self.matched_el = tag
