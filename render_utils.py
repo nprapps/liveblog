@@ -247,38 +247,36 @@ class GetFirstElement(HTMLParser):
     {u'src': u'', u'alt': u'The first img'}
     '''
 
-    def __init__(self, el, without_classes=[]):
+    def __init__(self, el, without_classes=[], with_classes=[]):
         '''
         What element are we looking for? That gets set here.
         '''
         HTMLParser.__init__(self)
         self.el = el.lower()
-        # Be able to ignore certain sorts of elements, such as photo captions
+        # Be able to ignore certain sorts of elements, such as photo captions,
+        # by requiring or ignoring specific classes
         self.without_classes = without_classes
+        self.with_classes = with_classes
         self.attrs = None
         self.data = None
         # self.match_start and self.match_data helps us figure out when we've already gotten a match for the element.
         self.match_start = False
         self.match_data = False
-        self.standalone_elements = ['meta', 'link', 'hr', 'img']
 
     def handle_starttag(self, tag, attrs):
         '''
         Some elements have an opening and closing tag, those get handled differently
         than the elements that are standalone.
         '''
+        classes = dict(attrs).get('class', '').split(' ')
         if tag == self.el and \
-                not any([
-                    c in self.without_classes
-                    for c in dict(attrs).get('class', '').split(' ')
-                ]) and \
+                not any([c in self.without_classes for c in classes]) and \
+                all([c in classes for c in self.with_classes]) and \
                 not self.match_start:
             logger.debug('Found a matching start tag: %s' % tag)
             self.match_start = True
             self.matched_el = tag
-            if tag in self.standalone_elements:
-                # Set aside the element attributes for later.
-                self.attrs = attrs
+            self.attrs = attrs
 
     def handle_data(self, data):
         '''

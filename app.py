@@ -43,20 +43,35 @@ def _sharecard(slug):
             post_context['PARENT_LIVEBLOG_URL'] = context['PARENT_LIVEBLOG_URL']
             post_context['SHARECARD_URL'] = '%s/%s.html' % (context['S3_BASE_URL'], post['slug'])
 
-            get_img = GetFirstElement('img')
-            get_img.verbose = True
+            preview_image = None
+            # Embedded images should be preferred, and are contained within
+            # non-standard markup
+            get_img = GetFirstElement('div', with_classes=['embed-image'])
             get_img.feed(post['contents'])
-            post_context['img_src'] = context['DEFAULT_SHARE_IMG']
-            if get_img.attrs:
-                img_attrs = dict(get_img.attrs)
-                if 'src' in img_attrs.keys():
-                    post_context['img_src'] = img_attrs['src']
+            if get_img and dict(get_img.attrs or {}).get('data-src'):
+                preview_image = dict(get_img.attrs)['data-src']
+            if not preview_image:
+                # Try to find a graphic embed instead
+                get_img = GetFirstElement('div', with_classes=['embed-graphic'])
+                get_img.feed(post['contents'])
+                if get_img and dict(get_img.attrs or {}).get('data-src'):
+                    preview_image = dict(get_img.attrs)['data-src']
+            if not preview_image:
+                # Look for other `img` tags if there are no embed-style images
+                get_img = GetFirstElement('img')
+                get_img.feed(post['contents'])
+                if get_img and dict(get_img.attrs or {}).get('src'):
+                    post_context['img_src'] = dict(get_img.attrs)['src']
+            if not preview_image:
+                preview_image = context['DEFAULT_SHARE_IMG']
+            post_context['img_src'] = preview_image
 
             get_p = GetFirstElement('p', without_classes=['caption', 'credit'])
             get_p.feed(post['contents'])
             # Force an empty string instead of `None`, which would render
             # literally in the social card
             post_context['lead_paragraph'] = get_p.data or ""
+
             break
 
     markup = render_template('sharecard.html', **post_context)
