@@ -622,7 +622,7 @@ const renderFacebookVideo = function(videoWrapper) {
     videoDiv.setAttribute('data-show-text', 'true');
     videoDiv.setAttribute('data-width', '500');
     videoDiv.classList.add('fb-video');
-    placeholder.append(videoDiv);
+    placeholder.appendChild(videoDiv);
     FB.XFBML.parse(videoWrapper, function() {
         //videoWrapper.removeChild(placeholder);
         videoWrapper.classList.add('loaded');
