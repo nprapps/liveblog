@@ -528,7 +528,7 @@ const renderHeaderContentsDuring = function(data) {
         h('h1.header-title', COPY.header_title),
         h('p.header-info', [
             h('span.last-updated', ['Last updated: ' + data.updated]),
-            h('span.num-posts', data.numPosts + ' Posts')
+            h('span.num-posts', { innerHTML: data.numPosts + '&nbsp;Posts' })
         ]),
     ]
 };
@@ -541,7 +541,7 @@ const renderHeaderContentsAfter = function(data) {
         h('h1.header-title', COPY.header_title),
         h('p.header-info', [
             h('span.last-updated', ['Last updated: ' + data.updated]),
-            h('span.num-posts', data.numPosts + ' Posts')
+            h('span.num-posts', { innerHTML: data.numPosts + '&nbsp;Posts' })
         ]),
     ]
 };
