@@ -23,26 +23,29 @@ window.ANALYTICS = (function () {
     }
 
     var setupVizAnalytics = function() {
-        var startUrl = location.host + location.pathname;
+        const currentUrl = new URL(window.location.href, true);
+        const parentUrl = new URL(currentUrl.query.parentUrl);
 
-        var parentUrl = new URL(decodeURIComponent(getParameterByName('parentUrl')));
+        const embedUrl = window.location.protocol +
+            '//' + window.location.hostname +
+            window.location.pathname;
 
-        var gaLocation = startUrl + '?parentUrl=' + parentUrl.hostname
-        var gaPath = location.pathname.substring(1) + '?parentUrl=' + parentUrl.hostname;
+        const gaLocation = embedUrl;
+        const gaPath = window.location.pathname;
 
-        ga('create', APP_CONFIG.VIZ_GOOGLE_ANALYTICS.ACCOUNT_ID, 'auto');
-        ga('send', {
-            hitType: 'pageview',
-            location: gaLocation,
-            page: gaPath
-        });
-    }
+        // Dimension structure mirrrors that of the standard Visuals team analytics
+        const DIMENSION_PARENT_URL = 'dimension1';
+        const DIMENSION_PARENT_HOSTNAME = 'dimension2';
+        const DIMENSION_PARENT_INITIAL_WIDTH = 'dimension3';
+        let customData = {};
+        customData[DIMENSION_PARENT_URL] = currentUrl.query.parentUrl || '';
+        customData[DIMENSION_PARENT_HOSTNAME] = parentUrl.hostname;
+        customData[DIMENSION_PARENT_INITIAL_WIDTH] = currentUrl.query.initialWidth || '';
 
-    var getParameterByName = function(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        window.ga('create', APP_CONFIG.VIZ_GOOGLE_ANALYTICS.ACCOUNT_ID, 'auto');
+        window.ga('set', 'location', gaLocation);
+        window.ga('set', 'page', gaPath);
+        window.ga('send', 'pageview', customData);
     }
 
     var setupGoogle = function() {
@@ -71,127 +74,9 @@ window.ANALYTICS = (function () {
         ga('send', eventData);
     }
 
-    // SHARING
-
-    var openShareDiscuss = function() {
-        trackEvent('open-share-discuss');
-    }
-
-    var closeShareDiscuss = function() {
-        trackEvent('close-share-discuss');
-    }
-
-    var clickTweet = function(location) {
-        trackEvent('tweet', location);
-    }
-
-    var clickFacebook = function(location) {
-        trackEvent('facebook', location);
-    }
-
-    var clickEmail = function(location) {
-        trackEvent('email', location);
-    }
-
-    var postComment = function() {
-        trackEvent('new-comment');
-    }
-
-    var actOnFeaturedTweet = function(action, tweet_url) {
-        trackEvent('featured-tweet-action', action, null);
-    }
-
-    var actOnFeaturedFacebook = function(action, post_url) {
-        trackEvent('featured-facebook-action', action, null);
-    }
-
-    var copySummary = function() {
-        trackEvent('summary-copied');
-    }
-
-    // NAVIGATION
-    var usedKeyboardNavigation = false;
-
-    var useKeyboardNavigation = function() {
-        if (!usedKeyboardNavigation) {
-            trackEvent('keyboard-nav');
-            usedKeyboardNavigation = true;
-        }
-    }
-
-    var completeTwentyFivePercent =  function() {
-        trackEvent('completion', '0.25');
-    }
-
-    var completeFiftyPercent =  function() {
-        trackEvent('completion', '0.5');
-    }
-
-    var completeSeventyFivePercent =  function() {
-        trackEvent('completion', '0.75');
-    }
-
-    var completeOneHundredPercent =  function() {
-        trackEvent('completion', '1');
-    }
-
-    var startFullscreen = function() {
-        trackEvent('fullscreen-start');
-    }
-
-    var stopFullscreen = function() {
-        trackEvent('fullscreen-stop');
-    }
-
-    var begin = function(location) {
-        trackEvent('begin', location);
-    }
-
-    var readyChromecast = function() {
-        trackEvent('chromecast-ready');
-    }
-
-    var startChromecast = function() {
-        trackEvent('chromecast-start');
-    }
-
-    var stopChromecast = function() {
-        trackEvent('chromecast-stop');
-    }
-
-    // SLIDES
-
-    var exitSlide = function(slide_index) {
-        var currentTime = new Date();
-        timeOnLastSlide = Math.abs(currentTime - slideStartTime);
-        slideStartTime = currentTime;
-        trackEvent('slide-exit', slide_index, timeOnLastSlide);
-    }
-
     setupGoogle();
 
     return {
         'trackEvent': trackEvent,
-        'openShareDiscuss': openShareDiscuss,
-        'closeShareDiscuss': closeShareDiscuss,
-        'clickTweet': clickTweet,
-        'clickFacebook': clickFacebook,
-        'clickEmail': clickEmail,
-        'postComment': postComment,
-        'actOnFeaturedTweet': actOnFeaturedTweet,
-        'actOnFeaturedFacebook': actOnFeaturedFacebook,
-        'copySummary': copySummary,
-        'useKeyboardNavigation': useKeyboardNavigation,
-        'completeTwentyFivePercent': completeTwentyFivePercent,
-        'completeFiftyPercent': completeFiftyPercent,
-        'completeSeventyFivePercent': completeSeventyFivePercent,
-        'completeOneHundredPercent': completeOneHundredPercent,
-        'exitSlide': exitSlide,
-        'startFullscreen': startFullscreen,
-        'stopFullscreen': stopFullscreen,
-        'begin': begin,
-        'readyChromecast': readyChromecast,
-        'startChromecast': startChromecast,
-        'stopChromecast': stopChromecast
     };
 }());
