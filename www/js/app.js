@@ -348,9 +348,13 @@ const deepLinkScroll = function() {
     const postId = parentUrl.query['post'];
     updateIFrame();
     if (postId) {
-        const post = document.getElementById(postId)
-        scrollToPost('#'+postId);
-        lazyload_assets(post);
+        const post = document.getElementById(postId);
+        // Delay scrolling to the post, to allow the header/pinned-post
+        // Pym embed to load and update its height
+        setTimeout(() => {
+            scrollToPost('#'+postId);
+            lazyload_assets(post);
+        }, 500);
     }
 }
 
