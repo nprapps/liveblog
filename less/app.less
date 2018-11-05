@@ -207,17 +207,11 @@ a.new-posts-btn {
     }
 }
 
-/* Tooltip container */
-// .deeplink {
-//     position: relative;
-//     display: inline-block;
-// }
-
 // POST
 // For ease of editing, so we don't have to repeat as much with the vis-enabled
 .post-base() {
     box-sizing: border-box;
-    padding: 2em 0;
+    padding: 2em 0 1em 0;
     margin: 0;
     border-bottom: 1px solid @linegray;
     display: block;
@@ -241,8 +235,9 @@ a.new-posts-btn {
         .gotham();
         font-size: @smalltype;
         color: @textgray;
-        position: relative;
         display: inline-block;
+        transition: background-color .3s;
+        padding: 5px 0;
 
         &:hover {
             color: @lightgray;
@@ -252,58 +247,21 @@ a.new-posts-btn {
         &::after {
             font-family: npr-app-template;
             content: '\f0fe';
+            margin-left: 5px;
         }
 
-        .tooltip {
-            width: 70px;
+        &.confirmed {
             background-color: #555;
             color: #fff;
             text-align: center;
-            padding: 5px 0;
+            padding: 5px;
             border-radius: 6px;
-
-            /* Position the tooltip text */
-            // position: absolute; THIS BREAKS DOWNWARD SCROLLING ON MACOS SAFARI RIGHT NOW
-            z-index: 1;
-            top: 140%;
-            left: 55%; //desktop+
-            margin-left: -35px;
-
             pointer-events: none;
-            opacity: 0;
-            transition: opacity .3s;
-
-            @media @screen-small {
-              left: 70%;
-            }
-
-            @media @screen-leftrail {
-                left: 0;
-                margin-left: 0;
-            }
 
             &::after {
-                content: "";
-                position: absolute;
-                bottom: 100%;
-                left: 50%;
-                transform: rotate(180deg);
-                margin-left: -5px;
-                border-width: 5px;
-                border-style: solid;
-                border-color: #555 transparent transparent transparent;
-            }
-
-
-            &.visible {
-                opacity: 1;
-                transition: opacity .5s;
+                display: none;
             }
         }
-
-
-
-
     }
 
     .post-header {
@@ -338,9 +296,7 @@ a.new-posts-btn {
             }
         }
 
-        span.deeplink {
-            display: none;
-        }
+        span.deeplink { display: none; }
 
         @media @screen-leftrail-above {
             margin-bottom: 0;
@@ -397,6 +353,7 @@ a.new-posts-btn {
             font-size: @smalltype;
             color: @textgray;
             float: right;
+            padding: 5px 0;
 
             &:hover {
                 color: @lightgray;
