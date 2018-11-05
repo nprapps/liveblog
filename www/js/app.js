@@ -165,13 +165,15 @@ const setupClipboardjs = function() {
             deepLinkInput.remove();
         }
         // TODO add tooltip functionality
-        var triggerTooltip = e.trigger.childNodes[1];
+        var triggerTooltip = e.trigger;
+        triggerTooltip.childNodes[0]['nodeValue'] = 'Copied and ready to share!';
         setTimeout(hideTooltip, CLIPBOARD_TOOLTIP_SHOW_TIME);
-        triggerTooltip.classList.add('visible');
+        triggerTooltip.classList.add('confirmed');
         e.clearSelection();
 
         function hideTooltip() {
-            triggerTooltip.classList.remove('visible');
+            triggerTooltip.childNodes[0]['nodeValue'] = 'Copy link';
+            triggerTooltip.classList.remove('confirmed');
         }
 
         // Track copy to clipboard usage
