@@ -305,7 +305,6 @@ def parse_raw_posts(raw_posts, authors):
     client = MongoClient(app_config.MONGODB_URL)
     database = client['liveblog']
     collection = database.timestamps
-    sharecards = []
     for raw_post in raw_posts:
         post = {}
         marker_counter = 0
@@ -339,7 +338,6 @@ def parse_raw_posts(raw_posts, authors):
             continue
         if post['published'] == 'yes':
             result = collection.find_one({'_id': post['slug']})
-            # ** TODO Add a sharecard object to the sharecards list for processing after
             if not result:
                 # This fires when we have a newly published post
                 logger.debug('did not find post timestamp %s: ' % post['slug'])
@@ -356,9 +354,6 @@ def parse_raw_posts(raw_posts, authors):
                 logger.debug("timestamp from DB: %s" % post['timestamp'])
         else:
             post['timestamp'] = utcnow.replace(tzinfo=pytz.utc)
-        # ** TODO Loop through sharecards list and send published sharecards to the S3 bucket
-        # for item in sharecard.items():
-        #    pass
 
     return posts
 
