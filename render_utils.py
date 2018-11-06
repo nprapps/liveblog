@@ -258,10 +258,12 @@ class GetFirstElement(HTMLParser):
         self.without_classes = without_classes
         self.with_classes = with_classes
         self.attrs = None
-        self.data = None
+        self.data = ""
         # self.match_start and self.match_data helps us figure out when we've already gotten a match for the element.
         self.match_start = False
+        self.match_end = False
         self.match_data = False
+        self.depth = 0;
 
     def handle_starttag(self, tag, attrs):
         '''
@@ -277,17 +279,20 @@ class GetFirstElement(HTMLParser):
             self.match_start = True
             self.matched_el = tag
             self.attrs = attrs
+        else:
+            if self.match_start and not self.match_end:
+                self.depth += 1
+
+    def handle_endtag(self, tag):
+        if self.match_start and not self.match_end:
+            self.depth = self.depth - 1
+            if self.depth < 0:
+                self.match_end = True
 
     def handle_data(self, data):
         '''
         This processes the contents of the tags.
         '''
-        if self.match_start and not self.match_data:
-            logger.debug('Found contents of a matching start tag: %s' % data)
-            if data.strip() == '':
-                logger.debug('Start tag %s was empty, moving on to next tag.' % data)
-                self.match_start = False
-            else:
-                self.match_data = True
-                # Set aside the element's innards for later
-                self.data = data
+        if self.match_start and not self.match_end:
+            self.data += data
+
