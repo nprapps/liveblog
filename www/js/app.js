@@ -415,6 +415,10 @@ const buildLiveblogvDOM = function(liveblog) {
     }
 
     function renderPost(child) {
+        // strip out draggable before it passes through the VDOM
+        var links = Array.from(child.querySelectorAll("a"));
+        links.forEach(l => l.draggable = false);
+
         const id = child.getAttribute('id');
         // Aside from initial load, hide new posts
         // How do I keep this from screwing up the virtualDiff?
