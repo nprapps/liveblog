@@ -40,7 +40,7 @@ ASSETS_SLUG = 'liveblog'
 
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
-CURRENT_LIVEBLOG = '20181106-elections'
+CURRENT_LIVEBLOG = '20190619-test'
 IMAGE_URL = 'https://media.npr.org/assets/elections18'
 # We need this to make the social sharecard functionality work.
 # Make sure this URL doesn't contain a trailing query string or anchor
@@ -52,12 +52,12 @@ DEFAULT_SHARE_IMG = 'https://media.npr.org/assets/img/2018/10/26/live-blog.png'
 # Add a nested embed url if you want the pinned post to display a nested embed
 # Example: https://apps.npr.org/dailygraphics/graphics/map-state-trifecta-20170804/child.html
 # set to None or remove to ignore that option, WE SHOULD NOT CHANGE THIS LIVE
-NESTED_EMBED_URL = 'https://apps.npr.org/elections18-graphics/bop-gcu-liveblog/child.html?env=liveblog'
+NESTED_EMBED_URL = None
 
 # Sometimes, such as for elections, we need to add a custom header
 # Code for this header lives within the '_custom_header.html' HTML,
 # which can be edited project-by-project
-USE_CUSTOM_HEADER = True
+USE_CUSTOM_HEADER = False
 
 try:
     from local_settings import CURRENT_LIVEBLOG
@@ -145,13 +145,13 @@ AUTOINIT_LOADER = False
 """
 COPY EDITING
 """
-COPY_GOOGLE_DOC_KEY = '1Mw0jynVo1HsbOloIEArpJhaug8LhEisp1z__1PgrxhQ'
+COPY_GOOGLE_DOC_KEY = '1C5mrgLUFI1H8bDFW9a8G690OKUpUmE13_7OkOBUUsAA'
 COPY_PATH = 'data/copy.xlsx'
 
 """
 AUTHORS DICTIONARY
 """
-AUTHORS_GOOGLE_DOC_KEY = '1eWxIDDf3buSjPWzNKQXKq6yZOIhwig-ebrFoUYiTDns'
+AUTHORS_GOOGLE_DOC_KEY = '1wisK_wB7b9hyJ_hf5AqyacNVdO7lbhjEmOTC2n7j7IM'
 AUTHORS_PATH = 'data/authors.xlsx'
 # Number of cycles needed to refresh the author excel file
 REFRESH_AUTHOR_CYCLES = 6
@@ -167,7 +167,7 @@ GOOGLE APPS SCRIPTS
 """
 
 GAS_LOG_KEY = '1oE9V5APDi5zzFRm-1pm63BGJ6dUjeedz1qw6pECRRlQ' # Google app script logs spreadsheet key
-LIVEBLOG_GDOC_KEY = '1EuW3QYBtpl2hW421kVGtrHPI0bxY3ny5iKpixWUZvyg' # Google doc key
+LIVEBLOG_GDOC_KEY = '16WwQ7vB3ppRQh1R2vvRGJQoyGRTlgKN3ZvQOMf8Moug' # Google doc key
 SCRIPT_PROJECT_NAME = 'liveblog' # Google app scripts project name
 
 
@@ -283,8 +283,6 @@ def configure_targets(deployment_target):
         LOG_LEVEL = logging.INFO
         DEBUG = False
         ASSETS_MAX_AGE = 86400
-        # CHANGE TO LIVEBLOG DOC KEY FOR THE CORRESPONDING CURRENT_LIVEBLOG
-        LIVEBLOG_GDOC_KEY = '1EuW3QYBtpl2hW421kVGtrHPI0bxY3ny5iKpixWUZvyg'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = 'https://s3.amazonaws.com/%s/%s%s' % (
@@ -300,8 +298,6 @@ def configure_targets(deployment_target):
         LOG_LEVEL = logging.INFO
         DEBUG = True
         ASSETS_MAX_AGE = 20
-        # Staging google_apps_scripts > staging > liveblog
-        LIVEBLOG_GDOC_KEY = '1EuW3QYBtpl2hW421kVGtrHPI0bxY3ny5iKpixWUZvyg'
     else:
         S3_BUCKET = None
         S3_BASE_URL = 'http://127.0.0.1:7777'
@@ -312,8 +308,6 @@ def configure_targets(deployment_target):
         LOG_LEVEL = logging.INFO
         DEBUG = True
         ASSETS_MAX_AGE = 20
-        # Staging google_apps_scripts > development > liveblog
-        LIVEBLOG_GDOC_KEY = '1EuW3QYBtpl2hW421kVGtrHPI0bxY3ny5iKpixWUZvyg'
         # Override S3_BASE_URL to use another port locally for fab app
         try:
             from local_settings import S3_BASE_URL
