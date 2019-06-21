@@ -23,7 +23,7 @@
             <p>Due to technical issues, the live blog is not updating. We are actively working on a fix.</p>
         </div>
 
-        {% if pinned_post and False %}
+        {% if pinned_post %}
             <div class="pinned-post post" id="pinned" data-last-updated="{% if pinned_post.timestamp %}{{pinned_post.timestamp.isoformat()}}{% endif %}">
                 {%if request.path == url_for('_preview') %}
                     <h4 class="post-headline {% if not pinned_post.headline %}hidden{% endif %}">{{pinned_post.headline or ''}}</h4>

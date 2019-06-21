@@ -40,7 +40,7 @@ ASSETS_SLUG = 'liveblog'
 
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
-CURRENT_LIVEBLOG = '20190619-test'
+CURRENT_LIVEBLOG = '20190626-debate'
 IMAGE_URL = 'https://media.npr.org/assets/elections18'
 # We need this to make the social sharecard functionality work.
 # Make sure this URL doesn't contain a trailing query string or anchor
@@ -167,7 +167,7 @@ GOOGLE APPS SCRIPTS
 """
 
 GAS_LOG_KEY = '1oE9V5APDi5zzFRm-1pm63BGJ6dUjeedz1qw6pECRRlQ' # Google app script logs spreadsheet key
-LIVEBLOG_GDOC_KEY = '16WwQ7vB3ppRQh1R2vvRGJQoyGRTlgKN3ZvQOMf8Moug' # Google doc key
+LIVEBLOG_GDOC_KEY = '1gPIzH3_BP7eUN_F4iT-EjwZD4hsoTbO_qJxHHxJdTAI' # Google doc key
 SCRIPT_PROJECT_NAME = 'liveblog' # Google app scripts project name
 
 

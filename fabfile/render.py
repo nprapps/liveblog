@@ -201,10 +201,17 @@ def generate_views(views, parsed_liveblog):
                 with app.app.test_request_context():
                     path = url_for(view_name, slug=slug)
                     # If this view type requires a subdirectory, then create one
+                    dirname = ".liveblog" + os.path.dirname(path)
                     try:
-                        os.makedirs('.liveblog/{}'.format(os.path.dirname(path)))
+                        logger.info("Creating directory: " + dirname)
+                        os.makedirs(dirname)
                     except OSError:
                         pass
+                    for existing in os.listdir(dirname):
+                        filename = os.path.join(dirname, existing)
+                        logger.info("Existing file: " + filename)
+                        if os.path.isfile(filename):
+                            os.unlink(filename)
 
                 with _fake_context(path):
                     g.parsed_liveblog = parsed_liveblog
