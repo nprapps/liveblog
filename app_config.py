@@ -41,10 +41,10 @@ ASSETS_SLUG = 'liveblog'
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
 CURRENT_LIVEBLOG = '20190627-debate'
-IMAGE_URL = 'https://media.npr.org/assets/elections18'
+IMAGE_URL = 'https://media.npr.org/assets/liveblog/201906-dem-debate/'
 # We need this to make the social sharecard functionality work.
 # Make sure this URL doesn't contain a trailing query string or anchor
-PARENT_LIVEBLOG_URL = 'https://www.npr.org/650521908'
+PARENT_LIVEBLOG_URL = 'https://www.npr.org/734744609'
 # Also used by the social sharecards, this image will be the default share image in case there's no image in the actual post
 DEFAULT_SHARE_IMG = 'https://media.npr.org/assets/img/2018/10/26/live-blog.png'
 
