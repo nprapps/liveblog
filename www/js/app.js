@@ -354,7 +354,7 @@ const deepLinkScroll = function() {
         // Delay scrolling to the post, to allow the header/pinned-post
         // Pym embed to load and update its height
         setTimeout(() => {
-            scrollToPost('#'+postId);
+            post.scrollIntoView();
             lazyload_assets(post);
         }, 500);
     }
