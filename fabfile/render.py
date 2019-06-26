@@ -203,15 +203,15 @@ def generate_views(views, parsed_liveblog):
                     # If this view type requires a subdirectory, then create one
                     dirname = ".liveblog" + os.path.dirname(path)
                     try:
-                        logger.info("Creating directory: " + dirname)
+                        #logger.info("Creating directory: " + dirname)
                         os.makedirs(dirname)
                     except OSError:
                         pass
-                    for existing in os.listdir(dirname):
-                        filename = os.path.join(dirname, existing)
-                        logger.info("Existing file: " + filename)
-                        if os.path.isfile(filename):
-                            os.unlink(filename)
+                    # for existing in os.listdir(dirname):
+                    #     filename = os.path.join(dirname, existing)
+                    #     logger.info("Existing file: " + filename)
+                    #     if os.path.isfile(filename):
+                    #         os.unlink(filename)
 
                 with _fake_context(path):
                     g.parsed_liveblog = parsed_liveblog
