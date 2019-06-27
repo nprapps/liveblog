@@ -581,7 +581,7 @@ a.new-posts-btn {
 }
 
 // PINNED POST
-.pinned-post {
+.post.pinned-post {
     box-sizing: border-box;
     background: @white;
     padding: 1em;
@@ -593,13 +593,15 @@ a.new-posts-btn {
     }
 
     .embed-image,
-    .embed-video {
+    .embed-video,
+    .embed-youtube {
       margin: 0;
     }
 
     @media @screen-small-above {
         .embed-image,
-        .embed-video {
+        .embed-video,
+        .embed-youtube {
             float: right;
             max-width: 50%;
             margin-left: 1em;
