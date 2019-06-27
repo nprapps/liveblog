@@ -46,7 +46,7 @@ IMAGE_URL = 'https://media.npr.org/assets/liveblog/201906-dem-debate/'
 # Make sure this URL doesn't contain a trailing query string or anchor
 PARENT_LIVEBLOG_URL = 'https://www.npr.org/734744609'
 # Also used by the social sharecards, this image will be the default share image in case there's no image in the actual post
-DEFAULT_SHARE_IMG = 'https://media.npr.org/assets/img/2018/10/26/live-blog.png'
+DEFAULT_SHARE_IMG = 'https://media.npr.org/assets/img/2019/06/26/hsieh_angela_politics_demdebates_1_wide-s800-c80.jpg'
 
 # NESTED EMBED ON PINNED POST
 # Add a nested embed url if you want the pinned post to display a nested embed
