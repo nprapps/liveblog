@@ -461,7 +461,8 @@ a.new-posts-btn {
     }
 
 
-    .embed-image, .embed-graphic {
+    .embed-image,
+    .embed-graphic {
         margin: 2em 0;
         width: 100%;
 
@@ -580,20 +581,25 @@ a.new-posts-btn {
 .pinned-post {
     box-sizing: border-box;
     background: @white;
-    padding: 0.5em 1em;
+    padding: 1em;
     .gotham();
     .clearfix();
 
     @media @screen-tiny {
-        padding: 0.25em 0.8em;
+        padding: 0.8em;
+    }
+
+    .embed-image {
+      margin: 0;
     }
 
     @media @screen-small-above {
         .embed-image {
             float: right;
             max-width: 50%;
-            margin-top: 0;
             margin-left: 1em;
+
+            p.image-credit { margin-bottom: 0; }
         }
     }
 
