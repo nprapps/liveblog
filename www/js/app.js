@@ -460,6 +460,10 @@ const buildLiveblogvDOM = function(liveblog) {
     }
 
     function renderPinnedPost(child) {
+        // strip out draggable before it passes through the VDOM
+        var links = Array.from(child.querySelectorAll("a"));
+        links.forEach(l => l.draggable = false);
+        
         var lastUpdated = child.getAttribute("data-last-updated");
         if (lastUpdated) {
             if (moment().format('M D') == moment(lastUpdated).format('M D')) {
