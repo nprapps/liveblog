@@ -379,9 +379,6 @@ const buildLiveblogvDOM = function(liveblog) {
         clearInterval(liveblogInterval);
     } else if (liveblog.classList.contains('error')) {
         document.body.classList.add('error');
-        document.body.classList.remove('before');
-        document.body.classList.remove('during');
-        document.body.classList.remove('after');
     }
 
     const children = liveblog.children;
@@ -519,42 +516,14 @@ const renderInitialLiveblogvDOM = function() {
  * Render virtual DOM representation of header
  */
 const renderHeadervDOM = function(data) {
-    var headerContents;
-
-    if (document.body.classList.contains('before') || document.body.classList.contains('during')) {
-        headerContents = renderHeaderContentsDuring(data);
-    } else if (document.body.classList.contains('after')) {
-        headerContents = renderHeaderContentsAfter(data);
-    }
-
-    return h('div.header#header', headerContents)
+    return h('div.header#header', [
+        h('h1.header-title', COPY.header_title),
+        h('p.header-info', [
+            h('span.last-updated', ['Last updated: ' + data.updated]),
+            h('span.num-posts', { innerHTML: data.numPosts + '&nbsp;Posts' })
+        ]),
+    ])
 }
-
-/*
- * Render virtual DOM representation of header contents DURING debate
- */
-const renderHeaderContentsDuring = function(data) {
-    return [
-        h('h1.header-title', COPY.header_title),
-        h('p.header-info', [
-            h('span.last-updated', ['Last updated: ' + data.updated]),
-            h('span.num-posts', { innerHTML: data.numPosts + '&nbsp;Posts' })
-        ]),
-    ]
-};
-
-/*
- * Render virtual DOM representation of header contents AFTER debate
- */
-const renderHeaderContentsAfter = function(data) {
-    return [
-        h('h1.header-title', COPY.header_title),
-        h('p.header-info', [
-            h('span.last-updated', ['Last updated: ' + data.updated]),
-            h('span.num-posts', { innerHTML: data.numPosts + '&nbsp;Posts' })
-        ]),
-    ]
-};
 
 const renderImage = function(imageWrapper) {
     const image = imageWrapper.getElementsByTagName('img')[0];
