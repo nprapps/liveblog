@@ -1,0 +1,75 @@
+  <!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <!-- The CSS package above applies Google styling to buttons and other elements. -->
+    <?!= include('style'); ?>
+  </head>
+  <body>
+    <div class="sidebar branding-below">
+      <form class="metadata">
+        <div class="block form-group">
+          <h3 for="headline">Headline<span class="required-flag">*</span></h3>
+          <input class="width-100" placeholder="Headline"
+                 type="text" name="headline" id="headline">
+        </div>
+
+        <div class="block form-group">
+          <h3 for="authors">Author(s)<span class="required-flag">*</span></h3>
+          <? var half = Math.floor(data.length/2);?>
+          <div class="col-one">
+          <? for (var i = 0; i < half; i++) { ?>
+            <label class="checkbox width-100">
+              <input type="checkbox" class="author-input" name="authorsList" id="<?=data[i][0]?>" value="<?=data[i][1]?> (<?=data[i][0]?>)" /><?=data[i][1]?>
+            </label>
+          <? } ?>
+          </div>
+          <div class="col-one">
+          <? for (var i = half; i < data.length; i++) { ?>
+            <label class="checkbox width-100">
+              <input type="checkbox" class="author-input" name="authorsList" id="<?=data[i][0]?>" value="<?=data[i][1]?> (<?=data[i][0]?>)" /><?=data[i][1]?>
+            </label>
+          <? } ?>
+          </div>
+          <div>
+            <label class="checkbox width-100" for="other">
+              <input type="checkbox" class="author-input" name="author" id="other" value="other" />Other
+              <div id="input-other" class="block form-group">
+                <input class="width-100" placeholder="John Doe, Mark Smith" type="text" name="otherAuthors" id="other-author">
+              </div>
+            </label>
+          </div>
+        </div>
+
+
+        <div class="block form-group">
+          <h3 for="major-development">Fact Check</h3>
+          <div>
+            <div class="col-one">
+              <input type="radio" name="major" id="radio-embed-type-major" value="Yes">
+              <label for="radio-embed-type-major">Yes</label>
+            </div>
+            <div class="col-one">
+              <input type="radio" name="major" id="radio-embed-type-regular" value="No" checked="checked">
+              <label for="radio-embed-type-regular">No</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" id="button-bar">
+          <button class="blue" id="create-metadata">Create Draft Post</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="sidebar bottom">
+      <? if (logo) {?>
+        <img alt="Add-on logo" class="logo" src="<?=logo?>">
+      <? } ?>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <?!= include('metadata_sidebar_js'); ?>
+  </body>
+</html>
