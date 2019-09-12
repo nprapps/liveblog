@@ -576,6 +576,10 @@ a.new-posts-btn {
     &.pinned-post {
         .embed-youtube, .embed-fblive, .embed-npr-video, .embed-ap-live-video {
             max-width: 100%;
+
+            @media @screen-small-above {
+                max-width: 50%;
+            }
         }
     }
 }
@@ -601,6 +605,7 @@ a.new-posts-btn {
     @media @screen-small-above {
         .embed-image,
         .embed-video,
+        .embed-npr-video,
         .embed-youtube {
             float: right;
             max-width: 50%;
