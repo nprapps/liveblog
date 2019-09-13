@@ -57,7 +57,7 @@ NESTED_EMBED_URL = None
 # Sometimes, such as for elections, we need to add a custom header
 # Code for this header lives within the '_custom_header.html' HTML,
 # which can be edited project-by-project
-USE_CUSTOM_HEADER = False
+USE_CUSTOM_HEADER = True
 
 try:
     from local_settings import CURRENT_LIVEBLOG

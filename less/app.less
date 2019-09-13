@@ -718,3 +718,45 @@ a.new-posts-btn {
         display: none;
     }
 }
+
+.elections-2020-nav {
+  margin-bottom: 11px;
+
+  ul {
+    .gotham();
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    > li {
+      margin: 0;
+      padding: 0;
+      font-weight: bold;
+      font-size: 13px;
+      align-items: center;
+      display: none;
+
+      @media @screen-tiny-above { display: block; }
+
+      &.logo {
+        display: block;
+
+        a { padding-left: 0; }
+        img {
+          display: block;
+          width: 125px;
+          height: auto;
+
+          @media @screen-tiny-above { width: 160px; }
+        }
+      }
+
+      a {
+        display: block;
+        padding: 0 11px;
+        white-space: nowrap;
+      }
+    }
+  }
+}

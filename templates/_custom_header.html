@@ -1,31 +1,10 @@
 <!-- Use this component to insert any elements that are needed at the top of the liveblog page, as part of a larger project like elections -->
 
-<link rel="stylesheet" type="text/css" href="https://apps.npr.org/elections18-graphics/css/rendered/navbar-liveblog.min.css" />
-
-<script>
-  // Determine which element's HTML is being fetched and inserted
-  var hrefOfInsert = 'https://apps.npr.org/elections18-graphics/navbar-liveblog/child.html';
-  var insertBefore = document.getElementById('header-wrapper');
-
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    // When the HTML successfully loads...
-    if (this.readyState === 4 && this.status === 200) {
-      // Don't use the entire HTML document; instead, just insert the
-      // `#results-nav-wrapper` element, which has everything the 2018
-      // elections liveblog needs for display
-      var elementToInsert = this.response.getElementById('results-nav-wrapper');
-      insertBefore.parentNode.insertBefore(elementToInsert, insertBefore);
-
-      // Load the JavaScript that accompanies the elections navbar
-      var scriptTag = document.createElement('script');
-      scriptTag.src = 'https://apps.npr.org/elections18-graphics/js/rendered/navbar-liveblog.js';
-      scriptTag.type = 'text/javascript';
-      document.querySelector('head').appendChild(scriptTag);
-    }
-  } 
-  xhttp.open('GET', hrefOfInsert, true);
-  xhttp.responseType = 'document';
-  xhttp.send();
-</script>
-
+<div class="elections-2020-nav">
+  <ul>
+    <li class="logo"><a href="https://www.npr.org/sections/elections/"><img src="img/logo-election2020.svg" alt="2020 Election" /></a></li>
+    <li><a href="https://www.npr.org/sections/elections/">News</a></li>
+    <li><a href="https://www.npr.org/series/758097234/election-2020-issue-tracker">Issues</a></li>
+    <li><a href="https://www.npr.org/podcasts/510310/npr-politics-podcast">NPR Politics Podcast</a></li>
+  </ul>
+</div>
