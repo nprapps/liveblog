@@ -1,6 +1,9 @@
 {% extends '_base_child.html' %}
 
 {% block content %}
+{% if USE_CUSTOM_HEADER %}
+    {% include '_custom_header.html' %}
+{% endif %}
 <div id="header-wrapper" class="header-wrapper"></div>
 <div class="liveblog-wrapper"></div>
 <div class="footer-wrapper"></div>
