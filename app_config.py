@@ -40,8 +40,8 @@ ASSETS_SLUG = 'liveblog'
 
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
-CURRENT_LIVEBLOG = '20190627-debate'
-IMAGE_URL = 'https://media.npr.org/assets/liveblog/201906-dem-debate/'
+CURRENT_LIVEBLOG = '20191015-debate'
+IMAGE_URL = 'https://media.npr.org/assets/liveblog/201910-dem-debate/'
 # We need this to make the social sharecard functionality work.
 # Make sure this URL doesn't contain a trailing query string or anchor
 PARENT_LIVEBLOG_URL = 'https://www.npr.org/734744609'
@@ -167,7 +167,7 @@ GOOGLE APPS SCRIPTS
 """
 
 GAS_LOG_KEY = '1oE9V5APDi5zzFRm-1pm63BGJ6dUjeedz1qw6pECRRlQ' # Google app script logs spreadsheet key
-LIVEBLOG_GDOC_KEY = '1VzQj1lb2NAAyE1zYZzK8IgmQ33EMsIm-0SIPW48nC6A' # Google doc key
+LIVEBLOG_GDOC_KEY = '1hj6YIjPRnIx3R2AOHm7FtCoKAe3Gh3BJ-rayV_kn-Yk' # Google doc key
 SCRIPT_PROJECT_NAME = 'liveblog' # Google app scripts project name
 
 
@@ -300,7 +300,7 @@ def configure_targets(deployment_target):
         ASSETS_MAX_AGE = 20
     else:
         S3_BUCKET = None
-        S3_BASE_URL = 'http://127.0.0.1:7777'
+        S3_BASE_URL = 'http://localhost:7777'
         S3_DEPLOY_URL = None
         SERVERS = []
         SERVER_BASE_URL = 'http://127.0.0.1:8001/%s' % PROJECT_SLUG
