@@ -44,7 +44,7 @@ CURRENT_LIVEBLOG = '20191015-debate'
 IMAGE_URL = 'https://media.npr.org/assets/liveblog/201910-dem-debate/'
 # We need this to make the social sharecard functionality work.
 # Make sure this URL doesn't contain a trailing query string or anchor
-PARENT_LIVEBLOG_URL = 'https://www.npr.org/734744609'
+PARENT_LIVEBLOG_URL = 'https://www.npr.org/769069351'
 # Also used by the social sharecards, this image will be the default share image in case there's no image in the actual post
 DEFAULT_SHARE_IMG = 'https://media.npr.org/assets/img/2019/06/26/hsieh_angela_politics_demdebates_1_wide-s800-c80.jpg'
 
