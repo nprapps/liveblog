@@ -41,7 +41,7 @@ def _sharecard(slug):
         if slug == post['slug']:
             post_context = post
             post_context['PARENT_LIVEBLOG_URL'] = context['PARENT_LIVEBLOG_URL']
-            post_context['SHARECARD_URL'] = '%s/%s.html' % (context['S3_BASE_URL'], post['slug'])
+            post_context['SHARECARD_URL'] = '%s/sharecard/%s.html' % (context['S3_BASE_URL'], post['slug'])
 
             preview_image = None
             # Embedded images should be preferred, and are contained within
