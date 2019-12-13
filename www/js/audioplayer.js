@@ -3,7 +3,14 @@ export default function init() {
   var button = player.querySelector(".play-stream");
   var audio = player.querySelector("audio");
 
+  var playedCounter = 0;
+
   var updatePlayer = function(e) {
+    var rounded = Math.floor(audio.currentTime / 30) * 30;
+    if (rounded > playedCounter) {
+      playedCounter = rounded;
+      ANALYTICS.trackEvent('livestream-play-elapsed', rounded);
+    }
     switch (e.type) {
       case "seeking":
       case "stalled":
@@ -22,8 +29,10 @@ export default function init() {
   button.addEventListener("click", function() {
     if (audio.paused) {
       audio.play();
+      ANALYTICS.trackEvent('livestream-clicked-play');
     } else {
       audio.pause();
+      ANALYTICS.trackEvent('livestream-clicked-pause');
     }
   });
 
