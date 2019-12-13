@@ -9,6 +9,7 @@ import moment from 'moment-timezone';
 import imagesLoaded from 'imagesloaded';
 import * as _ from 'underscore';
 import Clipboard from 'clipboard/lib/clipboard';
+import initAudio from './audioplayer.js';
 
 // Global vars
 window.pymChild = null;
@@ -93,6 +94,7 @@ const onWindowLoaded = function() {
     liveblogInterval = setInterval(function () {
         getLiveblog();
     }, updateInterval);
+    initAudio();
 }
 
 /*
