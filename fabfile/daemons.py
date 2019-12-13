@@ -45,6 +45,7 @@ def main(run_once=False):
             copy_start = now
             logger.info('Update liveblog')
             execute('text.get_liveblog')
+            execute('text.update')
             if app_config.DEPLOYMENT_TARGET:
                 execute('deploy_liveblog')
             if (cycle % app_config.REFRESH_AUTHOR_CYCLES == 0):

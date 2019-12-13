@@ -10,6 +10,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 </head>
 <body>
+
+    {% if COPY.content.livestream_text %}
+        <audio class="livestream" controls preload="none" src="{{ COPY.content.livestream }}">
+            {{ COPY.content.livestream_text }}
+        </audio>
+    {% endif %}
+    
     <div class="liveblog {{status}}">
         {%if request.path == url_for('_preview') %}
         <h2 class="preview-msg">This is the preview page to check draft posts before publishing</h2>

@@ -775,6 +775,10 @@ a.new-posts-btn {
     font-size: 22px;
     // font-weight: bold;
 
+    &.hidden {
+        display: none;
+    }
+
     .play-stream {
         background: white;
         border-radius: 100%;
@@ -819,5 +823,9 @@ a.new-posts-btn {
             .pause-icon, .play-icon { display: none; }
             .seek-icon { display: block; }
         }
+    }
+
+    audio[src=""] + .play-stream {
+        display: none;
     }
 }

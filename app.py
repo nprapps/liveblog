@@ -12,6 +12,7 @@ import logging
 import oauth
 import parse_doc
 import static
+import copytext
 
 from copydoc import CopyDoc
 from flask import Flask, make_response, render_template
@@ -164,6 +165,7 @@ def get_liveblog_context():
     """
     from flask import g
     context = flatten_app_config()
+    context['COPY'] = copytext.Copy(app_config.COPY_PATH)
     parsed_liveblog_doc = getattr(g, 'parsed_liveblog', None)
     if parsed_liveblog_doc is None:
         logger.debug("did not find parsed_liveblog")

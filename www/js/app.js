@@ -9,7 +9,7 @@ import moment from 'moment-timezone';
 import imagesLoaded from 'imagesloaded';
 import * as _ from 'underscore';
 import Clipboard from 'clipboard/lib/clipboard';
-import initAudio from './audioplayer.js';
+import player from './audioplayer.js';
 
 // Global vars
 window.pymChild = null;
@@ -94,7 +94,6 @@ const onWindowLoaded = function() {
     liveblogInterval = setInterval(function () {
         getLiveblog();
     }, updateInterval);
-    initAudio();
 }
 
 /*
@@ -253,6 +252,13 @@ const updateLiveblog = function(data) {
     // i.e.: When the size of patches is greater than 1
     if ((_.size(patches) > 1) && lastVisiblePost) {
         onPostVisible(lastVisiblePost);
+    }
+
+    var audio = domNode.querySelector(".livestream");
+    if (audio) {
+        player.update(audio.getAttribute("src"), audio.innerHTML);
+    } else {
+        player.disable();
     }
 }
 
