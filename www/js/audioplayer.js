@@ -4,26 +4,40 @@ var playButton = ui.querySelector("button.play-stream");
 var playlist = ui.querySelector("span.text");
 
 var loadPlayer = null;
-var getPlayer = function(callback) {
+var getPlayer = function(src) {
   if (!loadPlayer) {
     loadPlayer = new Promise(function(ok, fail) {
       var script = document.createElement("script");
       script.src = playerURL;
       document.body.appendChild(script);
-      script.onload = function(callback) {
-        var player = jwplayer(document.createElement("div"))
+      script.onload = function() {
+        // create a hidden player element
+        var div = document.createElement("div");
+        div.style.display = "none";
+        div.id = "jwplayer";
+        document.body.appendChild(div);
+
+        // instantiate player
+        var player = jwplayer("jwplayer")
+        player.setup({
+          file: src
+        });
 
         playButton.addEventListener("click", function() {
           // play/pause the live stream
-          player.play();
+          if (player.getState() == "playing") {
+            player.pause();
+          } else {
+            player.play();
+          }
         });
 
-        var pressed = function() {
+        var pressed = function(e) {
           playButton.classList.remove("seeking");
           playButton.setAttribute("aria-pressed", "true");
         };
 
-        var unpressed = function() {
+        var unpressed = function(e) {
           playButton.classList.remove("seeking");
           playButton.setAttribute("aria-pressed", "false");
         };
@@ -32,10 +46,15 @@ var getPlayer = function(callback) {
           playButton.classList.add("seeking");
         }
 
-        player.on("play", pressed);
-        player.on("pause", unpressed);
-        player.on("buffer", seeking);
-        player.on("seek", seeking);
+        // register for events
+        player.on("ready", function() {
+          player.on("play", pressed);
+          player.on("pause", unpressed);
+          player.on("buffer", seeking);
+          player.on("seek", seeking);
+        });
+
+        window.player = player;
 
         ok(player)
       };
@@ -51,13 +70,13 @@ export default {
     if (src && lastSrc != src) {
       lastSrc = src;
       playlist.innerHTML = "Loading player...";
-      getPlayer().then(function(player) {
-        // console.log("*"+src+"*", text.trim(), player);
+      getPlayer(src).then(function(player) {
         playlist.innerHTML = text;
-        // set JWPlayer source
-        player.setup({
+        // set JWPlayer playlist
+        console.log(src);
+        player.load([{
           file: src
-        });
+        }]);
       });
     } else {
       playlist.innerHTML = text;
