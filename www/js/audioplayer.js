@@ -11,12 +11,31 @@ var getPlayer = function(callback) {
       script.src = playerURL;
       document.body.appendChild(script);
       script.onload = function(callback) {
-        var player = jwplayer(document.createElement("div"));
+        var player = jwplayer(document.createElement("div"))
 
         playButton.addEventListener("click", function() {
           // play/pause the live stream
-          // set aria-pressed to match
+          player.play();
         });
+
+        var pressed = function() {
+          playButton.classList.remove("seeking");
+          playButton.setAttribute("aria-pressed", "true");
+        };
+
+        var unpressed = function() {
+          playButton.classList.remove("seeking");
+          playButton.setAttribute("aria-pressed", "false");
+        };
+
+        var seeking = function() {
+          playButton.classList.add("seeking");
+        }
+
+        player.on("play", pressed);
+        player.on("pause", unpressed);
+        player.on("buffer", seeking);
+        player.on("seek", seeking);
 
         ok(player)
       };
@@ -25,15 +44,24 @@ var getPlayer = function(callback) {
   return loadPlayer;
 };
 
+var lastSrc = null;
 export default {
   update: function(src, text) {
-    ui.classList.remove("hidden");  
-    playlist.innerHTML = "Loading player...";
-    getPlayer().then(function(player) {
-      console.log("*"+src+"*", text.trim(), player);
+    ui.classList.remove("hidden");
+    if (src && lastSrc != src) {
+      lastSrc = src;
+      playlist.innerHTML = "Loading player...";
+      getPlayer().then(function(player) {
+        // console.log("*"+src+"*", text.trim(), player);
+        playlist.innerHTML = text;
+        // set JWPlayer source
+        player.setup({
+          file: src
+        });
+      });
+    } else {
       playlist.innerHTML = text;
-      // set JWPlayer source
-    });
+    }
   },
   disable: function() {
     ui.classList.add("hidden");
