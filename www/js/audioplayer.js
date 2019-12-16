@@ -1,50 +1,41 @@
+var playerURL = "https://cdn.jwplayer.com/libraries/JNfsuMc9.js";
+var ui = document.querySelector(".audio-player");
+var playButton = ui.querySelector("button.play-stream");
+var playlist = ui.querySelector("span.text");
 
-var player = document.querySelector(".audio-player");
-var button = player.querySelector(".play-stream");
-var audio = player.querySelector("audio");
-var titleSpan = player.querySelector(".text");
+var loadPlayer = null;
+var getPlayer = function(callback) {
+  if (!loadPlayer) {
+    loadPlayer = new Promise(function(ok, fail) {
+      var script = document.createElement("script");
+      script.src = playerURL;
+      document.body.appendChild(script);
+      script.onload = function(callback) {
+        var player = jwplayer(document.createElement("div"));
 
-var playedCounter = 0;
+        playButton.addEventListener("click", function() {
+          // play/pause the live stream
+          // set aria-pressed to match
+        });
 
-var updatePlayer = function(e) {
-  var rounded = Math.floor(audio.currentTime / 30) * 30;
-  if (rounded > playedCounter) {
-    playedCounter = rounded;
-    ANALYTICS.trackEvent('livestream-play-elapsed', rounded);
+        ok(player)
+      };
+    });
   }
-  switch (e.type) {
-    case "seeking":
-    case "stalled":
-    case "loadstart":
-      button.classList.add("seeking");
-      break;
+  return loadPlayer;
+};
 
-    default: 
-      button.classList.remove("seeking");
-      button.setAttribute("aria-pressed", audio.paused ? "false" : "true");
+export default {
+  update: function(src, text) {
+    ui.classList.remove("hidden");  
+    playlist.innerHTML = "Loading player...";
+    getPlayer().then(function(player) {
+      console.log("*"+src+"*", text.trim(), player);
+      playlist.innerHTML = text;
+      // set JWPlayer source
+    });
+  },
+  disable: function() {
+    ui.classList.add("hidden");
   }
 }
-
-"timeupdate seeking seeked loadstart loadend canplay ended".split(" ").forEach(e => audio.addEventListener(e, updatePlayer));
-
-button.addEventListener("click", function() {
-  if (audio.paused) {
-    audio.play();
-    ANALYTICS.trackEvent('livestream-clicked-play');
-  } else {
-    audio.pause();
-    ANALYTICS.trackEvent('livestream-clicked-pause');
-  }
-});
-
-var update = function(src, text) {
-  player.classList.remove("hidden");
-  audio.src = src;
-  titleSpan.innerHTML = text;
-}
-
-var disable = function() {
-  player.classList.add("hidden");
-}
-
-export default { update, disable }
