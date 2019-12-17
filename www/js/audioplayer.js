@@ -3,6 +3,8 @@ var ui = document.querySelector(".audio-player");
 var playButton = ui.querySelector("button.play-stream");
 var playlist = ui.querySelector("span.text");
 
+var playTotal = 0;
+
 var loadPlayer = null;
 var getPlayer = function(src) {
   if (!loadPlayer) {
@@ -30,8 +32,11 @@ var getPlayer = function(src) {
           // play/pause the live stream
           if (player.getState() == "playing") {
             player.pause();
+            ANALYTICS.trackEvent("liveblog-stream-state", "pause");
+            playTotal = 0; // timestamps will reset on each new stream play
           } else {
             player.play();
+            ANALYTICS.trackEvent("liveblog-stream-state", "play");
           }
         });
 
@@ -56,6 +61,17 @@ var getPlayer = function(src) {
           player.on("buffer", seeking);
           player.on("seek", seeking);
         });
+
+        player.on("time", function(e) {
+          var time = Math.floor(e.position / 30) * 30;
+          if (time > playTotal) {
+            playTotal = time;
+            console.log(time);
+            ANALYTICS.trackEvent("liveblog-stream-duration", time + "s");
+          }
+        });
+
+        player.setMute(true);
 
         window.player = player;
 
