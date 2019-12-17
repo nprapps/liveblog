@@ -13,7 +13,10 @@ var getPlayer = function(src) {
       script.onload = function() {
         // create a hidden player element
         var div = document.createElement("div");
-        div.style.display = "none";
+        div.style.visibility = "hidden";
+        div.style.position = "absolute";
+        div.style.left = "-1000px";
+        div.setAttribute("aria-hidden", "true");
         div.id = "jwplayer";
         document.body.appendChild(div);
 
@@ -67,6 +70,7 @@ var lastSrc = null;
 export default {
   update: function(src, text) {
     ui.classList.remove("hidden");
+    ui.classList.toggle("no-audio", !src);
     if (src && lastSrc != src) {
       lastSrc = src;
       playlist.innerHTML = "Loading player...";
