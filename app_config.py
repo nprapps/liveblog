@@ -302,7 +302,7 @@ def configure_targets(deployment_target):
         ASSETS_MAX_AGE = 20
     else:
         S3_BUCKET = None
-        S3_BASE_URL = 'http://vagrant.local:8888'
+        S3_BASE_URL = 'http://127.0.0.1:7777'
         S3_DEPLOY_URL = None
         SERVERS = []
         SERVER_BASE_URL = 'http://127.0.0.1:8001/%s' % PROJECT_SLUG
