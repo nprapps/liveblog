@@ -532,7 +532,7 @@ const renderHeadervDOM = function(data) {
         h('h1.header-title', COPY.header_title),
         h('p.header-info', [
             h('span.last-updated', ['Last updated: ' + data.updated]),
-            h('span.num-posts', { innerHTML: data.numPosts + '&nbsp;Posts' })
+            h('span.num-posts', { innerHTML: data.numPosts + '&nbsp;' + (data.numPosts > 1 ? 'Posts' : 'Post') })
         ]),
     ])
 }
