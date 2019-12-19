@@ -772,7 +772,7 @@ a.new-posts-btn {
     align-items: center;
     color: white;
     .gotham();
-    font-size: 22px;
+    font-size: 14px;
     // font-weight: bold;
 
     &.hidden {
@@ -826,11 +826,15 @@ a.new-posts-btn {
     }
 
     &.no-audio {
-        background: #EEE;
-        color: #555;
+        background: #e0e0e0;
+        color: #333;
+        font-weight: bold;
 
         .play-stream {
-            display: none;
+            background: white;
+            pointer-events: none;
+            border-color: white;
+            color: #e0e0e0;
         }
     }
 }
