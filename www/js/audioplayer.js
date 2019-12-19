@@ -35,6 +35,7 @@ var getPlayer = function(src) {
             ANALYTICS.trackEvent("liveblog-stream-state", "pause");
             playTotal = 0; // timestamps will reset on each new stream play
           } else {
+            player.setVolume(100);
             player.play();
             ANALYTICS.trackEvent("liveblog-stream-state", "play");
           }
@@ -104,5 +105,6 @@ export default {
   },
   disable: function() {
     ui.classList.add("hidden");
+    player.pause();
   }
 }
