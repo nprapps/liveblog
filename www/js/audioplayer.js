@@ -83,6 +83,12 @@ var getPlayer = function(src) {
   return loadPlayer;
 };
 
+var killPlayer = function() {
+  if (loadPlayer) {
+    getPlayer().then(player => player.pause());
+  }
+}
+
 var lastSrc = null;
 export default {
   update: function(src, text) {
@@ -100,11 +106,15 @@ export default {
         }]);
       });
     } else {
+      // distinguish between "no source" and "same as last"
+      if (!src) {
+        killPlayer();
+      }
       playlist.innerHTML = text;
     }
   },
   disable: function() {
     ui.classList.add("hidden");
-    player.pause();
+    killPlayer();
   }
 }
