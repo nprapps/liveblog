@@ -40,11 +40,11 @@ ASSETS_SLUG = 'liveblog'
 
 # DEPLOY SETUP CONFIG
 LIVEBLOG_DIRECTORY_PREFIX = 'liveblogs/'
-CURRENT_LIVEBLOG = '20191219-debate'
-IMAGE_URL = 'https://media.npr.org/assets/liveblog/201912-dem-debate/'
+CURRENT_LIVEBLOG = '20200114-debate'
+IMAGE_URL = 'https://media.npr.org/assets/liveblog/202001-dem-debate/'
 # We need this to make the social sharecard functionality work.
 # Make sure this URL doesn't contain a trailing query string or anchor
-PARENT_LIVEBLOG_URL = 'https://www.npr.org/788711002'
+PARENT_LIVEBLOG_URL = 'https://www.npr.org/793989351'
 # Also used by the social sharecards, this image will be the default share image in case there's no image in the actual post
 DEFAULT_SHARE_IMG = 'https://media.npr.org/assets/img/2019/06/26/hsieh_angela_politics_demdebates_1_wide-s800-c80.jpg'
 # get this URL from the live audio playlist
@@ -169,7 +169,7 @@ GOOGLE APPS SCRIPTS
 """
 
 GAS_LOG_KEY = '1oE9V5APDi5zzFRm-1pm63BGJ6dUjeedz1qw6pECRRlQ' # Google app script logs spreadsheet key
-LIVEBLOG_GDOC_KEY = '1HqBgjT1JcHnV7Cv4kpZEHeXLtYdcsTw1s2I_mJhimu8' # Google doc key
+LIVEBLOG_GDOC_KEY = '1ZnAB0wx728F6XBHVNNzgqhvpLWRyrwjbneMMlYVZ9CM' # Google doc key
 SCRIPT_PROJECT_NAME = 'liveblog' # Google app scripts project name
 
 
